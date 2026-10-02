@@ -359,7 +359,7 @@ footer b{color:var(--ink)}
 </style>
 </head>
 <body>
-<div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true"><img src="share.jpg" alt="" width="600" height="315"></div>
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true"><img id="wxImg" src="share.jpg" alt="" width="600" height="315"></div>
 
 
 <header class="top">
@@ -734,7 +734,7 @@ function render(){renderChrome();renderAlert();renderResults();}
 /* ---------- modals ---------- */
 const layer=$('#layer');let lastFocus=null;
 function openModal(html,cls=''){lastFocus=document.activeElement;layer.innerHTML=`<div class="ov" data-ov><div class="dlg ${cls}" role="dialog" aria-modal="true"><button class="x" data-close aria-label="close">${ic('x')}</button>${html}</div></div>`;document.body.style.overflow='hidden';const f=layer.querySelector('input,select,button:not(.x)');(f||layer.querySelector('.x')).focus();}
-function closeModal(){agentOpen=false;layer.innerHTML='';document.body.style.overflow='';lastFocus&&lastFocus.focus&&lastFocus.focus();}
+function closeModal(){agentOpen=false;if(window.__baseTitle){document.title=window.__baseTitle;const w=document.getElementById('wxImg');if(w)w.src='share.jpg';}layer.innerHTML='';document.body.style.overflow='';lastFocus&&lastFocus.focus&&lastFocus.focus();}
 function openDetail(code){
   const p=P.find(x=>x.code===code),L=t(),im=imgsFull(p),th=imgsThumbs(p),pr=priceOf(p);galIdx=0;
   const amen=AMEN[p.kind].map(a=>`<span>${S.lang==='th'?a:AMEN_EN[a]||a}</span>`).join('');
@@ -774,6 +774,8 @@ function openDetail(code){
    </div>
    ${detailBarHTML(p)}`);
   recalc();
+  window.__baseTitle=window.__baseTitle||document.title;document.title=p.project+' · '+(p.rent?fmt(p.rent)+L.mo:fmt(p.sale))+' | JUBILEE Real Estate';
+  {const w=document.getElementById('wxImg'),c=imgsFull(p)[0];if(w&&/^https?:/.test(c))w.src=c;}
 }
 function openBooking(code){
   const L=t(),d=new Date(today);d.setDate(d.getDate()+1);const minD=d.toISOString().slice(0,10);
@@ -1387,8 +1389,8 @@ applyTheme();
 /* ---------- sharing (WeChat Moments, Facebook, LINE, X, WhatsApp, Telegram) ---------- */
 const UA=navigator.userAgent||'';const isWeChat=/MicroMessenger/i.test(UA);const isMobile=/Android|iPhone|iPad|iPod/i.test(UA);
 const enc=encodeURIComponent;
-const siteUrl=()=>location.origin+location.pathname;
-const listingUrl=p=>siteUrl()+'?p='+enc(p.code);
+const siteUrl=()=>location.origin+location.pathname.replace(/[^/]*$/,'');
+const listingUrl=p=>siteUrl()+'p/'+enc(p.code)+'.html';
 const SHI={
  wechat:'<svg viewBox="0 0 24 24"><path d="M9 4C5 4 2 6.7 2 10c0 1.9 1 3.6 2.6 4.7L4 17l2.8-1.4c.7.2 1.4.3 2.2.3h.4A5.6 5.6 0 0 1 9 14c0-3.3 3.1-6 7-6h.5C15.7 5.7 12.6 4 9 4zm7 5c-3.3 0-6 2.2-6 5s2.7 5 6 5c.7 0 1.3-.1 1.9-.3L20 20l-.6-2.1C21 17 22 15.6 22 14c0-2.8-2.7-5-6-5z"/></svg>',
  fb:'<svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v8h4v-8h3l1-4h-4V8.6c0-.4.3-.6 1-.6z"/></svg>',
