@@ -10,7 +10,7 @@ const imgUrl = u => u.startsWith('https://') ? u.replace(/w=\d+/, 'w=1200') : `$
 const baht = n => '฿' + Math.round(Number(n)).toLocaleString('en-US');
 const KIND_TH = {condo:'คอนโด', house:'บ้านเดี่ยว', town:'ทาวน์โฮม'}, KIND_ZH = {condo:'公寓', house:'独栋别墅', town:'联排别墅'};
 
-const res = await fetch(`${SB}/rest/v1/listings?select=code,mode,kind,project,district,station,beds,baths,area,rent,sale,pets,photos,description&status=eq.active&limit=2000`, {headers:{apikey:KEY, Authorization:`Bearer ${KEY}`}});
+const res = await fetch(`${SB}/rest/v1/listings?select=code,mode,kind,project,project_en,project_zh,description_zh,district,station,beds,baths,area,rent,sale,pets,photos,description&status=eq.active&limit=2000`, {headers:{apikey:KEY, Authorization:`Bearer ${KEY}`}});
 if (!res.ok) { console.error('fetch failed', res.status, await res.text()); process.exit(1); }
 const rows = await res.json();
 fs.mkdirSync('p', {recursive:true});
@@ -21,8 +21,9 @@ for (const r of rows) {
   const img = cover ? imgUrl(cover) : SITE + 'share.jpg';
   const priceTh = [r.rent ? `เช่า ${baht(r.rent)}/เดือน` : '', r.sale ? `ขาย ${baht(r.sale)}` : ''].filter(Boolean).join(' · ');
   const priceZh = [r.rent ? `月租 ${baht(r.rent)}` : '', r.sale ? `售价 ${baht(r.sale)}` : ''].filter(Boolean).join(' · ');
-  const title = `${r.project} · ${priceTh} | JUBILEE Real Estate`;
-  const desc = `曼谷 ${r.district} · ${KIND_ZH[r.kind]||''} ${r.beds}卧${r.baths}卫 ${r.area}㎡ · ${priceZh} | ${KIND_TH[r.kind]||''} ${r.beds} ห้องนอน ${r.area} ตร.ม. ${r.district}${r.station ? ' ใกล้ ' + r.station : ''}`;
+  const name = r.project_zh || r.project_en || r.project;
+  const title = `${name} · ${priceZh || priceTh} | JUBILEE Real Estate`;
+  const desc = `${r.description_zh ? r.description_zh.slice(0,120) + ' · ' : ''}${r.project_zh ? r.project + ' · ' : ''}曼谷 ${r.district} · ${KIND_ZH[r.kind]||''} ${r.beds}卧${r.baths}卫 ${r.area}㎡ · ${priceZh} | ${KIND_TH[r.kind]||''} ${r.beds} ห้องนอน ${r.area} ตร.ม. ${r.district}${r.station ? ' ใกล้ ' + r.station : ''}`;
   const target = `../?p=${encodeURIComponent(r.code)}`;
   const url = `${SITE}p/${r.code}.html`;
   const html = `<!doctype html>
@@ -38,8 +39,8 @@ for (const r of rows) {
 <script>location.replace(${JSON.stringify(target)}+(location.hash||''));</script>
 <style>body{font-family:system-ui,sans-serif;margin:0;padding:16px;max-width:720px;margin-inline:auto;color:#111}img{width:100%;border-radius:12px}a{color:#B8137F;font-weight:700}</style>
 </head><body>
-<img src="${esc(img)}" alt="${esc(r.project)}">
-<h1>${esc(r.project)}</h1><p>${esc(desc)}</p>
+<img src="${esc(img)}" alt="${esc(name)}">
+<h1>${esc(name)}</h1><p>${esc(desc)}</p>
 <p><a href="${esc(target)}">ดูรายละเอียดประกาศ / 查看房源详情 / View listing</a></p>
 </body></html>
 `;

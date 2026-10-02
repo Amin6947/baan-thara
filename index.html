@@ -536,15 +536,21 @@ const AMEN_EN={'สระว่ายน้ำ':'Pool','ฟิตเนส':'Gym
 const today=new Date();
 const STATIONS=['BTS พร้อมพงษ์','BTS ทองหล่อ','BTS เอกมัย','BTS อ่อนนุช','BTS อโศก','BTS อารีย์','BTS ช่องนนทรี','BTS ราชเทวี','BTS กรุงธนบุรี','BTS อนุสาวรีย์ชัยฯ','BTS สยาม','BTS ศาลาแดง','BTS บางนา','MRT พระราม 9','MRT บางซื่อ','MRT ลาดพร้าว 71','MRT สุขุมวิท','MRT สีลม','MRT ห้วยขวาง'];
 let P=[],LOADING=true,LOADERR=false;
+function pickLang(m){return S.lang==='zh'?(m.zh||m.en||m.th):S.lang==='en'?(m.en||m.th||m.zh):(m.th||m.en||m.zh);}
 function mapRow(r){
   const created=new Date(r.created_at);const days=Math.max(0,Math.floor((Date.now()-created)/864e5));const a=r.agents||null;
   const photos=(Array.isArray(r.photos)?r.photos:[]).filter(x=>x&&okPath(x.f)&&okPath(x.t));
-  return {id:r.id,code:String(r.code),owner:r.agent_id,mode:r.mode,kind:r.kind,project:String(r.project),district:String(r.district),station:r.station||null,walk:r.walk_m||null,
+  const o={id:r.id,code:String(r.code),owner:r.agent_id,mode:r.mode,kind:r.kind,district:String(r.district),station:r.station||null,walk:r.walk_m||null,
     beds:+r.beds||0,baths:+r.baths||0,area:+r.area,floor:+r.floor||0,rent:+r.rent||0,sale:+r.sale||0,pets:!!r.pets,days,date:created,scene:r.scene,featured:!!r.featured,isNew:days<=7,
-    seed:hash(r.id),photos,desc:r.description||'',isSample:!!r.is_sample,fromAgent:!!r.agent_id,
+    seed:hash(r.id),photos,isSample:!!r.is_sample,fromAgent:!!r.agent_id,
     agent:a?[a.name,a.name]:['ที่ปรึกษาการขาย Jubilee','Jubilee sales consultant'],agentLine:a?(a.line_id||''):CONFIG.line,agentPhone:a?(a.phone||''):CONFIG.phone,agentAvatar:a?(a.avatar_path&&okAny(a.avatar_path)?spub('avatars',a.avatar_path):null):'team'+(1+hash(r.id)%4)+'.jpg'};
+  o.names={th:String(r.project||''),en:r.project_en||'',zh:r.project_zh||''};
+  o.descs={th:r.description||'',en:r.description_en||'',zh:r.description_zh||''};
+  Object.defineProperty(o,'project',{get(){return pickLang(o.names);},enumerable:true});
+  Object.defineProperty(o,'desc',{get(){return pickLang(o.descs);},enumerable:true});
+  return o;
 }
-const LSEL='id,code,agent_id,mode,kind,project,district,station,walk_m,beds,baths,area,floor,rent,sale,pets,scene,description,photos,status,featured,is_sample,created_at,agents(name,line_id,phone,avatar_path)';
+const LSEL='id,code,agent_id,mode,kind,project,district,station,walk_m,beds,baths,area,floor,rent,sale,pets,scene,description,photos,status,featured,is_sample,created_at,project_en,project_zh,description_en,description_zh,agents(name,line_id,phone,avatar_path)';
 async function loadListings(){
   if(!SB){LOADING=false;LOADERR=true;renderResults();return;}
   const {data,error}=await SB.from('listings').select(LSEL).eq('status','active').order('created_at',{ascending:false}).limit(1000);
@@ -650,7 +656,7 @@ function filtered(){
     const pr=priceOf(p).v;
     if(S.min!==''&&pr<+S.min)return false;
     if(S.max!==''&&pr>+S.max)return false;
-    if(q){const hay=(p.project+' '+p.district+' '+p.code+' '+(p.station||'')+' '+station(p)+' '+t().kinds[p.kind]).toLowerCase();if(!hay.includes(q))return false;}
+    if(q){const hay=([p.names.th,p.names.en,p.names.zh].join(' ')+' '+p.district+' '+p.code+' '+(p.station||'')+' '+station(p)+' '+t().kinds[p.kind]).toLowerCase();if(!hay.includes(q))return false;}
     return true;});
   const s=S.sort;
   a.sort((x,y)=>s===0?y.date-x.date:s===1?priceOf(x).v-priceOf(y).v:s===2?priceOf(y).v-priceOf(x).v:y.area-x.area);
@@ -740,6 +746,7 @@ function openDetail(code){
   const amen=AMEN[p.kind].map(a=>`<span>${S.lang==='th'?a:AMEN_EN[a]||a}</span>`).join('');
   const descTH=`${t().kinds[p.kind]} ${p.project} ${p.beds} ห้องนอน ${p.baths} ห้องน้ำ พื้นที่ ${p.area} ตร.ม.${p.floor?` ชั้น ${p.floor}`:''} ตกแต่งครบ พร้อมเข้าอยู่ ${p.station?`เดินทางสะดวกใกล้ ${p.station}`:'อยู่ในโครงการเงียบสงบ เดินทางเข้าเมืองสะดวก'} ${p.pets?'เลี้ยงสัตว์เลี้ยงได้':''}`;
   const descEN=`${p.beds}-bedroom ${t().kinds[p.kind].toLowerCase()} at ${p.project}, ${p.area} m²${p.floor?`, floor ${p.floor}`:''}. Fully furnished and ready to move in. ${p.station?`Easy access to ${station(p)}.`:'Quiet project with easy access to the city.'}${p.pets?' Pets welcome.':''}`;
+  const descZH=`${{condo:'公寓',house:'独栋别墅',town:'联排别墅'}[p.kind]||''} ${p.project} · ${p.beds}卧${p.baths}卫 · ${p.area}㎡${p.floor?` · ${p.floor}楼`:''}。精装修，可拎包入住。${p.station?`近 ${stationEn(p)}，交通便利。`:'环境安静，进城方便。'}${p.pets?'可养宠物。':''}`;
   const both=p.rent&&p.sale;
   openModal(`
    <div class="gal-main"><img id="galImg" src="${im[0]}" alt="${esc(p.project)}"></div>
@@ -758,7 +765,7 @@ function openDetail(code){
       <div class="fact"><small>${L.pets}</small><b>${p.pets?L.petsY:L.petsN}</b></div>
       ${p.station?`<div class="fact"><small>${L.nearest}</small><b style="font-size:14.5px">${esc(station(p))}</b></div>`:''}
      </div>
-     <h4>${L.about}</h4><p class="desc">${esc(p.desc||(S.lang==='th'?descTH:descEN))}</p>
+     <h4>${L.about}</h4><p class="desc" style="white-space:pre-line">${esc(p.desc||({th:descTH,en:descEN,zh:descZH}[S.lang]||descEN))}</p>
      <h4>${L.amen}</h4><div class="amen">${amen}</div>
      ${travelHTML(p)}${calcHTML(p)}
     </div>
@@ -843,7 +850,7 @@ function aiAsk(text){
     if(pet&&!p.pets)ok=false; if(bts&&!p.station)ok=false;
     if(beds&&p.beds!==beds)sc-=2; else if(beds)sc+=2;
     if(kind&&p.kind!==kind)ok=false;
-    const hay=(p.project+' '+p.district+' '+(p.station||'')+' '+station(p)).toLowerCase();
+    const hay=([p.names.th,p.names.en,p.names.zh].join(' ')+' '+p.district+' '+(p.station||'')+' '+station(p)).toLowerCase();
     if(areaQ){if(hay.includes(areaQ.toLowerCase())||hay.includes(areaMap[areaQ].toLowerCase())||(areaQ==='ทองหล่อ'&&p.district==='Watthana'))sc+=3;else sc-=3;}
     if(known){if(p.district.toLowerCase()===known)sc+=3;else ok=false;}
     return {p,sc,ok};}).filter(x=>x.ok&&x.sc>=0).sort((a,b)=>b.sc-a.sc||a.p.days-b.p.days);
@@ -1184,7 +1191,10 @@ function renderListingForm(b,r){
   const sceneL={living:T3('ห้องนั่งเล่น','Living room','客厅'),dining:T3('ห้องทานข้าว','Dining','餐厅'),studio:T3('สตูดิโอ','Studio','开间'),bedroom:T3('ห้องนอน','Bedroom','卧室'),kitchen:T3('ครัว','Kitchen','厨房'),house:T3('บ้านเดี่ยว (ภายนอก)','House exterior','别墅外观'),town:T3('ทาวน์โฮม (ภายนอก)','Townhome exterior','联排外观')};
   b.innerHTML=`<form id="agForm" novalidate style="display:flex;flex-direction:column;gap:14px"><fieldset><legend>${r?T3('แก้ไขประกาศ','Edit listing','编辑房源')+' '+esc(r.code):T3('ลงประกาศใหม่','New listing','新房源')}</legend>
      <div class="wide"><label>${T3('รูปถ่าย (สูงสุด 8 รูป · รูปแรกคือรูปปก · กด ★ เพื่อเลือกรูปปก)','Photos (up to 8 · first is the cover · tap ★ to choose the cover)','照片（最多8张，★ 设为封面）')}</label><div class="phgrid" id="phGrid"></div></div>
-     <div class="wide"><label for="ag-project">${T3('ชื่อโครงการ / ชื่อประกาศ','Project / listing name','项目名称')}</label><input id="ag-project" maxlength="120"></div>
+     <div class="wide"><small style="color:var(--muted)">${T3('กรอกชื่อและรายละเอียดได้ 3 ภาษา ภาษาไทยจำเป็น ภาษาที่เว้นว่างจะแสดงภาษาไทยแทน แนะนำให้กรอกภาษาจีนสำหรับลูกค้าจีนและการแชร์ WeChat','Enter the name and details in up to 3 languages. Thai is required; empty languages fall back to Thai. Chinese is recommended for WeChat sharing.','可填写三种语言。泰语必填，未填写的语言将显示泰语。建议填写中文以便微信分享。')}</small></div>
+     <div class="wide"><label for="ag-project">${T3('ชื่อโครงการ (ไทย) *','Project name (Thai) *','项目名称（泰语）*')}</label><input id="ag-project" maxlength="120"></div>
+     <div><label for="ag-project-en">${T3('ชื่อโครงการ (English)','Project name (English)','项目名称（英语）')}</label><input id="ag-project-en" maxlength="120"></div>
+     <div><label for="ag-project-zh">${T3('ชื่อโครงการ (中文)','Project name (中文)','项目名称（中文）')}</label><input id="ag-project-zh" maxlength="120"></div>
      <div><label for="ag-mode">${T3('ประเภทประกาศ','Listing type','类型')}</label><select id="ag-mode"><option value="r">${L.rent}</option><option value="s">${L.sale}</option><option value="rs">${L.rent} + ${L.sale}</option></select></div>
      <div><label for="ag-kind">${L.fKind}</label><select id="ag-kind">${Object.entries(L.kinds).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
      <div><label for="ag-rent">${T3('ค่าเช่า/เดือน (บาท)','Rent / month (THB)','月租')}</label><input id="ag-rent" type="number" inputmode="numeric" min="0"></div>
@@ -1198,11 +1208,13 @@ function renderListingForm(b,r){
      <div><label for="ag-floor">${L.floor}</label><input id="ag-floor" type="number" inputmode="numeric" min="0"></div>
      <div><label for="ag-scene">${T3('ภาพประกอบ (ใช้เมื่อไม่มีรูปถ่าย)','Illustration (used without photos)','插图')}</label><select id="ag-scene">${Object.keys(sceneL).map(s=>`<option value="${s}">${sceneL[s]}</option>`).join('')}</select></div>
      <div><label class="chk"><input type="checkbox" id="ag-pets"> ${L.pet}</label></div>
-     <div class="wide"><label for="ag-desc">${L.about}</label><textarea id="ag-desc" rows="4" maxlength="2000"></textarea></div>
+     <div class="wide"><label for="ag-desc">${L.about} (ไทย)</label><textarea id="ag-desc" rows="4" maxlength="2000"></textarea></div>
+     <div class="wide"><label for="ag-desc-en">${L.about} (English)</label><textarea id="ag-desc-en" rows="3" maxlength="2000"></textarea></div>
+     <div class="wide"><label for="ag-desc-zh">${L.about} (中文)</label><textarea id="ag-desc-zh" rows="3" maxlength="2000"></textarea></div>
     </fieldset><div class="err" id="agErr" hidden></div>
     <div class="actions">${r?`<button type="button" class="btn outline" id="agCancel">${T3('ยกเลิก','Cancel','取消')}</button>`:''}<button class="btn" type="submit" id="agSubmit">${r?T3('บันทึกการแก้ไข','Save changes','保存'):T3('ลงประกาศ','Publish listing','发布')}</button></div></form>`;
   if(r){const s=(id,v)=>{const el=$('#ag-'+id);if(el.type==='checkbox')el.checked=!!v;else el.value=v==null?'':v;};
-    s('project',r.project);s('mode',r.mode);s('kind',r.kind);s('rent',r.rent);s('sale',r.sale);s('dist',r.district);s('station',r.station||'');s('walk',r.walk_m);s('beds',r.beds);s('baths',r.baths);s('area',r.area);s('floor',r.floor);s('scene',r.scene);s('pets',r.pets);s('desc',r.description);}
+    s('project',r.project);s('project-en',r.project_en);s('project-zh',r.project_zh);s('desc-en',r.description_en);s('desc-zh',r.description_zh);s('mode',r.mode);s('kind',r.kind);s('rent',r.rent);s('sale',r.sale);s('dist',r.district);s('station',r.station||'');s('walk',r.walk_m);s('beds',r.beds);s('baths',r.baths);s('area',r.area);s('floor',r.floor);s('scene',r.scene);s('pets',r.pets);s('desc',r.description);}
   renderPhGrid();
 }
 function renderPhGrid(){
@@ -1331,7 +1343,7 @@ document.addEventListener('submit',async e=>{
   const g=k=>$('#ag-'+k);const mode=g('mode').value;const n=(v,lo,hi)=>{v=Number(v);return isFinite(v)&&v!==0?Math.min(hi,Math.max(lo,v)):null};
   const row={mode,kind:g('kind').value,project:g('project').value.trim().slice(0,120),district:g('dist').value,station:g('station').value||null,walk_m:g('station').value?n(g('walk').value,0,10000):null,
     beds:n(g('beds').value,0,20)??0,baths:n(g('baths').value,0,20)??0,area:n(g('area').value,0,99999),floor:n(g('floor').value,0,200),rent:mode.includes('r')?n(g('rent').value,0,1e9):null,sale:mode.includes('s')?n(g('sale').value,0,1e12):null,
-    pets:g('pets').checked,scene:g('scene').value,description:g('desc').value.trim().slice(0,2000)||null};
+    pets:g('pets').checked,scene:g('scene').value,description:g('desc').value.trim().slice(0,2000)||null,project_en:g('project-en').value.trim().slice(0,120)||null,project_zh:g('project-zh').value.trim().slice(0,120)||null,description_en:g('desc-en').value.trim().slice(0,2000)||null,description_zh:g('desc-zh').value.trim().slice(0,2000)||null};
   if(!row.project||!row.area)return agErr(T3('กรอกชื่อโครงการและพื้นที่ให้ครบ','Enter the project name and size.','请填写项目名称和面积。'));
   if((mode.includes('r')&&!row.rent)||(mode.includes('s')&&!row.sale))return agErr(T3('กรอกราคาให้ตรงกับประเภทประกาศ','Enter a price for each listing type.','请填写对应价格。'));
   saving=true;const subTxt=sb.textContent;sb.disabled=true;const scope=editingId?editScope:'mine';
@@ -1405,7 +1417,7 @@ function stationEn(p){const l=S.lang;S.lang='en';const s=station(p);S.lang=l;ret
 function momentsText(p){
   const kind={condo:'公寓',house:'独栋别墅',town:'联排别墅'}[p.kind]||'房源';
   const price=[p.rent?`月租 ฿${Math.round(p.rent).toLocaleString('en-US')}`:'',p.sale?`售价 ฿${Math.round(p.sale).toLocaleString('en-US')}`:''].filter(Boolean).join(' · ');
-  return `🏙【JUBILEE EXCLUSIVE · 曼谷精选房源】${p.project} | JUBILEE Real Estate
+  return `🏙【JUBILEE EXCLUSIVE · 曼谷精选房源】${p.names.zh||p.names.en||p.names.th} | JUBILEE Real Estate${p.descs.zh?'\n\n'+p.descs.zh.slice(0,300):''}
 
 📍 核心地段: ${p.district}, Bangkok${p.station?' · 近 '+stationEn(p):''}
 🏠 ${kind} · ${p.beds}卧${p.baths}卫 · ${p.area}㎡
