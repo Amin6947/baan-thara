@@ -295,6 +295,31 @@ form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--
 .hero.has-img .eyebrow{color:#DDDDDD}.hero.has-img p{color:rgba(255,255,255,.88)}
 .hero.has-img .seg{background:rgba(255,255,255,.18)}.hero.has-img .seg button{color:#fff}.hero.has-img .seg button.on{color:#1B211D;background:#fff}
 .acct-seg button{white-space:nowrap}
+.ai-panel{width:min(420px,calc(100% - 32px));height:min(680px,calc(100vh - 120px));border-radius:20px}
+.ai-panel header{padding:14px 16px;gap:12px}
+.ai-av{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;flex:none}
+.ai-ttl{flex:1;display:flex;flex-direction:column;line-height:1.25}.ai-ttl b{font-size:18px;font-family:var(--f-display)}.ai-ttl small{opacity:.85;font-size:13px}
+.ai-new{font-size:14px!important;padding:6px 8px;opacity:.9}
+.ai-panel .msgs{flex:1;max-height:none;background:var(--bg);padding:16px;gap:12px}
+.ai-panel .m{font-size:15px;line-height:1.6;padding:12px 16px;border-radius:18px}
+.ai-panel .m.bot{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px;max-width:92%}
+.ai-panel .m.me{background:var(--ink);color:var(--bg);border-bottom-right-radius:6px}
+.ai-cap{font-size:13px;color:var(--muted);margin:-4px 0 -2px 4px}
+.ai-card{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:16px;padding:12px;cursor:pointer;transition:box-shadow .15s,transform .15s}
+.ai-card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.ai-card img{width:100px;height:100px;object-fit:cover;border-radius:10px;flex:none;background:var(--soft)}
+.ai-cb{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.ai-cb b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.ai-pr{font-weight:700;font-size:16px;color:var(--accent);font-variant-numeric:tabular-nums}
+.ai-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;color:var(--muted);font-size:13px}.ai-meta span{display:inline-flex;align-items:center;gap:3px}.ai-meta svg.i{width:14px;height:14px}
+.ai-cb .code{align-self:flex-start;margin-top:2px}
+.ai-more{align-self:center;border:1px solid var(--accent);color:var(--accent);background:var(--surface);border-radius:999px;padding:8px 16px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.ai-panel .sugg{padding:8px 14px 0;background:var(--surface);border-top:1px solid var(--line)}
+.ai-panel form{border-top:0;padding:10px 12px 12px;background:var(--surface)}
+.ai-panel form input{border-radius:999px;padding:12px 18px;font-size:15px}
+.ai-send{width:48px;height:48px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
+@media (max-width:560px){.ai-panel{left:0!important;right:0!important;bottom:0!important;width:100%;height:100%;height:100dvh;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px)}.ai-card img{width:84px;height:84px}}
+
 .d-badges .tag.new,.d-badges .tag.sale{box-shadow:0 0 0 1px var(--ink)}
 .agent-login{max-width:220px}.agent-login span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* colour palettes (chosen in the theme menu) */
@@ -823,43 +848,65 @@ function openChat(){
    <button class="btn" data-book="">${ic('cal')}${L.bookView}</button></div></div>`);
 }
 let aiLog=[];
+const shortPrice=n=>n>=1e6?'฿'+(Math.round(n/1e5)/10).toString().replace(/\.0$/,'')+'M':fmt(n);
+function aiCard(p,wantSale){const L=t();const sale=wantSale?p.sale:(p.rent?0:p.sale);const pr=sale?shortPrice(sale):fmt(p.rent)+L.mo;
+  const pre=p.mode==='rs'?L3('ขาย/เช่า ','Sale/Rent ','租售 '):(p.mode==='s'?L3('ขาย ','For sale ','出售 '):'');
+  return `<button type="button" class="ai-card" data-open="${esc(p.code)}"><img src="${imgs(p)[0]}" alt="" loading="lazy"><span class="ai-cb"><b>${esc(pre+p.project)}</b><span class="ai-pr">${pr}</span><span class="ai-meta">${ic('pin',14)}${esc(p.district)}${p.kind==='condo'||p.beds?`<span>${ic('bed',14)}${p.beds}</span><span>${ic('bath',14)}${p.baths}</span>`:''}<span>${p.area}m²</span></span><span class="code">${esc(p.code)}</span></span></button>`;}
+function aiPicks(list,wantSale){return `<div class="ai-cap">${L3('กดดูรายละเอียดได้เลยค่ะ 👇','Tap a listing to see details 👇','点击查看房源详情 👇')}</div>${list.map(p=>aiCard(p,wantSale)).join('')}`;}
+function aiGreeting(){return `<div class="m bot">${L3('สวัสดีค่ะ! ☀️ บอกได้เลยว่าอยากได้บ้านแบบไหน เช่น "คอนโด 2 ห้องนอน ทองหล่อ งบ 3 ล้าน ใกล้ BTS" หรือ "บ้านเดี่ยว บางนา เลี้ยงหมาได้"','Hi! ☀️ Tell me what you are looking for, e.g. "2-bed condo in Thonglor under 3M near BTS" or "house in Bang Na, dogs allowed".','您好！☀️ 告诉我您想找什么样的房子，例如“通罗两房公寓，预算300万，近BTS”或“挽那独栋别墅，可养狗”。')}</div>`;}
+function aiFeatured(){return P.slice().sort((a,b)=>(b.featured-a.featured)||(a.days-b.days)).slice(0,4);}
 function openAI(){
   if(panel==='ai'){closePanel();return;}closePanel();panel='ai';const L=t();
-  document.body.insertAdjacentHTML('beforeend',`<div class="panel r" id="panel"><header>${ic('spark')}<b>${L.aiTitle}</b><button data-pclose aria-label="close">${ic('x')}</button></header>
-   <div class="msgs" id="aiMsgs"><div class="m bot">${L.aiHi}</div>${aiLog.join('')}</div>
-   <div class="sugg">${L.aiSugg.map(s=>`<button data-ask="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-   <form id="aiForm"><input id="aiIn" placeholder="${L.aiPh}" autocomplete="off"><button class="btn" style="padding:9px 13px" aria-label="send">${ic('send')}</button></form></div>`);
-  $('#aiIn').focus();const m=$('#aiMsgs');m.scrollTop=m.scrollHeight;
+  if(!aiLog.length)aiLog.push(aiGreeting()+aiPicks(aiFeatured()));
+  document.body.insertAdjacentHTML('beforeend',`<div class="panel r ai-panel" id="panel" role="dialog" aria-label="AI">
+   <header><span class="ai-av">${ic('spark',22)}</span><span class="ai-ttl"><b>JUBILEE</b><small>${L3('ผู้ช่วยหาบ้าน','Home finder','找房助手')}</small></span><button type="button" class="ai-new" data-ainew>${L3('ใหม่','New','新对话')}</button><button type="button" data-pclose aria-label="close">${ic('x',22)}</button></header>
+   <div class="msgs" id="aiMsgs">${aiLog.join('')}</div>
+   <div class="sugg">${L.aiSugg.map(x=>`<button type="button" data-ask="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+   <form id="aiForm"><input id="aiIn" placeholder="${L3('พิมพ์ข้อความ...','Type a message...','输入消息...')}" autocomplete="off"><button class="ai-send" aria-label="send">${ic('send',20)}</button></form></div>`);
+  $('#aiIn').focus();const m=$('#aiMsgs');m.scrollTop=aiLog.length<=1?0:m.scrollHeight;
 }
+document.addEventListener('click',e=>{if(e.target.closest('[data-ainew]')){aiLog=[];aiLast=null;closePanel();openAI();}});
 let aiLast=null;
-function aiAsk(text){
-  const L=t(),s=text.toLowerCase();
-  const nums=(s.replace(/,/g,'').match(/\d{4,}/g)||[]).map(Number);
-  const budget=nums.length?Math.max(...nums):null;
-  const wantSale=/ขาย|ซื้อ|buy|sale|出售|购/.test(s),wantRent=/เช่า|rent|租/.test(s);
-  const pet=/สัตว์|หมา|แมว|pet|dog|cat|宠/.test(s),bts=/bts|mrt|รถไฟฟ้า|轻轨|地铁/.test(s);
-  const bm=s.match(/(\d)\s*(ห้องนอน|นอน|bed|卧)/)||s.match(/(两|二)卧/);const beds=bm?(bm[1]==='两'||bm[1]==='二'?2:+bm[1]):null;
+function aiAsk(text){const prevLang=S.lang;const det=/[\u4e00-\u9fff]/.test(text)?'zh':/[\u0e00-\u0e7f]/.test(text)?'th':/[a-z]/i.test(text)?'en':S.lang;S.lang=det;try{aiAsk0(text);}finally{S.lang=prevLang;}}
+function aiAsk0(text){
+  const L=t(),s=text.toLowerCase().replace(/,/g,'');
+  let budget=null;
+  const mm=s.match(/(\d+(?:\.\d+)?)\s*(ล้าน|m\b|million|百万)/);const wan=s.match(/(\d+(?:\.\d+)?)\s*万/);const kk=s.match(/(\d+(?:\.\d+)?)\s*(k|พัน|千)\b/);
+  if(mm)budget=parseFloat(mm[1])*1e6;else if(wan)budget=parseFloat(wan[1])*1e4;else if(kk)budget=parseFloat(kk[1])*1e3;
+  else{const nums=(s.match(/\d{4,}/g)||[]).map(Number);if(nums.length)budget=Math.max(...nums);}
+  const wantSale=/ขาย|ซื้อ|buy|sale|出售|购|买/.test(s)||(budget&&budget>=1e6),wantRent=/เช่า|rent|租/.test(s);
+  const pet=/สัตว์|หมา|แมว|pet|dog|cat|宠/.test(s),bts=/bts|mrt|รถไฟฟ้า|轻轨|地铁/.test(s),pool=/สระ|pool|泳池/.test(s);
+  const bm=s.match(/(\d)\s*(ห้องนอน|นอน|bed|br|卧|房)/)||s.match(/(一|两|二|三)\s*(卧|房)/);const cn={'一':1,'两':2,'二':2,'三':3};const beds=bm?(cn[bm[1]]||+bm[1]):null;
   const kind=/บ้านเดี่ยว|house|villa|别墅/.test(s)&&!/ทาวน์|town|联排/.test(s)?'house':/ทาวน์|town|联排/.test(s)?'town':/คอนโด|condo|公寓/.test(s)?'condo':null;
-  const areaMap={'ทองหล่อ':'Thong Lo','thonglor':'Thong Lo','通罗':'Thong Lo','อโศก':'Asok','อารีย์':'Ari','อ่อนนุช':'On Nut','สีลม':'Silom','เอกมัย':'Ekkamai','พระราม 9':'Rama 9','บางซื่อ':'Bang Sue','ลาดพร้าว':'Lat Phrao','พร้อมพงษ์':'Phrom Phong','บางนา':'Bang'};
-  let areaQ=null;for(const k in areaMap)if(s.includes(k.toLowerCase()))areaQ=k;
-  const known=[...new Set(P.map(p=>p.district.toLowerCase()))].find(d=>s.includes(d));
-  let res=P.map(p=>{let sc=0,ok=true;
-    if(wantSale&&!p.mode.includes('s'))ok=false; if(wantRent&&!wantSale&&!p.mode.includes('r'))ok=false;
-    const price=wantSale?p.sale:(p.rent||p.sale);
-    if(budget&&price>budget*1.1)ok=false; if(budget&&price<=budget)sc+=2;
-    if(pet&&!p.pets)ok=false; if(bts&&!p.station)ok=false;
-    if(beds&&p.beds!==beds)sc-=2; else if(beds)sc+=2;
-    if(kind&&p.kind!==kind)ok=false;
-    const hay=([p.names.th,p.names.en,p.names.zh].join(' ')+' '+p.district+' '+(p.station||'')+' '+station(p)).toLowerCase();
-    if(areaQ){if(hay.includes(areaQ.toLowerCase())||hay.includes(areaMap[areaQ].toLowerCase())||(areaQ==='ทองหล่อ'&&p.district==='Watthana'))sc+=3;else sc-=3;}
-    if(known){if(p.district.toLowerCase()===known)sc+=3;else ok=false;}
-    return {p,sc,ok};}).filter(x=>x.ok&&x.sc>=0).sort((a,b)=>b.sc-a.sc||a.p.days-b.p.days);
-  aiLast={budget,wantSale,wantRent,pet,bts,beds,kind};
+  const areaMap={'ทองหล่อ':'Thong Lo','thonglor':'Thong Lo','thong lo':'Thong Lo','通罗':'Thong Lo','อโศก':'Asok','asok':'Asok','อารีย์':'Ari','ari':'Ari','อ่อนนุช':'On Nut','on nut':'On Nut','สีลม':'Silom','silom':'Silom','เอกมัย':'Ekkamai','ekkamai':'Ekkamai','พระราม 9':'Rama 9','rama 9':'Rama 9','บางซื่อ':'Bang Sue','ลาดพร้าว':'Lat Phrao','พร้อมพงษ์':'Phrom Phong','phrom phong':'Phrom Phong','บางนา':'Bang Na','bang na':'Bang Na','สุขุมวิท':'Sukhumvit','sukhumvit':'Sukhumvit','素坤逸':'Sukhumvit','สาทร':'Sathon','sathorn':'Sathon'};
+  let areaQ=null;for(const k in areaMap)if(s.includes(k))areaQ=k;
+  const TH_D={'วัฒนา':'watthana','สวนหลวง':'suan luang','พญาไท':'phaya thai','ตลิ่งชัน':'taling chan','ห้วยขวาง':'huai khwang','ลาดพร้าว':'lat phrao','บางรัก':'bang rak','คลองเตย':'khlong toei','ปทุมวัน':'pathum wan','บางซื่อ':'bang sue','คลองสาน':'khlong san','วังทองหลาง':'wang thonglang','ยานนาวา':'yan nawa','ราชเทวี':'ratchathewi','บางพลี':'bang phli','บางนา':'bang na','จตุจักร':'chatuchak','สาทร':'sathon','พระโขนง':'phra khanong','ดินแดง':'din daeng'};
+  let known=[...new Set(P.map(p=>p.district.toLowerCase()))].find(d=>s.includes(d));
+  if(!known)for(const k in TH_D)if(s.includes(k)){known=TH_D[k];break;}
+  if(known&&areaQ&&areaMap[areaQ]&&areaMap[areaQ].toLowerCase()===known)areaQ=null;
+  const hasCriteria=budget||wantSale||wantRent||pet||bts||beds||kind||areaQ||known||pool;
+  aiLog.push(`<div class="m me">${esc(text)}</div>`);
   let reply;
-  if(!res.length)reply=`<div class="m bot">${L.aiNone}</div>`;
-  else reply=`<div class="m bot">${L.aiFound(res.length)}${res.slice(0,3).map(({p})=>{const pr=wantSale?{v:p.sale,r:false}:{v:p.rent||p.sale,r:!!p.rent};return `<button class="pick" data-open="${p.code}"><img src="${imgs(p)[0]}" alt=""><span><b>${esc(p.project)}</b><small>${fmt(pr.v)}${pr.r?L.mo:''} · ${p.beds} ${L.bedU} · ${p.area} m²</small></span></button>`}).join('')}<button class="pick" data-applyai style="justify-content:center">${L.aiShow} ${ic('arrow',14)}</button></div>`;
-  aiLog.push(`<div class="m me">${esc(text)}</div>`,reply);
-  const m=$('#aiMsgs');if(m){m.insertAdjacentHTML('beforeend',`<div class="m me">${esc(text)}</div>`+reply);m.scrollTop=m.scrollHeight;}
+  if(!hasCriteria){reply=aiGreeting()+aiPicks(aiFeatured());aiLast=null;}
+  else{
+    let res=P.map(p=>{let sc=0,ok=true;
+      if(wantSale&&!wantRent&&!p.mode.includes('s'))ok=false; if(wantRent&&!wantSale&&!p.mode.includes('r'))ok=false;
+      const price=wantSale&&!wantRent?p.sale:(p.rent||p.sale);
+      if(budget&&price>budget*1.15)ok=false; if(budget&&price<=budget)sc+=2;
+      if(pet&&!p.pets)ok=false; if(bts&&!p.station)ok=false;
+      if(beds&&(beds>=3?p.beds<3:p.beds!==beds))ok=false; else if(beds)sc+=2;
+      if(kind&&p.kind!==kind)ok=false;
+      const hay=([p.names.th,p.names.en,p.names.zh,p.descs.th,p.descs.en,p.descs.zh].join(' ')+' '+p.district+' '+(p.station||'')+' '+station(p)).toLowerCase();
+      if(areaQ){if(hay.includes(areaQ)||hay.includes(areaMap[areaQ].toLowerCase())||(/ทองหล่อ|thonglor|thong lo|通罗|เอกมัย|ekkamai|พร้อมพงษ์|phrom phong/.test(areaQ)&&p.district==='Watthana'))sc+=3;else sc-=3;}
+      if(known){if(p.district.toLowerCase()===known)sc+=3;else ok=false;}
+      if(pool&&/สระ|pool|泳池/.test(hay))sc+=1;
+      return {p,sc,ok};}).filter(x=>x.ok&&x.sc>=0).sort((a,b)=>b.sc-a.sc||a.p.days-b.p.days);
+    aiLast={budget,wantSale:wantSale&&!wantRent,wantRent,pet,bts,beds,kind};
+    if(!res.length)reply=`<div class="m bot">${L3('ยังไม่เจอทรัพย์ที่ตรงทุกข้อค่ะ ลองขยายงบ เปลี่ยนทำเล หรือฝากเบอร์ไว้ให้ทีมขายช่วยหาก็ได้นะคะ 😊','No exact match yet. Try a wider budget or another area, or leave your number and our team will search for you 😊','暂时没有完全符合的房源，可放宽预算或换个区域，也可以留下电话由顾问帮您找 😊')}</div>`+aiPicks(aiFeatured().slice(0,2))+`<button type="button" class="ai-more" data-book="">${ic('cal',16)}${L3('ให้ทีมขายช่วยหา','Ask our team','请顾问帮我找')}</button>`;
+    else reply=`<div class="m bot">${L3(`เจอ ${res.length} รายการที่น่าจะถูกใจค่ะ ✨`,`Found ${res.length} listings you may like ✨`,`为您找到 ${res.length} 套合适的房源 ✨`)}</div>`+aiPicks(res.slice(0,4).map(x=>x.p),wantSale&&!wantRent)+(res.length>4?`<button type="button" class="ai-more" data-applyai>${L3(`ดูทั้งหมด ${res.length} รายการ`,`See all ${res.length}`,`查看全部 ${res.length} 套`)} ${ic('arrow',14)}</button>`:'');
+  }
+  aiLog.push(reply);
+  const m=$('#aiMsgs');if(m){m.insertAdjacentHTML('beforeend',`<div class="m me">${esc(text)}</div>`+reply);m.scrollTop=m.scrollHeight-(m.lastElementChild?0:0);const mes=m.querySelectorAll('.m.me');mes[mes.length-1].scrollIntoView({block:'start'});}
 }
 function applyAI(){const a=aiLast;if(!a)return;Object.assign(S,{mode:a.wantSale?'sale':a.wantRent?'rent':'all',pet:a.pet,bts:a.bts,bed:a.beds?Math.min(a.beds,3):0,kind:a.kind||'all',max:a.budget?String(a.budget):'',min:'',q:'',dist:'all',favOnly:false,featured:false,shown:9});$('#q').value='';closePanel();render();$('#count').scrollIntoView({behavior:'smooth',block:'start'});}
 
