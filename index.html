@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M7 26V14l9-7 9 7v12' fill='none' stroke='white' stroke-width='2.4'/%3E%3C/svg%3E">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>(function(){try{var m=localStorage.getItem('bt_mode'),c=localStorage.getItem('bt_palette');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);if(c&&c!=='mono')document.documentElement.setAttribute('data-palette',c);}catch(e){}})();</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,7 @@
 :root{
   --bg:#F6F6F6; --surface:#FFFFFF; --soft:#EEEEEE; --ink:#0D0D0D; --muted:#6B6B6B; --line:#E2E2E2;
   --accent:#111111; --accent-hover:#000000; --accent-ink:#FFFFFF; --accent-soft:#ECECEC;
-  --tag-dark:#111111; --tag-dark-ink:#FFFFFF; --tag-light:#FFFFFF; --tag-light-ink:#111111; --danger:#B42318;
+  --tag-dark:#111111; --tag-dark-ink:#FFFFFF; --tag-light:#FFFFFF; --tag-light-ink:#111111; --danger:#B42318; --brand-mark:#111111;
   --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.07);
   --f-display:"Anuphan","IBM Plex Sans Thai","Noto Sans SC",system-ui,sans-serif;
   --f-body:"IBM Plex Sans Thai","Anuphan","Noto Sans SC",system-ui,sans-serif;
@@ -51,7 +52,7 @@ svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-widt
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:20px;height:72px}
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;flex:none}
-.brand .mark{width:42px;height:42px;border-radius:10px;background:#111111;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center}
+.brand .mark{width:42px;height:42px;border-radius:10px;background:var(--brand-mark);box-shadow:0 0 0 1px var(--line);display:grid;place-items:center}
 .brand .mark svg{width:26px;height:26px}
 .brand b{display:block;font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.1}
 .brand small{display:block;font-size:10.5px;letter-spacing:.22em;color:var(--accent);font-weight:500}
@@ -73,7 +74,7 @@ nav.main button.on{color:var(--accent);font-weight:600}
 .menu button .cc{font-size:11px;color:var(--muted);width:22px;font-weight:600}
 .menu button .ck{margin-left:auto;color:var(--accent)}
 .burger{display:none}
-.top .wrap.mnav{display:none;height:auto;border-top:1px solid var(--line);padding:8px 0 14px}
+.top .wrap.mnav{display:none;height:auto;border-top:1px solid var(--line);padding-block:8px 14px}
 .mnav button{display:block;width:100%;text-align:left;background:none;border:0;padding:11px 4px;font-size:16px;border-bottom:1px solid var(--line)}
 @media (max-width:1280px){nav.main{display:none}.burger{display:inline-flex}.top-right{margin-left:auto}.top .wrap.mnav.open{display:block}}
 @media (max-width:560px){.agent-login span,.lang-label{display:none}.top .btn{padding:10px 14px}.brand small{display:none}}
@@ -289,6 +290,22 @@ form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--
 .acct-seg button{white-space:nowrap}
 .d-badges .tag.new,.d-badges .tag.sale{box-shadow:0 0 0 1px var(--ink)}
 .agent-login{max-width:220px}.agent-login span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* colour palettes (chosen in the theme menu) */
+:root[data-palette="green"]{--accent:#24513F;--accent-hover:#1B3F31;--accent-ink:#FFFFFF;--accent-soft:#E2ECE6;--tag-dark:#24513F;--brand-mark:#24513F;}
+@media (prefers-color-scheme:dark){:root[data-palette="green"]:not([data-theme="light"]){--accent:#62B08C;--accent-hover:#79C19F;--accent-ink:#0C1410;--accent-soft:#1E2E26;--tag-dark:#24513F;--brand-mark:#24513F;}}
+:root[data-palette="green"][data-theme="dark"]{--accent:#62B08C;--accent-hover:#79C19F;--accent-ink:#0C1410;--accent-soft:#1E2E26;--tag-dark:#24513F;--brand-mark:#24513F;}
+:root[data-palette="navy"]{--accent:#1F3A68;--accent-hover:#162B4F;--accent-ink:#FFFFFF;--accent-soft:#E3E9F3;--tag-dark:#1F3A68;--brand-mark:#1F3A68;}
+@media (prefers-color-scheme:dark){:root[data-palette="navy"]:not([data-theme="light"]){--accent:#7EA2E0;--accent-hover:#98B6EA;--accent-ink:#0B1220;--accent-soft:#1A2433;--tag-dark:#1F3A68;--brand-mark:#1F3A68;}}
+:root[data-palette="navy"][data-theme="dark"]{--accent:#7EA2E0;--accent-hover:#98B6EA;--accent-ink:#0B1220;--accent-soft:#1A2433;--tag-dark:#1F3A68;--brand-mark:#1F3A68;}
+:root[data-palette="gold"]{--accent:#8A6A2F;--accent-hover:#6F5424;--accent-ink:#FFFFFF;--accent-soft:#F2EBDD;--tag-dark:#8A6A2F;--brand-mark:#8A6A2F;}
+@media (prefers-color-scheme:dark){:root[data-palette="gold"]:not([data-theme="light"]){--accent:#D6B36A;--accent-hover:#E2C482;--accent-ink:#17120A;--accent-soft:#2A2418;--tag-dark:#8A6A2F;--brand-mark:#8A6A2F;}}
+:root[data-palette="gold"][data-theme="dark"]{--accent:#D6B36A;--accent-hover:#E2C482;--accent-ink:#17120A;--accent-soft:#2A2418;--tag-dark:#8A6A2F;--brand-mark:#8A6A2F;}
+.thm-menu{min-width:230px}
+.thm-menu h6{margin:6px 10px 4px;font-size:11.5px;letter-spacing:.12em;color:var(--muted);font-weight:600;text-transform:uppercase}
+.thm-sw{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:0 0 0 1px var(--line)}
+ @media (max-width:560px){.top .wrap{gap:8px}.top-right{gap:2px}.top-right .ghost{padding:8px 7px}.top-right .ghost>svg.i:last-child:not(:first-child){display:none}}
+@media (max-width:480px){#bookTop{display:none}.brand .mark{width:38px;height:38px}.brand b{font-size:17px}}
+.thm-sep{height:1px;background:var(--line);margin:6px 4px}
 footer{border-top:1px solid var(--line);margin-top:60px;padding-block:28px 110px;color:var(--muted);font-size:13.5px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -306,6 +323,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
     <nav class="main" id="nav"></nav>
     <div class="top-right">
       <button class="ghost agent-login" id="agentLogin"></button>
+      <div class="lang" id="thmWrap">
+        <button class="ghost" id="thmBtn" aria-haspopup="true" aria-expanded="false" aria-label="theme"></button>
+        <div class="menu thm-menu" id="thmMenu" hidden></div>
+      </div>
       <div class="lang">
         <button class="ghost" id="langBtn" aria-haspopup="true" aria-expanded="false"></button>
         <div class="menu" id="langMenu" hidden></div>
@@ -583,7 +604,7 @@ function renderChrome(){
   const L=t();document.documentElement.lang=S.lang==='zh'?'zh':S.lang;
   const navActive=S.featured?2:1;
   $('#nav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}" class="${i===navActive?'on':''}">${n}</button>`).join('');
-  $('#mnav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}">${n}</button>`).join('')+`<button data-nav="agent">${L.agent}</button>`;
+  $('#mnav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}">${n}</button>`).join('')+`<button data-nav="acct">${L3('บัญชีของฉัน / เข้าสู่ระบบ','My account / Sign in','我的账户 / 登录')}</button><button data-nav="book">${L.book}</button>`;
   $('#agentLogin').innerHTML=ic('brief')+`<span>${L.agent}</span>`;
   const cur=LANGS.find(l=>l[0]===S.lang);
   $('#langBtn').innerHTML=ic('globe')+`<span class="lang-label">${cur[1]==='GB'?'EN':cur[1]}</span>`+ic($('#langMenu').hidden?'down':'up',14);
@@ -605,7 +626,7 @@ function renderChrome(){
   $('#aiBtn').innerHTML=ic('spark',20)+`<span>${L.ai}</span>`;
   $('#moreBtn').textContent=L.more;
   $('#foot1').textContent=L.foot1;$('#foot2').textContent=L.foot2;
-  renderFilters();renderAcctBtn();
+  renderFilters();renderAcctBtn();if(typeof renderThemeMenu==='function'&&$('#thmBtn'))renderThemeMenu();
 }
 function renderFilters(){
   const L=t(),f=$('#filters');f.hidden=!S.filOpen;if(!S.filOpen)return;
@@ -805,6 +826,8 @@ document.addEventListener('click',e=>{
     else if(n==='2'){S.featured=true;S.shown=9;render();$('#count').scrollIntoView({behavior:'smooth'});}
     else if(n==='5'){openChat();}
     else if(n==='3'||n==='agent'){openAgent();}
+    else if(n==='book'){openBooking('');}
+    else if(n==='acct'){openAcct();}
     else toast(t().soon);return;}
   switch(el.id){
     case 'langBtn':{const m=$('#langMenu');m.hidden=!m.hidden;el.setAttribute('aria-expanded',!m.hidden);renderChrome();return;}
@@ -1267,6 +1290,36 @@ document.addEventListener('submit',async e=>{
 });
 /* prefill booking from profile */
 const _openBooking=openBooking;openBooking=function(code){_openBooking(code);if(PROFILE){if(PROFILE.display_name)$('#bkN').value=PROFILE.display_name;if(PROFILE.phone)$('#bkT').value=PROFILE.phone;}};
+
+/* ---------- theme switcher: mode (light/dark/auto) + colour palette ---------- */
+const PALETTES=[['mono','#111111',['ขาวดำ','Black & white','黑白']],['green','#24513F',['เขียวป่า','Forest green','森林绿']],['navy','#1F3A68',['น้ำเงิน','Navy','藏青']],['gold','#8A6A2F',['ทอง','Gold','金色']]];
+const MODES=[['light',['สว่าง','Light','浅色'],'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'],['dark',['มืด','Dark','深色'],'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'],['auto',['ตามเครื่อง','Match device','跟随系统'],'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>']];
+const thmGet=(k,d)=>{try{return localStorage.getItem(k)||d}catch(_){return d}};
+const thmSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}};
+function applyTheme(){
+  const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','mono'),r=document.documentElement;
+  if(m==='light'||m==='dark')r.setAttribute('data-theme',m);else r.removeAttribute('data-theme');
+  if(p&&p!=='mono')r.setAttribute('data-palette',p);else r.removeAttribute('data-palette');
+  const meta=document.querySelector('meta[name="theme-color"]');if(meta){const dark=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);meta.content=dark?'#0B0B0B':(PALETTES.find(x=>x[0]===p)||PALETTES[0])[1];}
+}
+function renderThemeMenu(){
+  const pick=a=>a[S.lang==='en'?1:S.lang==='zh'?2:0];const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','mono');
+  const cur=MODES.find(x=>x[0]===m)||MODES[2];
+  $('#thmBtn').innerHTML=`<svg class="i" viewBox="0 0 24 24">${cur[2]}</svg><span class="lang-label">${L3('ธีม','Theme','主题')}</span>`+ic($('#thmMenu').hidden?'down':'up',14);
+  $('#thmMenu').innerHTML=`<h6>${L3('โหมด','Mode','模式')}</h6>`+MODES.map(x=>`<button data-thmmode="${x[0]}" class="${x[0]===m?'on':''}"><svg class="i" viewBox="0 0 24 24">${x[2]}</svg>${pick(x[1])}${x[0]===m?`<span class="ck">${ic('check',16)}</span>`:''}</button>`).join('')
+   +`<div class="thm-sep"></div><h6>${L3('สีของเว็บ','Colour','颜色')}</h6>`+PALETTES.map(x=>`<button data-thmpal="${x[0]}" class="${x[0]===p?'on':''}"><span class="thm-sw" style="background:${x[1]}"></span>${pick(x[2])}${x[0]===p?`<span class="ck">${ic('check',16)}</span>`:''}</button>`).join('');
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('#thmBtn,[data-thmmode],[data-thmpal]');const menu=$('#thmMenu');
+  if(!b){if(!menu.hidden&&!e.target.closest('#thmWrap')){menu.hidden=true;renderThemeMenu();}return;}
+  if(b.id==='thmBtn'){menu.hidden=!menu.hidden;b.setAttribute('aria-expanded',!menu.hidden);$('#langMenu').hidden=true;renderThemeMenu();return;}
+  if(b.dataset.thmmode)thmSet('bt_mode',b.dataset.thmmode);
+  if(b.dataset.thmpal)thmSet('bt_palette',b.dataset.thmpal);
+  applyTheme();renderThemeMenu();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#thmMenu').hidden){$('#thmMenu').hidden=true;renderThemeMenu();}});
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);}catch(_){}
+applyTheme();
 
 render();loadSettings();loadListings();
 </script>
