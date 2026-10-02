@@ -684,7 +684,7 @@ function openDetail(code){
   const both=p.rent&&p.sale;
   openModal(`
    <div class="gal-main"><img id="galImg" src="${im[0]}" alt="${esc(p.project)}"></div>
-   <div class="thumbs">${th.map((s,i)=>`<button data-thumb="${i}" class="${i?'':'on'}" aria-label="photo ${i+1}"><img src="${s}" alt=""></button>`).join('')}</div>
+   <div class="thumbs">${th.map((s,i)=>`<button data-thumb="${i}" class="${i?'':'on'}" aria-label="photo ${i+1}"><img src="${s}" alt=""></button>`).join('')}</div>${p.photos&&p.photos.some(x=>okStock(x.f))?`<p style="margin:6px 24px 0;font-size:12px;color:var(--muted)">${L3('ภาพประกอบตัวอย่างจาก Unsplash ไม่ใช่ภาพของทรัพย์จริง','Sample photos from Unsplash, not the actual property','示例图片来自 Unsplash，并非实际房源')}</p>`:''}
    <div class="d-body">
     <div style="min-width:0">
      <div class="d-badges">${p.isNew?`<span class="tag new">${L.isNew}</span>`:''}${p.mode.includes('r')?`<span class="tag rent">${L.rent}</span>`:''}${p.mode.includes('s')?`<span class="tag sale">${L.sale}</span>`:''}<span class="code">${p.code}</span></div>
@@ -940,8 +940,10 @@ refreshFresh();
 /* ---------- photos (Supabase Storage) ---------- */
 const BUCKET='listing-photos';
 const PHOTO_BASE=CONFIG.supabaseUrl+'/storage/v1/object/public/'+BUCKET+'/';
-const okPath=s=>typeof s==='string'&&/^[0-9a-f-]{36}\/[A-Za-z0-9_-]{4,40}\.jpg$/.test(s);
-const purl=path=>PHOTO_BASE+path.split('/').map(encodeURIComponent).join('/');
+const okStore=s=>typeof s==='string'&&/^[0-9a-f-]{36}\/[A-Za-z0-9_-]{4,40}\.jpg$/.test(s);
+const okStock=s=>typeof s==='string'&&/^https:\/\/images\.unsplash\.com\/photo-[0-9a-f-]{8,60}\?[A-Za-z0-9=&]{0,80}$/.test(s);
+const okPath=s=>okStore(s)||okStock(s);
+const purl=path=>okStock(path)?path:PHOTO_BASE+path.split('/').map(encodeURIComponent).join('/');
 let galIdx=0;
 function imgs(p){return p.photos&&p.photos.length?p.photos.map(x=>purl(x.t)):imgsArt(p);}
 function imgsThumbs(p){return imgs(p);}
@@ -1200,7 +1202,7 @@ document.addEventListener('click',async e=>{
   if(b.dataset.agdel){
     if(b.dataset.confirm!=='1'){b.dataset.confirm='1';b.textContent=T3('กดอีกครั้งเพื่อลบ','Tap again to delete','再次点击删除');setTimeout(()=>{if(b.isConnected){b.dataset.confirm='';b.textContent=T3('ลบ','Delete','删除');}},3000);return;}
     const {error}=await SB.from('listings').delete().eq('id',id);if(error)return toast(T3('ลบไม่สำเร็จ','Could not delete','删除失败'));
-    const paths=(Array.isArray(r.photos)?r.photos:[]).flatMap(x=>[x.f,x.t]).filter(okPath);if(paths.length)await SB.storage.from(BUCKET).remove(paths);
+    const paths=(Array.isArray(r.photos)?r.photos:[]).flatMap(x=>[x.f,x.t]).filter(okStore);if(paths.length)await SB.storage.from(BUCKET).remove(paths);
     toast(T3('ลบประกาศแล้ว','Listing deleted','已删除'));await refreshAfterListingChange(scope);renderAcctBody();}
 });
 document.addEventListener('change',async e=>{
@@ -1281,7 +1283,7 @@ document.addEventListener('submit',async e=>{
     sb.textContent=T3('กำลังบันทึก…','Saving…','保存中…');
     const res=editingId?await SB.from('listings').update(row).eq('id',editingId):await SB.from('listings').insert({agent_id:uid(),status:'active',...row});
     if(res.error)throw res.error;
-    if(editingId){const old=scopeRows(scope).find(x=>x.id===editingId);const keep=new Set(row.photos.flatMap(x=>[x.f,x.t]));const gone=(old&&Array.isArray(old.photos)?old.photos:[]).flatMap(x=>[x.f,x.t]).filter(pth=>okPath(pth)&&!keep.has(pth));if(gone.length)await SB.storage.from(BUCKET).remove(gone);}
+    if(editingId){const old=scopeRows(scope).find(x=>x.id===editingId);const keep=new Set(row.photos.flatMap(x=>[x.f,x.t]));const gone=(old&&Array.isArray(old.photos)?old.photos:[]).flatMap(x=>[x.f,x.t]).filter(pth=>okStore(pth)&&!keep.has(pth));if(gone.length)await SB.storage.from(BUCKET).remove(gone);}
     toast(editingId?T3('บันทึกการแก้ไขแล้ว','Changes saved','已保存'):T3('ลงประกาศแล้ว แสดงในหน้ารายการเรียบร้อย','Listing published','已发布'));
     editingId=null;formPhotos=[];if(scope==='admin')adminTab='listings';else agentTab='list';await refreshAfterListingChange(scope);renderAcctBody();
   }catch(err){sb.disabled=false;sb.textContent=subTxt;const m=String(err&&(err.message||err.error)||'');
