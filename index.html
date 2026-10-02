@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Baan Thara Properties | คอนโด บ้าน เช่า-ขาย กรุงเทพฯ</title>
+<meta name="description" content="ค้นหาคอนโด บ้านเดี่ยว ทาวน์โฮม ให้เช่าและขายในกรุงเทพฯ และปริมณฑล ใกล้รถไฟฟ้า เลี้ยงสัตว์ได้ พร้อมนัดชมออนไลน์">
+<meta property="og:title" content="Baan Thara Properties">
+<meta property="og:description" content="คอนโดและบ้าน เช่า-ขาย กรุงเทพฯ และปริมณฑล">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M7 26V14l9-7 9 7v12' fill='none' stroke='white' stroke-width='2.4'/%3E%3C/svg%3E">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky header → quiet listing hero → toolbar → 3-col card grid / table; modals for detail, booking, chat */
+:root{
+  --bg:#F6F6F6; --surface:#FFFFFF; --soft:#EEEEEE; --ink:#0D0D0D; --muted:#6B6B6B; --line:#E2E2E2;
+  --accent:#111111; --accent-hover:#000000; --accent-ink:#FFFFFF; --accent-soft:#ECECEC;
+  --tag-dark:#111111; --tag-dark-ink:#FFFFFF; --tag-light:#FFFFFF; --tag-light-ink:#111111; --danger:#B42318;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.07);
+  --f-display:"Anuphan","IBM Plex Sans Thai","Noto Sans SC",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai","Anuphan","Noto Sans SC",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B0B0B; --surface:#151515; --soft:#1F1F1F; --ink:#F2F2F2; --muted:#9E9E9E; --line:#2B2B2B;
+  --accent:#F2F2F2; --accent-hover:#FFFFFF; --accent-ink:#0B0B0B; --accent-soft:#232323;
+  --tag-dark:#111111; --tag-dark-ink:#FFFFFF; --tag-light:#FFFFFF; --tag-light-ink:#111111; --danger:#F97066;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B0B0B; --surface:#151515; --soft:#1F1F1F; --ink:#F2F2F2; --muted:#9E9E9E; --line:#2B2B2B;
+  --accent:#F2F2F2; --accent-hover:#FFFFFF; --accent-ink:#0B0B0B; --accent-soft:#232323;
+  --tag-dark:#111111; --tag-dark-ink:#FFFFFF; --tag-light:#FFFFFF; --tag-light-ink:#111111; --danger:#F97066;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,3vw,28px)}
+svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;flex:none}
+.brand .mark{width:42px;height:42px;border-radius:10px;background:#111111;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center}
+.brand .mark svg{width:26px;height:26px}
+.brand b{display:block;font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.1}
+.brand small{display:block;font-size:10.5px;letter-spacing:.22em;color:var(--accent);font-weight:500}
+nav.main{display:flex;gap:4px;margin-inline:auto}
+nav.main button{background:none;border:0;padding:8px 13px;border-radius:8px;color:var(--muted);font-size:15px;white-space:nowrap}
+nav.main button:hover{color:var(--ink);background:var(--soft)}
+nav.main button.on{color:var(--accent);font-weight:600}
+.top-right{display:flex;align-items:center;gap:8px;flex:none}
+.ghost{background:none;border:0;display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;color:var(--muted)}
+.ghost:hover{background:var(--soft);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:11px 20px;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+.btn:hover{background:var(--accent-hover)}
+.btn.outline{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.outline:hover{background:var(--soft)}
+.lang{position:relative}
+.menu{position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;min-width:180px;z-index:50}
+.menu button{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:10px 12px;border-radius:8px;text-align:left}
+.menu button:hover,.menu button.on{background:var(--soft)}
+.menu button .cc{font-size:11px;color:var(--muted);width:22px;font-weight:600}
+.menu button .ck{margin-left:auto;color:var(--accent)}
+.burger{display:none}
+.top .wrap.mnav{display:none;height:auto;border-top:1px solid var(--line);padding:8px 0 14px}
+.mnav button{display:block;width:100%;text-align:left;background:none;border:0;padding:11px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+@media (max-width:1280px){nav.main{display:none}.burger{display:inline-flex}.top-right{margin-left:auto}.top .wrap.mnav.open{display:block}}
+@media (max-width:560px){.agent-login span,.lang-label{display:none}.top .btn{padding:10px 14px}.brand small{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(40px,7vw,80px) clamp(32px,5vw,60px);text-align:center;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:13px;letter-spacing:.28em;color:var(--accent);font-weight:600;text-transform:uppercase}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,6vw,60px);line-height:1.15;margin:10px 0 12px;text-wrap:balance}
+.hero p{color:var(--muted);margin:0 auto;max-width:56ch;font-size:16.5px}
+.seg{display:inline-flex;margin-top:26px;background:var(--soft);border-radius:12px;padding:4px;gap:4px}
+.seg button{border:0;background:none;padding:9px 22px;border-radius:9px;color:var(--muted);font-weight:500}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+
+/* toolbar */
+.tools{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:14px;padding-block:36px 8px}
+@media (max-width:860px){.tools{grid-template-columns:1fr}}
+.search{position:relative}
+.search input{width:100%;height:52px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:0 16px 0 46px;font-size:15.5px}
+.search svg{position:absolute;left:16px;top:17px;color:var(--muted)}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{height:52px;display:inline-flex;align-items:center;gap:9px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:500;white-space:nowrap}
+.chip:hover{background:var(--soft)}
+.chip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.sel{height:52px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0 16px;flex:1 1 200px;min-width:0}
+.viewtog{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;height:52px}
+.viewtog button{width:58px;border:0;background:var(--surface);color:var(--ink);display:grid;place-items:center}
+.viewtog button.on{background:var(--ink);color:var(--bg)}
+.filters{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-top:6px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.filters label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.filters select,.filters input{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 12px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 14px;font-size:14px}
+.pills button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.range{display:flex;gap:8px;align-items:center}
+.f-actions{display:flex;gap:10px;align-items:end;justify-content:flex-end}
+.count{color:var(--muted);margin:22px 0 18px}
+.count b{color:var(--ink);font-size:17px}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:26px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.media{position:relative;aspect-ratio:4/3;max-width:100%;background:var(--soft);cursor:pointer;overflow:hidden}
+.media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.card:hover .media img{transform:scale(1.03)}
+.tag{position:absolute;font-size:13px;font-weight:600;color:#fff;padding:3px 11px;border-radius:999px;line-height:1.5}
+.tag.new{left:14px;top:14px;background:var(--tag-light);color:var(--tag-light-ink)}
+.tags-r{position:absolute;right:14px;top:62px;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.tags-r .tag{position:static}
+.tag.rent{background:var(--tag-dark);color:var(--tag-dark-ink);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+.tag.sale{background:var(--tag-light);color:var(--tag-light-ink);box-shadow:0 0 0 1px rgba(0,0,0,.6)}
+.fav{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);color:#1B211D;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.fav.on{color:#D6334A}
+.fav.on svg{fill:currentColor}
+.price{position:absolute;left:14px;bottom:14px;background:rgba(18,22,20,.82);color:#fff;font-weight:700;font-size:17px;padding:6px 13px;border-radius:9px;font-variant-numeric:tabular-nums}
+.price small{font-weight:500;font-size:13px;opacity:.85}
+.qa{position:absolute;right:14px;bottom:14px;display:flex;gap:7px}
+.qa button{width:38px;height:38px;border-radius:9px;border:0;display:grid;place-items:center;color:#fff}
+.qa .ln{background:#FFFFFF;color:#111111}
+.qa .ms{background:rgba(17,17,17,.9)}
+.body{padding:18px 20px 6px;display:flex;flex-direction:column;gap:6px;flex:1}
+.ttl{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.ttl h3{font-family:var(--f-display);font-size:19px;font-weight:600;margin:0;line-height:1.35;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.ttl h3:hover{color:var(--accent)}
+.code{font-family:var(--f-mono);font-size:12px;background:var(--soft);color:var(--muted);padding:3px 8px;border-radius:6px;flex:none;margin-top:2px}
+.meta{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.meta.sm{font-size:13px}
+.meta svg.i{width:16px;height:16px}
+.bts{display:flex;align-items:center;gap:6px;background:var(--soft);border-radius:999px;padding:3px 12px;font-size:13px;color:var(--ink);margin-top:4px;width:100%}
+.bts svg.i{width:15px;height:15px;color:var(--accent)}
+.specs{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;border-top:1px solid var(--line);margin-top:10px;padding-top:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.specs span{display:inline-flex;align-items:center;gap:6px}
+.specs .pm{margin-left:auto;color:var(--accent);font-weight:600;font-size:13.5px}
+.more{display:flex;justify-content:space-between;align-items:center;border:0;background:none;padding:16px 20px 18px;font-weight:600;width:100%;text-align:left}
+.more:hover{color:var(--accent)}
+.empty{text-align:center;padding:60px 16px;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+.loadmore{display:flex;justify-content:center;margin:34px 0 10px}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
+th{font-size:12.5px;color:var(--muted);font-weight:600;background:var(--soft)}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--soft)}
+td img{width:64px;height:46px;object-fit:cover;border-radius:6px;display:block}
+.mini{font-size:12px;font-weight:600;color:#fff;padding:2px 8px;border-radius:999px;margin-right:4px}
+
+/* modal */
+.ov{position:fixed;inset:0;z-index:80;background:rgba(10,14,12,.55);display:flex;align-items:flex-start;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) 16px 16px;overflow-y:auto}
+.dlg{background:var(--surface);border-radius:18px;width:min(980px,100%);margin-block:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.dlg.sm{width:min(480px,100%)}
+.x{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);color:#1B211D;display:grid;place-items:center;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.gal-main{aspect-ratio:16/9;max-width:100%;border-radius:18px 18px 0 0;overflow:hidden;background:var(--soft)}
+.gal-main img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs{display:flex;gap:10px;padding:14px 24px 0;overflow-x:auto}
+.thumbs button{border:2px solid transparent;padding:0;border-radius:8px;overflow:hidden;width:96px;height:66px;flex:none;background:none}
+.thumbs button.on{border-color:var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.d-body{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;padding:20px 24px 28px}
+@media (max-width:820px){.d-body{grid-template-columns:1fr}}
+.d-body h2{font-family:var(--f-display);font-size:clamp(22px,3vw,28px);margin:6px 0 6px;line-height:1.3;text-wrap:balance}
+.d-badges{display:flex;gap:6px;flex-wrap:wrap}
+.d-badges .tag{position:static}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:18px 0}
+.fact{background:var(--soft);border-radius:12px;padding:12px 14px}
+.fact small{display:block;color:var(--muted);font-size:12.5px}
+.fact b{font-size:17px;font-variant-numeric:tabular-nums}
+.d-body h4{margin:22px 0 8px;font-size:15px}
+.d-body p.desc{color:var(--muted);margin:0;max-width:65ch}
+.amen{display:flex;flex-wrap:wrap;gap:8px}
+.amen span{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px}
+.side{border:1px solid var(--line);border-radius:14px;padding:20px;align-self:start;display:flex;flex-direction:column;gap:12px}
+.side .big{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;font-family:var(--f-display)}
+.side .sub{color:var(--muted);font-size:13.5px;margin-top:-8px}
+.agent{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding-top:14px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700}
+.agent small{color:var(--muted);display:block;font-size:12.5px}
+.btn.lnb{background:var(--surface);color:var(--ink);border:1px solid var(--ink)}
+form.bk{display:flex;flex-direction:column;gap:12px;padding:26px}
+form.bk h3{font-family:var(--f-display);font-size:22px;margin:0}
+form.bk label{font-size:13px;color:var(--muted);font-weight:500;display:block;margin-bottom:5px}
+form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.err{color:var(--danger);font-size:13px}
+.ok{background:var(--accent-soft);border-radius:12px;padding:16px;color:var(--ink)}
+.copyline{display:flex;gap:8px;align-items:center;background:var(--soft);border-radius:10px;padding:8px 8px 8px 14px}
+.copyline code{font-family:var(--f-mono);flex:1;user-select:all}
+.copyline button{border:0;background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px}
+
+/* floating */
+.float-l,.float-r{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;display:inline-flex;align-items:center;gap:9px;border:0;border-radius:999px;padding:13px 20px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.float-l{left:20px;background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.float-r{right:20px;background:var(--accent);color:var(--accent-ink)}
+@media (max-width:560px){.float-l span,.float-r span{display:none}.float-l,.float-r{padding:14px}}
+.panel{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;width:min(380px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.22);display:flex;flex-direction:column;overflow:hidden}
+.panel.l{left:16px}.panel.r{right:16px}
+.panel header{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--accent);color:var(--accent-ink)}
+.panel header b{flex:1}
+.panel header button{background:none;border:0;color:inherit;display:grid;place-items:center}
+.msgs{padding:14px;display:flex;flex-direction:column;gap:10px;max-height:min(420px,55vh);overflow-y:auto}
+.m{max-width:88%;padding:9px 13px;border-radius:14px;font-size:14px}
+.m.bot{background:var(--soft);align-self:flex-start;border-bottom-left-radius:4px}
+.m.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.m .pick{display:flex;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:6px;margin-top:8px;cursor:pointer;border:1px solid var(--line);width:100%;text-align:left}
+.m .pick img{width:54px;height:40px;object-fit:cover;border-radius:6px}
+.m .pick small{display:block;color:var(--muted)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px}
+.sugg button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 11px;font-size:12.5px}
+.panel form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.panel form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--bg)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;z-index:90;font-size:14px;max-width:calc(100% - 32px)}
+/* new features */
+.tag.foryou{left:14px;top:46px;background:var(--tag-dark);color:var(--tag-dark-ink);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+.src{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px;width:max-content}
+.alertbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:12px;padding:12px 16px;margin-top:18px}
+.alertbar .txt{flex:1 1 260px;min-width:0}
+.alertbar .txt small{display:block;color:var(--muted)}
+.alertbar .num{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:13px;padding:0 7px;margin-inline:4px}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:600;padding:6px 8px;border-radius:8px}
+.linkbtn:hover{background:var(--surface)}
+.sect{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:22px}
+.sect h4{margin:0 0 4px!important}
+.sect .note{color:var(--muted);font-size:12.5px;margin:8px 0 0}
+.trav{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.trav div{background:var(--soft);border-radius:10px;padding:9px 12px;font-variant-numeric:tabular-nums}
+.trav small{display:block;color:var(--muted);font-size:12.5px}
+.walk{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.walkbar{flex:1 1 160px;height:8px;background:var(--soft);border-radius:999px;overflow:hidden}
+.walkbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.calc-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:10px}
+.calc-in label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px}
+.calc-in input,.calc-in select{width:100%;height:40px;border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:0 10px;font-variant-numeric:tabular-nums}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}
+.calc-out div{border-radius:10px;padding:10px 12px;background:var(--soft);font-variant-numeric:tabular-nums}
+.calc-out div.hl{background:var(--accent);color:var(--accent-ink)}
+.calc-out small{display:block;font-size:12.5px;opacity:.8}
+.calc-out b{font-size:18px}
+.agentbox{padding:26px;display:flex;flex-direction:column;gap:18px}
+.agentbox h3{font-family:var(--f-display);font-size:24px;margin:0}
+.agentbox .lead{color:var(--muted);margin:-10px 0 0;max-width:62ch}
+.agentbox fieldset{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.agentbox legend{font-weight:600;padding:0 6px}
+.agentbox label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px}
+.agentbox input,.agentbox select,.agentbox textarea{width:100%;border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:9px 10px}
+.agentbox .wide{grid-column:1/-1}
+.agentbox .chk{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:14px;margin-top:22px}
+.agentbox .chk input{width:auto}
+.mylist{display:flex;flex-direction:column;gap:8px}
+.myrow{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:8px}
+.myrow img{width:64px;height:46px;object-fit:cover;border-radius:6px}
+.myrow .grow{flex:1;min-width:0}
+.myrow .grow b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.myrow .grow small{color:var(--muted)}
+.state{background:var(--soft);border-radius:12px;padding:16px;color:var(--ink)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.phgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.phtile{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:10px;overflow:hidden;background:var(--soft);border:1px solid var(--line)}
+.phtile img{width:100%;height:100%;object-fit:cover;display:block}
+.phadd{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);border-style:dashed;cursor:pointer;margin:0!important;font-size:12.5px}
+.phadd:hover{color:var(--accent);border-color:var(--accent)}
+.phbtn{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(255,255,255,.95);color:#1B211D;display:grid;place-items:center;font-size:13px;padding:0}
+.phbtn.star{right:auto;left:6px}
+.phcover{position:absolute;left:6px;top:6px;background:var(--accent);color:var(--accent-ink);font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px}
+.phload{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:spin 1s linear infinite;margin:auto}
+.phtile>.phload{position:absolute;inset:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero.has-img{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),var(--hero-img) center/cover no-repeat;color:#fff;border-bottom:0}
+.hero.has-img .eyebrow{color:#DDDDDD}.hero.has-img p{color:rgba(255,255,255,.88)}
+.hero.has-img .seg{background:rgba(255,255,255,.18)}.hero.has-img .seg button{color:#fff}.hero.has-img .seg button.on{color:#1B211D;background:#fff}
+.acct-seg button{white-space:nowrap}
+.d-badges .tag.new,.d-badges .tag.sale{box-shadow:0 0 0 1px var(--ink)}
+.agent-login{max-width:220px}.agent-login span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+footer{border-top:1px solid var(--line);margin-top:60px;padding-block:28px 110px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" id="brand">
+      <span class="mark"><svg viewBox="0 0 32 32"><path d="M6 27V14l10-8 10 8v13" fill="none" stroke="#fff" stroke-width="2"/><path d="M11 27c2-5 8-5 10 0" fill="none" stroke="#BDBDBD" stroke-width="2"/><path d="M13 23c1.5-2 4.5-2 6 0" fill="none" stroke="#BDBDBD" stroke-width="2"/></svg></span>
+      <span><b>Baan Thara</b><small>PROPERTIES</small></span>
+    </a>
+    <nav class="main" id="nav"></nav>
+    <div class="top-right">
+      <button class="ghost agent-login" id="agentLogin"></button>
+      <div class="lang">
+        <button class="ghost" id="langBtn" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="menu" id="langMenu" hidden></div>
+      </div>
+      <button class="btn" id="bookTop"></button>
+      <button class="ghost burger" id="burger" aria-label="Menu"></button>
+    </div>
+  </div>
+  <div class="wrap mnav" id="mnav"></div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="h1"></h1>
+      <p id="sub"></p>
+      <div class="seg" id="seg" role="tablist"></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="tools">
+      <div class="search">
+        <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" autocomplete="off">
+      </div>
+      <div class="ctrls">
+        <button class="chip" id="petBtn"></button>
+        <select class="sel" id="sort" aria-label="sort"></select>
+        <button class="chip" id="btsBtn"></button>
+        <button class="chip" id="filBtn" aria-expanded="false"></button>
+        <button class="chip" id="saveBtn"></button>
+        <div class="viewtog">
+          <button id="vGrid" class="on" aria-label="grid"></button>
+          <button id="vTable" aria-label="table"></button>
+        </div>
+      </div>
+    </div>
+    <div class="filters" id="filters" hidden></div>
+    <div class="alertbar" id="alertBar" hidden></div>
+    <div class="count" id="count"></div>
+    <div id="results"></div>
+    <div class="loadmore" id="loadmore" hidden><button class="btn outline" id="moreBtn"></button></div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span id="foot1"></span><span id="foot2"></span></div></footer>
+
+<button class="float-l" id="chatBtn"></button>
+<button class="float-r" id="aiBtn"></button>
+<div id="layer"></div>
+
+<script>
+/* ---------- icons ---------- */
+const I = {
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  paw:'<circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/>',
+  train:'<rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16M12 3v8M8 19l-2 3M16 19l2 3"/><circle cx="8" cy="15" r=".6"/><circle cx="16" cy="15" r=".6"/>',
+  sliders:'<path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  table:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+  cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  bed:'<path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>',
+  bath:'<path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.68 3 4 3.68 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5M10 5 8 7M2 12h20M7 19v2M17 19v2"/>',
+  area:'<rect x="4" y="4" width="16" height="16" rx="1"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+  down:'<path d="m6 9 6 6 6-6"/>', up:'<path d="m18 15-6-6-6 6"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  brief:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+  spark:'<path d="M9.94 14.06 4 20M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>'
+};
+const ic=(n,s)=>`<svg class="i" viewBox="0 0 24 24"${s?` style="width:${s}px;height:${s}px"`:''}>${I[n]}</svg>`;
+
+/* ---------- i18n ---------- */
+const T={
+ th:{nav:['หน้าแรก','อสังหาริมทรัพย์','ประกาศแนะนำ','Agent Club','Looking','ติดต่อเรา'],agent:'Agent Login',book:'จองชม',eyebrow:'รายการ',h1:'อสังหาริมทรัพย์ทั้งหมด',sub:'ค้นหาบ้านในฝันจากคอลเลกชันคอนโดและบ้านคัดสรรในกรุงเทพฯ และปริมณฑล',
+  all:'ทั้งหมด',rent:'ให้เช่า',sale:'ขาย',q:'ค้นหาตามชื่อ ทำเล หรือรหัสประกาศ...',pet:'เลี้ยงสัตว์ได้',bts:'ใกล้รถไฟฟ้า',fil:'ตัวกรอง',
+  sort:['ใหม่ล่าสุด','ราคา: ต่ำ → สูง','ราคา: สูง → ต่ำ','พื้นที่: มาก → น้อย'],found:'พบ',items:'รายการ',isNew:'มาใหม่',mo:'/เดือน',
+  listedOn:'ลงวันที่',bedU:'ห้องนอน',bathU:'ห้องน้ำ',detail:'ดูรายละเอียด',more:'โหลดเพิ่ม',none:'ไม่พบทรัพย์ที่ตรงกับเงื่อนไข ลองปรับตัวกรองหรือคำค้นหา',clear:'ล้างตัวกรอง',
+  fType:'ประเภทประกาศ',fKind:'ประเภททรัพย์',fBed:'ห้องนอน',bathL:'ห้องน้ำ',fPrice:'ช่วงราคา (บาท)',fDist:'เขต / ทำเล',min:'ต่ำสุด',max:'สูงสุด',any:'ไม่ระบุ',favOnly:'เฉพาะรายการโปรด',fFav:'รายการโปรด',
+  kinds:{condo:'คอนโด',house:'บ้านเดี่ยว',town:'ทาวน์โฮม'},
+  thPhoto:'รูป',thName:'ชื่อประกาศ',thLoc:'ทำเล',thType:'ประเภท',thBed:'นอน/น้ำ',thArea:'พื้นที่',thPrice:'ราคา',thPm:'ต่อ ตร.ม.',
+  floor:'ชั้น',areaL:'พื้นที่ใช้สอย',pets:'สัตว์เลี้ยง',petsY:'เลี้ยงได้',petsN:'ไม่ได้',nearest:'สถานีใกล้สุด',about:'รายละเอียดทรัพย์',amen:'สิ่งอำนวยความสะดวก',
+  dep:'มัดจำ 2 เดือน ล่วงหน้า 1 เดือน · สัญญาขั้นต่ำ 1 ปี',xfer:'ค่าธรรมเนียมโอนแบ่งจ่ายคนละครึ่ง',bookView:'นัดเข้าชมทรัพย์',lineC:'ติดต่อทาง LINE',callC:'โทรหาเจ้าหน้าที่',agentT:'ที่ปรึกษาอสังหาฯ',
+  bkTitle:'นัดเข้าชมทรัพย์',bkProp:'ทรัพย์ที่สนใจ',bkGeneral:'ยังไม่ระบุ (ให้เจ้าหน้าที่แนะนำ)',bkName:'ชื่อ-นามสกุล',bkPhone:'เบอร์โทรศัพท์',bkDate:'วันที่สะดวก',bkTime:'ช่วงเวลา',bkNote:'ข้อความเพิ่มเติม',bkSend:'ยืนยันนัดชม',
+  bkTimes:['09:00–12:00','12:00–15:00','15:00–18:00','หลัง 18:00'],bkErr:'กรอกชื่อ เบอร์โทร (9–10 หลัก) และวันที่ให้ครบ',
+  bkOk:'บันทึกคำขอนัดชมแล้ว เจ้าหน้าที่จะโทรยืนยันภายใน 1 วันทำการ',bkDemo:'หน้านี้เป็นเว็บตัวอย่าง คำขอยังไม่ถูกส่งไปยังระบบจริง',
+  chatAdmin:'แชทกับแอดมิน',chatHi:'สวัสดีค่ะ ติดต่อทีมงานได้ทุกวัน 09:00–20:00 น.',copy:'คัดลอก',copied:'คัดลอกแล้ว',
+  ai:'ปรึกษา AI',aiTitle:'ผู้ช่วยค้นหาทรัพย์',aiHi:'บอกงบ ทำเล หรือความต้องการได้เลยค่ะ เช่น "คอนโดใกล้ BTS งบ 25,000 เลี้ยงแมวได้"',aiPh:'พิมพ์ความต้องการ...',
+  aiSugg:['คอนโดเช่า งบ 20,000','2 ห้องนอน ใกล้ BTS','บ้านเดี่ยวขาย','เลี้ยงสัตว์ได้ ทองหล่อ'],aiFound:n=>`เจอ ${n} รายการที่ใกล้เคียง ตัวอย่างที่เหมาะที่สุดค่ะ`,aiNone:'ยังไม่เจอทรัพย์ที่ตรงทุกข้อ ลองขยายงบหรือเปลี่ยนทำเลดูนะคะ',aiShow:'แสดงทั้งหมดในหน้ารายการ',
+  soon:'ส่วนนี้อยู่ระหว่างพัฒนา',foot1:'© 2026 Baan Thara Properties',foot2:'กรุงเทพมหานคร'},
+ en:{nav:['Home','Properties','Featured','Agent Club','Looking','Contact'],agent:'Agent Login',book:'Book a viewing',eyebrow:'Listings',h1:'All Properties',sub:'Find your next home from our curated condos and houses across Bangkok and its suburbs',
+  all:'All',rent:'For rent',sale:'For sale',q:'Search by name, area or listing code...',pet:'Pet friendly',bts:'Near BTS/MRT',fil:'Filters',
+  sort:['Newest','Price: low → high','Price: high → low','Size: large → small'],found:'Found',items:'listings',isNew:'New',mo:'/mo',
+  listedOn:'Listed',bedU:'bed',bathU:'bath',detail:'View details',more:'Load more',none:'No properties match these filters. Try widening your search.',clear:'Clear filters',
+  fType:'Listing type',fKind:'Property type',fBed:'Bedrooms',bathL:'Bathrooms',fPrice:'Price range (THB)',fDist:'District',min:'Min',max:'Max',any:'Any',favOnly:'Saved only',fFav:'Saved',
+  kinds:{condo:'Condo',house:'House',town:'Townhome'},
+  thPhoto:'Photo',thName:'Listing',thLoc:'Location',thType:'Type',thBed:'Bed/Bath',thArea:'Size',thPrice:'Price',thPm:'Per m²',
+  floor:'Floor',areaL:'Usable area',pets:'Pets',petsY:'Allowed',petsN:'No',nearest:'Nearest station',about:'About this property',amen:'Amenities',
+  dep:'2-month deposit + 1 month advance · 1-year minimum',xfer:'Transfer fee split 50/50',bookView:'Book a viewing',lineC:'Chat on LINE',callC:'Call an agent',agentT:'Property consultant',
+  bkTitle:'Book a viewing',bkProp:'Property',bkGeneral:'Not decided (recommend one)',bkName:'Full name',bkPhone:'Phone',bkDate:'Preferred date',bkTime:'Time',bkNote:'Notes',bkSend:'Confirm viewing',
+  bkTimes:['09:00–12:00','12:00–15:00','15:00–18:00','After 18:00'],bkErr:'Enter your name, a 9–10 digit phone number and a date.',
+  bkOk:'Viewing request saved. An agent will call to confirm within 1 business day.',bkDemo:'This is a demo site; the request is not sent to a live system.',
+  chatAdmin:'Chat with us',chatHi:'Hello! Our team is available daily, 09:00–20:00.',copy:'Copy',copied:'Copied',
+  ai:'Ask AI',aiTitle:'Property finder',aiHi:'Tell me your budget, area or needs, e.g. "condo near BTS under 25,000, cats OK".',aiPh:'Describe what you need...',
+  aiSugg:['Rent under 20,000','2 bed near BTS','House for sale','Pet friendly Thonglor'],aiFound:n=>`Found ${n} close matches. Top picks:`,aiNone:'Nothing matches every point yet. Try a wider budget or another area.',aiShow:'Show all in listings',
+  soon:'This section is coming soon',foot1:'© 2026 Baan Thara Properties',foot2:'Bangkok, Thailand'},
+ zh:{nav:['首页','房产','精选','经纪人俱乐部','求租求购','联系我们'],agent:'经纪人登录',book:'预约看房',eyebrow:'房源',h1:'全部房产',sub:'在曼谷及周边精选公寓与别墅中，找到理想的家',
+  all:'全部',rent:'出租',sale:'出售',q:'按名称、区域或编号搜索...',pet:'可养宠物',bts:'近轻轨',fil:'筛选',
+  sort:['最新','价格：低 → 高','价格：高 → 低','面积：大 → 小'],found:'共',items:'套房源',isNew:'新上',mo:'/月',
+  listedOn:'发布于',bedU:'卧',bathU:'卫',detail:'查看详情',more:'加载更多',none:'没有符合条件的房源，请调整筛选条件。',clear:'清除筛选',
+  fType:'房源类型',fKind:'物业类型',fBed:'卧室',bathL:'卫生间',fPrice:'价格区间（泰铢）',fDist:'区域',min:'最低',max:'最高',any:'不限',favOnly:'仅看收藏',fFav:'收藏',
+  kinds:{condo:'公寓',house:'独栋别墅',town:'联排别墅'},
+  thPhoto:'图片',thName:'房源',thLoc:'区域',thType:'类型',thBed:'卧/卫',thArea:'面积',thPrice:'价格',thPm:'每平米',
+  floor:'楼层',areaL:'使用面积',pets:'宠物',petsY:'可以',petsN:'不可',nearest:'最近车站',about:'房源介绍',amen:'配套设施',
+  dep:'押二付一 · 最短租期1年',xfer:'过户费双方各半',bookView:'预约看房',lineC:'LINE 联系',callC:'致电经纪人',agentT:'房产顾问',
+  bkTitle:'预约看房',bkProp:'意向房源',bkGeneral:'未定（请顾问推荐）',bkName:'姓名',bkPhone:'电话',bkDate:'日期',bkTime:'时段',bkNote:'备注',bkSend:'确认预约',
+  bkTimes:['09:00–12:00','12:00–15:00','15:00–18:00','18:00 以后'],bkErr:'请填写姓名、9–10位电话号码和日期。',
+  bkOk:'预约已记录，顾问将在1个工作日内致电确认。',bkDemo:'本网站为示例，预约不会发送到真实系统。',
+  chatAdmin:'联系客服',chatHi:'您好！客服每天 09:00–20:00 在线。',copy:'复制',copied:'已复制',
+  ai:'AI 咨询',aiTitle:'找房助手',aiHi:'告诉我预算、区域或需求，例如“近BTS公寓，预算25,000，可养猫”。',aiPh:'输入您的需求...',
+  aiSugg:['租金 20,000 以内','两卧 近BTS','出售独栋别墅','可养宠物 通罗'],aiFound:n=>`找到 ${n} 套相近房源，推荐：`,aiNone:'暂无完全匹配的房源，可放宽预算或更换区域。',aiShow:'在列表中查看全部',
+  soon:'该栏目即将上线',foot1:'© 2026 Baan Thara Properties',foot2:'泰国曼谷'}
+};
+const LANGS=[['th','TH','ไทย'],['en','GB','English'],['zh','CN','中文']];
+
+/* ---------- sample data (fictional projects) ---------- */
+/* ---------- site config: แก้ข้อมูลติดต่อจริงตรงนี้ ---------- */
+const CONFIG={
+  phone:'02-000-4567',      // เบอร์โทรสำนักงาน
+  line:'@baanthara',        // LINE Official Account
+  supabaseUrl:'https://srdcpdkckuifvtetxdwx.supabase.co',
+  supabaseKey:'sb_publishable_ixCwFiIjgHEZZCl_yhK0Rg_BYzsE9F6' // publishable key: ใส่ในหน้าเว็บได้ ปลอดภัยด้วย RLS
+};
+const SB=window.supabase?window.supabase.createClient(CONFIG.supabaseUrl,CONFIG.supabaseKey):null;
+const PROV={'Bang Phli':'Samut Prakan'};
+const AMEN={condo:['สระว่ายน้ำ','ฟิตเนส','รปภ. 24 ชม.','คีย์การ์ด','ที่จอดรถ','Co-working'],house:['สวนส่วนตัว','ที่จอดรถ 2 คัน','คลับเฮาส์','รปภ. 24 ชม.','สนามเด็กเล่น'],town:['ที่จอดรถ 2 คัน','สวนส่วนกลาง','รปภ. 24 ชม.']};
+const AMEN_EN={'สระว่ายน้ำ':'Pool','ฟิตเนส':'Gym','รปภ. 24 ชม.':'24h security','คีย์การ์ด':'Key card','ที่จอดรถ':'Parking','Co-working':'Co-working','สวนส่วนตัว':'Private garden','ที่จอดรถ 2 คัน':'2 parking spaces','คลับเฮาส์':'Clubhouse','สนามเด็กเล่น':'Playground','สวนส่วนกลาง':'Shared garden'};
+const today=new Date();
+const STATIONS=['BTS พร้อมพงษ์','BTS ทองหล่อ','BTS เอกมัย','BTS อ่อนนุช','BTS อโศก','BTS อารีย์','BTS ช่องนนทรี','BTS ราชเทวี','BTS กรุงธนบุรี','BTS อนุสาวรีย์ชัยฯ','BTS สยาม','BTS ศาลาแดง','BTS บางนา','MRT พระราม 9','MRT บางซื่อ','MRT ลาดพร้าว 71','MRT สุขุมวิท','MRT สีลม','MRT ห้วยขวาง'];
+let P=[],LOADING=true,LOADERR=false;
+function mapRow(r){
+  const created=new Date(r.created_at);const days=Math.max(0,Math.floor((Date.now()-created)/864e5));const a=r.agents||null;
+  const photos=(Array.isArray(r.photos)?r.photos:[]).filter(x=>x&&okPath(x.f)&&okPath(x.t));
+  return {id:r.id,code:String(r.code),owner:r.agent_id,mode:r.mode,kind:r.kind,project:String(r.project),district:String(r.district),station:r.station||null,walk:r.walk_m||null,
+    beds:+r.beds||0,baths:+r.baths||0,area:+r.area,floor:+r.floor||0,rent:+r.rent||0,sale:+r.sale||0,pets:!!r.pets,days,date:created,scene:r.scene,featured:!!r.featured,isNew:days<=7,
+    seed:hash(r.id),photos,desc:r.description||'',isSample:!!r.is_sample,fromAgent:!!r.agent_id,
+    agent:a?[a.name,a.name]:['ทีม Baan Thara','Baan Thara team'],agentLine:a?(a.line_id||''):CONFIG.line,agentPhone:a?(a.phone||''):CONFIG.phone,agentAvatar:a&&a.avatar_path&&okAny(a.avatar_path)?spub('avatars',a.avatar_path):null};
+}
+const LSEL='id,code,agent_id,mode,kind,project,district,station,walk_m,beds,baths,area,floor,rent,sale,pets,scene,description,photos,status,featured,is_sample,created_at,agents(name,line_id,phone,avatar_path)';
+async function loadListings(){
+  if(!SB){LOADING=false;LOADERR=true;renderResults();return;}
+  const {data,error}=await SB.from('listings').select(LSEL).eq('status','active').order('created_at',{ascending:false}).limit(1000);
+  LOADING=false;if(error){LOADERR=true;}else{LOADERR=false;P=data.map(mapRow);}
+  refreshFresh();renderChrome();renderAlert();renderResults();
+  if(uid())syncFavs();
+}
+/* ---------- illustrated photos (SVG) ---------- */
+function rng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647;}
+const pick=(r,a)=>a[Math.floor(r()*a.length)];
+function sky(r,id){const dusk=r()<.35;return `<linearGradient id="s${id}" x1="0" y1="0" x2="0" y2="1">${dusk?'<stop offset="0" stop-color="#6E7FB4"/><stop offset="1" stop-color="#F3B98A"/>':'<stop offset="0" stop-color="#8EC0E8"/><stop offset="1" stop-color="#E3EEF6"/>'}</linearGradient>`}
+function skyline(r,x,y,w,h){let s='',cx=x;while(cx<x+w){const bw=10+r()*22,bh=h*(.25+r()*.6);s+=`<rect x="${cx.toFixed(1)}" y="${(y+h-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${pick(r,['#8C9BAE','#A7B3C2','#7E8EA3','#B8C2CE'])}" opacity=".85"/>`;cx+=bw+1.5;}return s;}
+function windowEl(r,id,x,y,w,h){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#s${id})"/>${skyline(r,x,y+h*.35,w,h*.65)}<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2B2B2B" stroke-width="4"/><line x1="${x+w/2}" y1="${y}" x2="${x+w/2}" y2="${y+h}" stroke="#2B2B2B" stroke-width="3"/><rect x="${x}" y="${y+h-3}" width="${w}" height="6" fill="#3A3A3A"/>`;}
+function floor(r,y,c){let s=`<rect x="0" y="${y}" width="400" height="${300-y}" fill="${c}"/>`;for(let i=1;i<7;i++)s+=`<line x1="${i*60-r()*20}" y1="${y}" x2="${i*80-120}" y2="300" stroke="#000" stroke-opacity=".08"/>`;return s;}
+function plant(x,y){return `<rect x="${x-9}" y="${y-22}" width="18" height="22" rx="3" fill="#E9E4DA"/><circle cx="${x}" cy="${y-38}" r="14" fill="#4E7A4F"/><circle cx="${x-10}" cy="${y-30}" r="10" fill="#5F8E5E"/><circle cx="${x+10}" cy="${y-46}" r="9" fill="#3F6942"/>`;}
+function lamp(x){return `<line x1="${x}" y1="0" x2="${x}" y2="44" stroke="#333" stroke-width="1.5"/><path d="M${x-12} 58 L${x-6} 44 L${x+6} 44 L${x+12} 58Z" fill="#D9B46A"/><circle cx="${x}" cy="62" r="18" fill="#FFE9B0" opacity=".35"/>`;}
+function photo(seed,scene){
+  const r=rng(seed),id=seed;
+  const wall=pick(r,['#E7E1D7','#DAD5CC','#EEE9E1','#D1CABE','#E4DED2','#C9CFC8']);
+  const fl=pick(r,['#B4855A','#8E6643','#C59E76','#A27852','#9C8B78']);
+  const fab=pick(r,['#5A6670','#3E4A44','#8A7C6B','#2F3B4A','#B4ACA0','#6B5B4E']);
+  const acc=pick(r,['#D9A441','#7C9A6D','#C46A4A','#E8C468','#5E7FA8']);
+  let g=`<defs>${sky(r,id)}<linearGradient id="l${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>`;
+  let b='';
+  if(scene==='house'||scene==='town'){
+    const body=pick(r,['#F1EDE6','#E5DFD5','#D9D2C6','#F4F1EC']),roof=pick(r,['#3C3F44','#5A4A3E','#2F3A36','#6B4B3A']);
+    b+=`<rect width="400" height="300" fill="url(#s${id})"/><circle cx="${300+r()*60}" cy="${50+r()*20}" r="20" fill="#FFF3C9" opacity=".8"/>`;
+    b+=`<ellipse cx="60" cy="210" rx="70" ry="60" fill="#557A55"/><ellipse cx="350" cy="205" rx="65" ry="62" fill="#4A6E4C"/>`;
+    b+=`<rect x="0" y="230" width="400" height="70" fill="#6E9A5C"/><rect x="170" y="230" width="60" height="70" fill="#C9C1B3"/>`;
+    if(scene==='town'){for(let k=0;k<3;k++){const x=40+k*110;b+=`<rect x="${x}" y="110" width="105" height="125" fill="${body}" stroke="#0002"/><polygon points="${x-4},112 ${x+52},78 ${x+109},112" fill="${roof}"/><rect x="${x+14}" y="128" width="32" height="34" fill="url(#s${id})" stroke="#333" stroke-width="2"/><rect x="${x+58}" y="128" width="32" height="34" fill="url(#s${id})" stroke="#333" stroke-width="2"/><rect x="${x+14}" y="180" width="40" height="55" fill="#7A5A3E"/><rect x="${x+62}" y="185" width="30" height="26" fill="url(#s${id})" stroke="#333" stroke-width="2"/>`;}}
+    else{b+=`<rect x="85" y="120" width="230" height="115" fill="${body}"/><polygon points="70,124 200,62 330,124" fill="${roof}"/><rect x="235" y="85" width="80" height="45" fill="${body}"/><polygon points="228,88 275,62 322,88" fill="${roof}"/>`;
+      b+=`<rect x="105" y="140" width="56" height="48" fill="url(#s${id})" stroke="#333" stroke-width="3"/><rect x="250" y="140" width="50" height="48" fill="url(#s${id})" stroke="#333" stroke-width="3"/><rect x="180" y="160" width="44" height="75" fill="#6B4A32"/><circle cx="216" cy="198" r="2.5" fill="#E5C77B"/><rect x="248" y="98" width="54" height="26" fill="url(#s${id})" stroke="#333" stroke-width="2"/>`;
+      b+=`<ellipse cx="120" cy="236" rx="40" ry="10" fill="#4D7A45"/><ellipse cx="290" cy="236" rx="40" ry="10" fill="#4D7A45"/>`;}
+  } else {
+    b+=`<rect width="400" height="300" fill="${wall}"/>`;
+    const wx=scene==='kitchen'?250:150+r()*90,ww=scene==='studio'?150:120;
+    b+=windowEl(r,id,wx,36,ww,scene==='kitchen'?90:150);
+    if(scene!=='kitchen'){b+=`<rect x="${wx-30}" y="26" width="26" height="190" fill="${pick(r,['#EFE8DC','#9A8F82','#D7CFC1','#5C5A57'])}" opacity=".95"/><rect x="${wx+ww+4}" y="26" width="26" height="190" fill="#EDE6DA" opacity=".9"/><rect x="${wx-34}" y="22" width="${ww+68}" height="5" fill="#555"/>`;}
+    b+=floor(r,215,fl);
+    if(scene==='living'||scene==='studio'){
+      b+=`<ellipse cx="200" cy="268" rx="130" ry="22" fill="${pick(r,['#D8D1C4','#BFB5A6','#E7E1D6'])}"/>`;
+      const sx=scene==='studio'?40:70;
+      b+=`<rect x="${sx}" y="190" width="170" height="52" rx="10" fill="${fab}"/><rect x="${sx}" y="170" width="170" height="36" rx="10" fill="${fab}" style="filter:brightness(.9)"/><rect x="${sx-8}" y="188" width="20" height="54" rx="7" fill="${fab}"/><rect x="${sx+158}" y="188" width="20" height="54" rx="7" fill="${fab}"/><rect x="${sx+25}" y="180" width="34" height="24" rx="6" fill="${acc}"/><rect x="${sx+120}" y="182" width="30" height="22" rx="6" fill="#EEE"/>`;
+      b+=`<ellipse cx="270" cy="252" rx="34" ry="9" fill="#3B3B3B"/><rect x="267" y="252" width="6" height="18" fill="#3B3B3B"/>`;
+      b+=`<rect x="330" y="120" width="56" height="34" rx="2" fill="#1E1E1E"/><rect x="330" y="200" width="66" height="30" fill="#5B4636"/>`;
+      b+=plant(370,200);
+      if(scene==='studio'){b+=`<rect x="250" y="150" width="70" height="8" fill="#E6D8C0"/><rect x="258" y="158" width="4" height="60" fill="#888"/><rect x="308" y="158" width="4" height="60" fill="#888"/><circle cx="285" cy="140" r="9" fill="${acc}"/>`;}
+      b+=lamp(150+r()*100);
+    } else if(scene==='bedroom'){
+      b+=`<rect x="60" y="150" width="210" height="40" rx="6" fill="${fab}"/><rect x="50" y="186" width="230" height="66" rx="8" fill="#F4F2EE"/><rect x="50" y="210" width="230" height="44" rx="6" fill="${acc}" opacity=".85"/><rect x="72" y="172" width="70" height="24" rx="10" fill="#FFFFFF"/><rect x="188" y="172" width="70" height="24" rx="10" fill="#FFFFFF"/>`;
+      b+=`<rect x="290" y="200" width="44" height="42" fill="#6B523F"/><path d="M302 200 L306 176 L318 176 L322 200Z" fill="#E9D7A8"/><circle cx="312" cy="176" r="16" fill="#FFE9B0" opacity=".35"/>`;
+      b+=plant(368,240);
+    } else if(scene==='kitchen'){
+      b+=`<rect x="20" y="40" width="210" height="60" fill="${pick(r,['#F5F3EF','#7B6250','#DCD6CC'])}" stroke="#0002"/>`;for(let k=1;k<4;k++)b+=`<line x1="${20+k*52.5}" y1="40" x2="${20+k*52.5}" y2="100" stroke="#0002"/>`;
+      b+=`<rect x="20" y="150" width="330" height="70" fill="${pick(r,['#8A6A4E','#F1EEE8','#3E4A44'])}"/><rect x="14" y="142" width="342" height="10" fill="#EDEAE4"/>`;
+      for(let k=1;k<6;k++)b+=`<line x1="${20+k*55}" y1="152" x2="${20+k*55}" y2="220" stroke="#0003"/>`;
+      b+=`<rect x="110" y="128" width="42" height="14" rx="2" fill="#AAA"/><rect x="360" y="70" width="38" height="150" rx="4" fill="#DADDE0"/><line x1="364" y1="120" x2="394" y2="120" stroke="#9AA"/>`;
+      b+=`<circle cx="60" cy="134" r="8" fill="${acc}"/>${plant(210,142)}`;
+    } else { // dining
+      b+=`<rect x="20" y="70" width="70" height="90" fill="#EFE9DE" stroke="#0002"/><rect x="28" y="80" width="54" height="34" fill="${acc}" opacity=".6"/>`;
+      b+=`<rect x="90" y="200" width="200" height="10" rx="3" fill="#F5F4F1"/><rect x="100" y="210" width="6" height="50" fill="#333"/><rect x="274" y="210" width="6" height="50" fill="#333"/>`;
+      b+=`<ellipse cx="140" cy="198" rx="16" ry="4" fill="#fff" stroke="#ccc"/><ellipse cx="240" cy="198" rx="16" ry="4" fill="#fff" stroke="#ccc"/><rect x="186" y="178" width="8" height="20" fill="#9FC4B0"/><circle cx="190" cy="172" r="9" fill="#F2C94C"/>`;
+      b+=`<rect x="70" y="180" width="30" height="80" rx="4" fill="#2F2F2F"/><rect x="280" y="180" width="30" height="80" rx="4" fill="#2F2F2F"/>`;
+      for(let k=0;k<4;k++)b+=lamp(150+k*26).replace('stroke-width="1.5"','stroke-width="1"');
+      b+=`<rect x="320" y="170" width="70" height="80" rx="10" fill="${fab}"/>`;
+    }
+    b+=`<rect width="400" height="300" fill="url(#l${id})"/>`;
+  }
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">${g}${b}</svg>`;
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+const ALT={living:['bedroom','kitchen'],dining:['living','bedroom'],studio:['kitchen','bedroom'],bedroom:['living','kitchen'],kitchen:['living','bedroom'],house:['living','kitchen'],town:['living','bedroom']};
+const imgCache={};
+function imgsArt(p){if(!imgCache[p.code])imgCache[p.code]=[photo(p.seed,p.scene),photo(p.seed+7,ALT[p.scene][0]),photo(p.seed+13,ALT[p.scene][1]),photo(p.seed+21,p.scene==='house'||p.scene==='town'?'dining':'dining')];return imgCache[p.code];}
+
+/* ---------- state ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const h0=(location.hash||'').replace('#','');
+const S={lang:store.get('bt_lang','th'),mode:['rent','sale'].includes(h0)?h0:'all',q:'',pet:false,bts:false,sort:0,view:'grid',kind:'all',bed:0,min:'',max:'',dist:'all',favOnly:false,featured:false,favs:new Set(store.get('bt_favs',[])),shown:9,filOpen:false};
+const t=()=>T[S.lang];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>'฿'+Math.round(n).toLocaleString('en-US');
+const fmtDate=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const priceOf=p=>{const m=S.mode==='sale'?'s':S.mode==='rent'?'r':(p.mode.includes('r')?'r':'s');return m==='r'&&p.rent?{v:p.rent,r:true}:{v:p.sale||p.rent,r:!p.sale}};
+const titleOf=p=>{const pre=p.mode==='s'||(S.mode==='sale'&&p.sale)?t().sale:t().rent;const k=p.kind==='condo'?(S.lang==='th'?'คอนโด ':''):t().kinds[p.kind]+' ';return `${pre} ${k}${p.project}`};
+const loc=p=>esc(`${p.district}, ${PROV[p.district]||'Bangkok'}`);
+const station=p=>{if(!p.station)return '';if(S.lang==='th')return p.station;return p.station.replace('BTS ','BTS ').replace(/พร้อมพงษ์/,'Phrom Phong').replace(/อ่อนนุช/,'On Nut').replace(/ทองหล่อ/,'Thong Lo').replace(/อารีย์/,'Ari').replace(/พระราม 9/,'Phra Ram 9').replace(/เอกมัย/,'Ekkamai').replace(/ช่องนนทรี/,'Chong Nonsi').replace(/ราชเทวี/,'Ratchathewi').replace(/บางซื่อ/,'Bang Sue').replace(/กรุงธนบุรี/,'Krung Thon Buri').replace(/ลาดพร้าว 71/,'Lat Phrao 71').replace(/อนุสาวรีย์ชัยฯ/,'Victory Monument');};
+
+function filtered(){
+  const q=S.q.trim().toLowerCase();
+  let a=P.filter(p=>{
+    if(S.mode==='rent'&&!p.mode.includes('r'))return false;
+    if(S.mode==='sale'&&!p.mode.includes('s'))return false;
+    if(S.pet&&!p.pets)return false;
+    if(S.bts&&!p.station)return false;
+    if(S.kind!=='all'&&p.kind!==S.kind)return false;
+    if(S.bed&&(S.bed===3?p.beds<3:p.beds!==S.bed))return false;
+    if(S.dist!=='all'&&p.district!==S.dist)return false;
+    if(S.favOnly&&!S.favs.has(p.code))return false;
+    if(S.featured&&!p.featured)return false;
+    const pr=priceOf(p).v;
+    if(S.min!==''&&pr<+S.min)return false;
+    if(S.max!==''&&pr>+S.max)return false;
+    if(q){const hay=(p.project+' '+p.district+' '+p.code+' '+(p.station||'')+' '+station(p)+' '+t().kinds[p.kind]).toLowerCase();if(!hay.includes(q))return false;}
+    return true;});
+  const s=S.sort;
+  a.sort((x,y)=>s===0?y.date-x.date:s===1?priceOf(x).v-priceOf(y).v:s===2?priceOf(y).v-priceOf(x).v:y.area-x.area);
+  return a;
+}
+const filtersActive=()=>S.kind!=='all'||S.bed||S.min!==''||S.max!==''||S.dist!=='all'||S.favOnly;
+
+/* ---------- render ---------- */
+function renderChrome(){
+  const L=t();document.documentElement.lang=S.lang==='zh'?'zh':S.lang;
+  const navActive=S.featured?2:1;
+  $('#nav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}" class="${i===navActive?'on':''}">${n}</button>`).join('');
+  $('#mnav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}">${n}</button>`).join('')+`<button data-nav="agent">${L.agent}</button>`;
+  $('#agentLogin').innerHTML=ic('brief')+`<span>${L.agent}</span>`;
+  const cur=LANGS.find(l=>l[0]===S.lang);
+  $('#langBtn').innerHTML=ic('globe')+`<span class="lang-label">${cur[1]==='GB'?'EN':cur[1]}</span>`+ic($('#langMenu').hidden?'down':'up',14);
+  $('#langMenu').innerHTML=LANGS.map(l=>`<button data-lang="${l[0]}" class="${l[0]===S.lang?'on':''}"><span class="cc">${l[1]}</span>${l[2]}${l[0]===S.lang?`<span class="ck">${ic('check',16)}</span>`:''}</button>`).join('');
+  $('#bookTop').textContent=L.book;
+  $('#burger').innerHTML=ic('menu');
+  $('#eyebrow').textContent=S.featured?L.nav[2]:L.eyebrow;
+  $('#h1').textContent=S.featured?L.nav[2]:L.h1;$('#sub').textContent=L.sub;
+  $('#seg').innerHTML=[['all',L.all],['rent',L.rent],['sale',L.sale]].map(([k,v])=>`<button role="tab" aria-selected="${S.mode===k}" class="${S.mode===k?'on':''}" data-mode="${k}">${v}</button>`).join('');
+  $('#q').placeholder=L.q;
+  $('#petBtn').innerHTML=ic('paw')+L.pet;$('#petBtn').classList.toggle('on',S.pet);
+  $('#btsBtn').innerHTML=ic('train')+L.bts;$('#btsBtn').classList.toggle('on',S.bts);
+  $('#saveBtn').innerHTML=ic('bell')+(SS?L3('แจ้งเตือนเปิดอยู่','Alert on','提醒已开启'):L3('แจ้งเตือนทรัพย์ใหม่','Alert me','新房源提醒'));$('#saveBtn').classList.toggle('on',!!SS);
+  $('#filBtn').innerHTML=ic('sliders')+L.fil+(filtersActive()?'<span class="dot"></span>':'');$('#filBtn').classList.toggle('on',S.filOpen);
+  $('#sort').innerHTML=L.sort.map((s,i)=>`<option value="${i}" ${i===S.sort?'selected':''}>${s}</option>`).join('');
+  $('#vGrid').innerHTML=ic('grid');$('#vTable').innerHTML=ic('table');
+  $('#vGrid').classList.toggle('on',S.view==='grid');$('#vTable').classList.toggle('on',S.view==='table');
+  $('#chatBtn').innerHTML=ic('chat',20)+`<span>${L.chatAdmin}</span>`;
+  $('#aiBtn').innerHTML=ic('spark',20)+`<span>${L.ai}</span>`;
+  $('#moreBtn').textContent=L.more;
+  $('#foot1').textContent=L.foot1;$('#foot2').textContent=L.foot2;
+  renderFilters();renderAcctBtn();
+}
+function renderFilters(){
+  const L=t(),f=$('#filters');f.hidden=!S.filOpen;if(!S.filOpen)return;
+  const dists=[...new Set(P.map(p=>p.district))].sort();
+  f.innerHTML=`
+   <div><label>${L.fKind}</label><div class="pills">${[['all',L.all],['condo',L.kinds.condo],['house',L.kinds.house],['town',L.kinds.town]].map(([k,v])=>`<button data-kind="${k}" class="${S.kind===k?'on':''}">${v}</button>`).join('')}</div></div>
+   <div><label>${L.fBed}</label><div class="pills">${[[0,L.any],[1,'1'],[2,'2'],[3,'3+']].map(([k,v])=>`<button data-bed="${k}" class="${S.bed===k?'on':''}">${v}</button>`).join('')}</div></div>
+   <div><label for="fmin">${L.fPrice}</label><div class="range"><input id="fmin" type="number" inputmode="numeric" placeholder="${L.min}" value="${S.min}"><span>–</span><input id="fmax" type="number" inputmode="numeric" placeholder="${L.max}" value="${S.max}"></div></div>
+   <div><label for="fdist">${L.fDist}</label><select id="fdist"><option value="all">${L.all}</option>${dists.map(d=>`<option ${S.dist===d?'selected':''}>${d}</option>`).join('')}</select></div>
+   <div><label>${L.fFav}</label><div class="pills"><button data-favonly class="${S.favOnly?'on':''}">${ic('heart',14)} ${L.favOnly} (${S.favs.size})</button></div></div>
+   <div class="f-actions"><button class="btn outline" data-clear>${L.clear}</button></div>`;
+}
+function card(p){
+  const L=t(),pr=priceOf(p),im=imgs(p)[0],fav=S.favs.has(p.code);
+  const tags=[p.mode.includes('s')&&S.mode!=='rent'?`<span class="tag sale">${L.sale}</span>`:'',p.mode.includes('r')&&S.mode!=='sale'?`<span class="tag rent">${L.rent}</span>`:''].join('');
+  return `<article class="card">
+   <div class="media" data-open="${p.code}"><img src="${im}" alt="${esc(p.project)}" loading="lazy">
+    ${p.isNew?`<span class="tag new">${L.isNew}</span>`:''}${FRESH.has(p.code)?`<span class="tag foryou"${p.isNew?'':' style="top:14px"'}>${L3('ใหม่สำหรับคุณ','New for you','为您新增')}</span>`:''}
+    <button class="fav ${fav?'on':''}" data-fav="${p.code}" aria-label="favorite" aria-pressed="${fav}">${ic('heart')}</button>
+    <div class="tags-r">${tags}</div>
+    <span class="price">${fmt(pr.v)}${pr.r?`<small>${L.mo}</small>`:''}</span>
+    <div class="qa"><button class="ln" data-line="${p.code}" aria-label="LINE">${ic('chat')}</button><button class="ms" data-book="${p.code}" aria-label="${L.book}">${ic('msg')}</button></div>
+   </div>
+   <div class="body">
+    <div class="ttl"><h3 data-open="${p.code}" title="${esc(titleOf(p))}">${esc(titleOf(p))}</h3><span class="code">${p.code}</span></div>
+    ${p.fromAgent?`<span class="src">${ic('brief',13)}${esc(p.agent[0])}</span>`:''}${p.isSample?`<span class="src" style="color:var(--muted);background:var(--soft)">${L3('ประกาศตัวอย่าง','Sample listing','示例房源')}</span>`:''}
+    <div class="meta">${ic('pin')}${loc(p)}</div>
+    <div class="meta sm">${ic('cal')}${L.listedOn} ${fmtDate(p.date)}</div>
+    ${p.station?`<div class="bts">${ic('train')}${esc(station(p))}</div>`:''}
+    <div class="specs"><span>${ic('bed')}${p.beds} ${L.bedU}</span><span>${ic('bath')}${p.baths} ${L.bathU}</span><span>${ic('area')}${p.area} m²</span><span class="pm">${fmt(pr.v/p.area)}/m²</span></div>
+   </div>
+   <button class="more" data-open="${p.code}">${L.detail}${ic('arrow')}</button>
+  </article>`;
+}
+function renderResults(){
+  const L=t(),list=filtered(),shown=list.slice(0,S.shown);
+  $('#count').innerHTML=S.lang==='en'?`${L.found} <b>${list.length}</b> ${L.items}`:`${L.found} <b>${list.length}</b> ${L.items}`;
+  const R=$('#results');if(LOADING||LOADERR){R.innerHTML=`<div class="empty">${LOADERR?L3('โหลดประกาศไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วรีเฟรชหน้า','Could not load listings. Check your connection and refresh.','加载失败，请刷新。'):L3('กำลังโหลดประกาศ…','Loading listings…','加载中…')}</div>`;$('#loadmore').hidden=true;$('#count').innerHTML='';return;}
+  if(!list.length){R.innerHTML=`<div class="empty">${L.none}<div style="margin-top:14px"><button class="btn outline" data-clear>${L.clear}</button></div></div>`;$('#loadmore').hidden=true;return;}
+  if(S.view==='grid')R.innerHTML=`<div class="grid">${shown.map(card).join('')}</div>`;
+  else R.innerHTML=`<div class="tbl-wrap"><table><thead><tr><th>${L.thPhoto}</th><th>${L.thName}</th><th>${L.thLoc}</th><th>${L.thType}</th><th>${L.thBed}</th><th>${L.thArea}</th><th>${L.thPrice}</th><th>${L.thPm}</th></tr></thead><tbody>${shown.map(p=>{const pr=priceOf(p);return `<tr data-open="${p.code}"><td><img src="${imgs(p)[0]}" alt=""></td><td><b>${esc(p.project)}</b><br><span class="code">${p.code}</span></td><td>${loc(p)}${p.station?`<br><small style="color:var(--muted)">${esc(station(p))}</small>`:''}</td><td>${p.mode.includes('r')?`<span class="mini" style="background:var(--tag-dark);color:var(--tag-dark-ink)">${L.rent}</span>`:''}${p.mode.includes('s')?`<span class="mini" style="background:var(--tag-light);color:var(--tag-light-ink);border:1px solid var(--tag-light-ink)">${L.sale}</span>`:''}<br><small>${L.kinds[p.kind]}</small></td><td>${p.beds} / ${p.baths}</td><td>${p.area} m²</td><td><b>${fmt(pr.v)}</b>${pr.r?L.mo:''}</td><td>${fmt(pr.v/p.area)}</td></tr>`}).join('')}</tbody></table></div>`;
+  $('#loadmore').hidden=list.length<=S.shown;
+}
+function render(){renderChrome();renderAlert();renderResults();}
+
+/* ---------- modals ---------- */
+const layer=$('#layer');let lastFocus=null;
+function openModal(html,cls=''){lastFocus=document.activeElement;layer.innerHTML=`<div class="ov" data-ov><div class="dlg ${cls}" role="dialog" aria-modal="true"><button class="x" data-close aria-label="close">${ic('x')}</button>${html}</div></div>`;document.body.style.overflow='hidden';const f=layer.querySelector('input,select,button:not(.x)');(f||layer.querySelector('.x')).focus();}
+function closeModal(){agentOpen=false;layer.innerHTML='';document.body.style.overflow='';lastFocus&&lastFocus.focus&&lastFocus.focus();}
+function openDetail(code){
+  const p=P.find(x=>x.code===code),L=t(),im=imgsFull(p),th=imgsThumbs(p),pr=priceOf(p);galIdx=0;
+  const amen=AMEN[p.kind].map(a=>`<span>${S.lang==='th'?a:AMEN_EN[a]||a}</span>`).join('');
+  const descTH=`${t().kinds[p.kind]} ${p.project} ${p.beds} ห้องนอน ${p.baths} ห้องน้ำ พื้นที่ ${p.area} ตร.ม.${p.floor?` ชั้น ${p.floor}`:''} ตกแต่งครบ พร้อมเข้าอยู่ ${p.station?`เดินทางสะดวกใกล้ ${p.station}`:'อยู่ในโครงการเงียบสงบ เดินทางเข้าเมืองสะดวก'} ${p.pets?'เลี้ยงสัตว์เลี้ยงได้':''}`;
+  const descEN=`${p.beds}-bedroom ${t().kinds[p.kind].toLowerCase()} at ${p.project}, ${p.area} m²${p.floor?`, floor ${p.floor}`:''}. Fully furnished and ready to move in. ${p.station?`Easy access to ${station(p)}.`:'Quiet project with easy access to the city.'}${p.pets?' Pets welcome.':''}`;
+  const both=p.rent&&p.sale;
+  openModal(`
+   <div class="gal-main"><img id="galImg" src="${im[0]}" alt="${esc(p.project)}"></div>
+   <div class="thumbs">${th.map((s,i)=>`<button data-thumb="${i}" class="${i?'':'on'}" aria-label="photo ${i+1}"><img src="${s}" alt=""></button>`).join('')}</div>
+   <div class="d-body">
+    <div style="min-width:0">
+     <div class="d-badges">${p.isNew?`<span class="tag new">${L.isNew}</span>`:''}${p.mode.includes('r')?`<span class="tag rent">${L.rent}</span>`:''}${p.mode.includes('s')?`<span class="tag sale">${L.sale}</span>`:''}<span class="code">${p.code}</span></div>
+     <h2>${esc(titleOf(p))}</h2>
+     <div class="meta">${ic('pin')}${loc(p)}</div>
+     <div class="facts">
+      <div class="fact"><small>${L.fBed}</small><b>${p.beds}</b></div>
+      <div class="fact"><small>${L.bathL}</small><b>${p.baths}</b></div>
+      <div class="fact"><small>${L.areaL}</small><b>${p.area} m²</b></div>
+      ${p.floor?`<div class="fact"><small>${L.floor}</small><b>${p.floor}</b></div>`:''}
+      <div class="fact"><small>${L.pets}</small><b>${p.pets?L.petsY:L.petsN}</b></div>
+      ${p.station?`<div class="fact"><small>${L.nearest}</small><b style="font-size:14.5px">${esc(station(p))}</b></div>`:''}
+     </div>
+     <h4>${L.about}</h4><p class="desc">${esc(p.desc||(S.lang==='th'?descTH:descEN))}</p>
+     <h4>${L.amen}</h4><div class="amen">${amen}</div>
+     ${travelHTML(p)}${calcHTML(p)}
+    </div>
+    <aside class="side">
+     ${p.rent?`<div class="big">${fmt(p.rent)}<small style="font-size:15px;font-weight:500">${L.mo}</small></div><div class="sub">${L.dep}</div>`:''}
+     ${p.sale?`<div class="big"${both?' style="font-size:21px"':''}>${both?L.sale+' ':''}${fmt(p.sale)}</div><div class="sub">${fmt(p.sale/p.area)}/m² · ${L.xfer}</div>`:''}
+     <button class="btn" data-book="${p.code}">${ic('cal')}${L.bookView}</button>
+     <button class="btn lnb" data-line="${p.code}">${ic('chat')}${L.lineC}</button>
+     <div class="agent">${p.agentAvatar?`<img src="${p.agentAvatar}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover">`:`<div class="av">${esc((p.agent[1]||'A')[0])}</div>`}<div><b>${esc(S.lang==='th'?p.agent[0]:p.agent[1])}</b><small>${L.agentT}</small></div></div>
+     ${p.agentLine?`<div class="copyline"><span>LINE</span><code>${esc(p.agentLine)}</code><button data-copy="${esc(p.agentLine)}">${L.copy}</button></div>`:''}
+     <div class="copyline"><code>${esc(p.agentPhone||CONFIG.phone)}</code><button data-copy="${esc(p.agentPhone||CONFIG.phone)}">${L.copy}</button></div>
+    </aside>
+   </div>`);
+  recalc();
+}
+function openBooking(code){
+  const L=t(),d=new Date(today);d.setDate(d.getDate()+1);const minD=d.toISOString().slice(0,10);
+  openModal(`<form class="bk" id="bkForm" novalidate>
+   <h3>${L.bkTitle}</h3>
+   <div><label for="bkP">${L.bkProp}</label><select id="bkP"><option value="">${L.bkGeneral}</option>${P.map(p=>`<option value="${p.code}" ${p.code===code?'selected':''}>${p.code} · ${esc(p.project)}</option>`).join('')}</select></div>
+   <div><label for="bkN">${L.bkName}</label><input id="bkN" autocomplete="name"></div>
+   <div><label for="bkT">${L.bkPhone}</label><input id="bkT" inputmode="tel" autocomplete="tel" placeholder="08x-xxx-xxxx"></div>
+   <div class="row2"><div><label for="bkD">${L.bkDate}</label><input id="bkD" type="date" min="${minD}" value="${minD}"></div><div><label for="bkS">${L.bkTime}</label><select id="bkS">${L.bkTimes.map(x=>`<option>${x}</option>`).join('')}</select></div></div>
+   <div><label for="bkM">${L.bkNote}</label><textarea id="bkM" rows="2"></textarea></div>
+   <label style="display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink)"><input type="checkbox" id="bkC" style="width:auto;margin-top:4px"> <span>${L3('ยินยอมให้ Baan Thara และเอเจนต์ผู้ดูแลทรัพย์ เก็บและใช้ชื่อและเบอร์โทรนี้เพื่อติดต่อเรื่องนัดชมเท่านั้น ขอลบข้อมูลได้ทุกเมื่อที่','I agree that Baan Thara and the listing agent may store and use this name and phone number only to arrange the viewing. Ask for deletion anytime at','同意 Baan Thara 及经纪人仅为安排看房使用此姓名和电话。如需删除请联系')} ${esc(CONFIG.phone)}</span></label>
+   <div class="err" id="bkErr" hidden>${L.bkErr}</div>
+   <button class="btn" type="submit">${L.bkSend}</button>
+  </form>`,'sm');
+}
+document.addEventListener('submit',async e=>{
+  if(e.target.id==='bkForm'){e.preventDefault();const L=t(),n=$('#bkN').value.trim(),ph=$('#bkT').value.replace(/\D/g,''),dt=$('#bkD').value,err=$('#bkErr');
+    if(!n||ph.length<9||ph.length>10||!dt){err.textContent=L.bkErr;err.hidden=false;return;}
+    if(!$('#bkC').checked){err.textContent=L3('กรุณาติ๊กยินยอมก่อนส่ง','Please tick the consent box.','请勾选同意。');err.hidden=false;return;}
+    const pc=$('#bkP').value,p=P.find(x=>x.code===pc);const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+    const slot=$('#bkS').value,note=$('#bkM').value.trim().slice(0,1000);
+    const {error}=SB?await SB.from('viewing_requests').insert({listing_id:p?p.id:null,name:n.slice(0,100),phone:ph,preferred_date:dt,time_slot:slot,note:note||null,consent:true}):{error:true};
+    btn.disabled=false;
+    if(error){err.textContent=L3('ส่งคำขอไม่สำเร็จ ลองอีกครั้ง หรือโทร ','Could not send. Try again or call ','发送失败，请重试或致电 ')+CONFIG.phone;err.hidden=false;return;}
+    e.target.innerHTML=`<h3>${L.bkTitle}</h3><div class="ok"><b>${ic('check')} ${L.bkOk}</b><p style="margin:10px 0 0">${esc(n)} · ${esc(ph)}<br>${esc(dt)} · ${esc(slot)}${p?`<br>${esc(p.code)} · ${esc(p.project)}`:''}</p></div><button class="btn outline" type="button" data-close>OK</button>`;}
+  if(e.target.id==='aiForm'){e.preventDefault();const v=$('#aiIn').value.trim();if(v){$('#aiIn').value='';aiAsk(v);}}
+});
+
+/* ---------- panels: admin chat & AI ---------- */
+let panel=null;
+function closePanel(){const el=document.getElementById('panel');if(el)el.remove();panel=null;}
+function openChat(){
+  if(panel==='chat'){closePanel();return;}closePanel();panel='chat';const L=t();
+  document.body.insertAdjacentHTML('beforeend',`<div class="panel l" id="panel"><header>${ic('chat')}<b>${L.chatAdmin}</b><button data-pclose aria-label="close">${ic('x')}</button></header>
+   <div class="msgs"><div class="m bot">${L.chatHi}</div>
+   <div class="copyline"><span>LINE</span><code>${esc(CONFIG.line)}</code><button data-copy="${esc(CONFIG.line)}">${L.copy}</button></div>
+   <div class="copyline"><span>${ic('phone',16)}</span><code>${esc(CONFIG.phone)}</code><button data-copy="${esc(CONFIG.phone)}">${L.copy}</button></div>
+   <button class="btn" data-book="">${ic('cal')}${L.bookView}</button></div></div>`);
+}
+let aiLog=[];
+function openAI(){
+  if(panel==='ai'){closePanel();return;}closePanel();panel='ai';const L=t();
+  document.body.insertAdjacentHTML('beforeend',`<div class="panel r" id="panel"><header>${ic('spark')}<b>${L.aiTitle}</b><button data-pclose aria-label="close">${ic('x')}</button></header>
+   <div class="msgs" id="aiMsgs"><div class="m bot">${L.aiHi}</div>${aiLog.join('')}</div>
+   <div class="sugg">${L.aiSugg.map(s=>`<button data-ask="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+   <form id="aiForm"><input id="aiIn" placeholder="${L.aiPh}" autocomplete="off"><button class="btn" style="padding:9px 13px" aria-label="send">${ic('send')}</button></form></div>`);
+  $('#aiIn').focus();const m=$('#aiMsgs');m.scrollTop=m.scrollHeight;
+}
+let aiLast=null;
+function aiAsk(text){
+  const L=t(),s=text.toLowerCase();
+  const nums=(s.replace(/,/g,'').match(/\d{4,}/g)||[]).map(Number);
+  const budget=nums.length?Math.max(...nums):null;
+  const wantSale=/ขาย|ซื้อ|buy|sale|出售|购/.test(s),wantRent=/เช่า|rent|租/.test(s);
+  const pet=/สัตว์|หมา|แมว|pet|dog|cat|宠/.test(s),bts=/bts|mrt|รถไฟฟ้า|轻轨|地铁/.test(s);
+  const bm=s.match(/(\d)\s*(ห้องนอน|นอน|bed|卧)/)||s.match(/(两|二)卧/);const beds=bm?(bm[1]==='两'||bm[1]==='二'?2:+bm[1]):null;
+  const kind=/บ้านเดี่ยว|house|villa|别墅/.test(s)&&!/ทาวน์|town|联排/.test(s)?'house':/ทาวน์|town|联排/.test(s)?'town':/คอนโด|condo|公寓/.test(s)?'condo':null;
+  const areaMap={'ทองหล่อ':'Thong Lo','thonglor':'Thong Lo','通罗':'Thong Lo','อโศก':'Asok','อารีย์':'Ari','อ่อนนุช':'On Nut','สีลม':'Silom','เอกมัย':'Ekkamai','พระราม 9':'Rama 9','บางซื่อ':'Bang Sue','ลาดพร้าว':'Lat Phrao','พร้อมพงษ์':'Phrom Phong','บางนา':'Bang'};
+  let areaQ=null;for(const k in areaMap)if(s.includes(k.toLowerCase()))areaQ=k;
+  const known=[...new Set(P.map(p=>p.district.toLowerCase()))].find(d=>s.includes(d));
+  let res=P.map(p=>{let sc=0,ok=true;
+    if(wantSale&&!p.mode.includes('s'))ok=false; if(wantRent&&!wantSale&&!p.mode.includes('r'))ok=false;
+    const price=wantSale?p.sale:(p.rent||p.sale);
+    if(budget&&price>budget*1.1)ok=false; if(budget&&price<=budget)sc+=2;
+    if(pet&&!p.pets)ok=false; if(bts&&!p.station)ok=false;
+    if(beds&&p.beds!==beds)sc-=2; else if(beds)sc+=2;
+    if(kind&&p.kind!==kind)ok=false;
+    const hay=(p.project+' '+p.district+' '+(p.station||'')+' '+station(p)).toLowerCase();
+    if(areaQ){if(hay.includes(areaQ.toLowerCase())||hay.includes(areaMap[areaQ].toLowerCase())||(areaQ==='ทองหล่อ'&&p.district==='Watthana'))sc+=3;else sc-=3;}
+    if(known){if(p.district.toLowerCase()===known)sc+=3;else ok=false;}
+    return {p,sc,ok};}).filter(x=>x.ok&&x.sc>=0).sort((a,b)=>b.sc-a.sc||a.p.days-b.p.days);
+  aiLast={budget,wantSale,wantRent,pet,bts,beds,kind};
+  let reply;
+  if(!res.length)reply=`<div class="m bot">${L.aiNone}</div>`;
+  else reply=`<div class="m bot">${L.aiFound(res.length)}${res.slice(0,3).map(({p})=>{const pr=wantSale?{v:p.sale,r:false}:{v:p.rent||p.sale,r:!!p.rent};return `<button class="pick" data-open="${p.code}"><img src="${imgs(p)[0]}" alt=""><span><b>${esc(p.project)}</b><small>${fmt(pr.v)}${pr.r?L.mo:''} · ${p.beds} ${L.bedU} · ${p.area} m²</small></span></button>`}).join('')}<button class="pick" data-applyai style="justify-content:center">${L.aiShow} ${ic('arrow',14)}</button></div>`;
+  aiLog.push(`<div class="m me">${esc(text)}</div>`,reply);
+  const m=$('#aiMsgs');if(m){m.insertAdjacentHTML('beforeend',`<div class="m me">${esc(text)}</div>`+reply);m.scrollTop=m.scrollHeight;}
+}
+function applyAI(){const a=aiLast;if(!a)return;Object.assign(S,{mode:a.wantSale?'sale':a.wantRent?'rent':'all',pet:a.pet,bts:a.bts,bed:a.beds?Math.min(a.beds,3):0,kind:a.kind||'all',max:a.budget?String(a.budget):'',min:'',q:'',dist:'all',favOnly:false,featured:false,shown:9});$('#q').value='';closePanel();render();$('#count').scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ---------- toast ---------- */
+let tt;function toast(m){let el=document.getElementById('toast');if(!el){el=document.createElement('div');el.id='toast';el.className='toast';el.setAttribute('role','status');document.body.appendChild(el);}el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2200);}
+function copy(v,btn){const done=()=>{const o=btn.textContent;btn.textContent=t().copied;setTimeout(()=>btn.textContent=o,1400)};try{navigator.clipboard.writeText(v).then(done,()=>{selectNear(btn)})}catch(e){selectNear(btn)}}
+function selectNear(btn){const c=btn.parentElement.querySelector('code');if(c){const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r);}}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('button,[data-open],[data-ov],a');
+  if(e.target.matches('[data-ov]')){closeModal();return;}
+  if(!el)return;const ds=el.dataset;
+  if(el.id==='brand'){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(ds.fav){e.stopPropagation();S.favs.has(ds.fav)?S.favs.delete(ds.fav):S.favs.add(ds.fav);store.set('bt_favs',[...S.favs]);el.classList.toggle('on');el.setAttribute('aria-pressed',S.favs.has(ds.fav));if(S.filOpen)renderFilters();if(S.favOnly)renderResults();return;}
+  if(ds.line!==undefined&&ds.line!==null&&'line' in ds){closeModal();openChat();return;}
+  if('book' in ds){closePanel();openBooking(ds.book);return;}
+  if(ds.open){closePanel();openDetail(ds.open);return;}
+  if('close' in ds){closeModal();return;}
+  if('pclose' in ds){closePanel();return;}
+  if(ds.thumb){galIdx=+ds.thumb;$('#galImg').src=imgsFull(P.find(p=>p.code===layer.querySelector('.d-badges .code').textContent))[galIdx];layer.querySelectorAll('[data-thumb]').forEach(b=>b.classList.toggle('on',b===el));return;}
+  if(ds.copy){copy(ds.copy,el);return;}
+  if(ds.ask){aiAsk(ds.ask);return;}
+  if('applyai' in ds){applyAI();return;}
+  if(ds.mode){S.mode=ds.mode;S.shown=9;try{history.replaceState(null,'',ds.mode==='all'?location.pathname:'#'+ds.mode)}catch(_){}render();return;}
+  if(ds.lang){S.lang=ds.lang;store.set('bt_lang',S.lang);$('#langMenu').hidden=true;closePanel();render();return;}
+  if(ds.kind){S.kind=ds.kind;S.shown=9;render();return;}
+  if(ds.bed!==undefined){S.bed=+ds.bed;S.shown=9;render();return;}
+  if('favonly' in ds){S.favOnly=!S.favOnly;S.shown=9;render();return;}
+  if('clear' in ds){Object.assign(S,{kind:'all',bed:0,min:'',max:'',dist:'all',favOnly:false,pet:false,bts:false,q:'',featured:false,shown:9});$('#q').value='';render();return;}
+  if(ds.nav!==undefined){$('#mnav').classList.remove('open');const n=ds.nav;
+    if(n==='0'){S.featured=false;render();window.scrollTo({top:0,behavior:'smooth'});}
+    else if(n==='1'){S.featured=false;S.shown=9;render();$('#count').scrollIntoView({behavior:'smooth'});}
+    else if(n==='2'){S.featured=true;S.shown=9;render();$('#count').scrollIntoView({behavior:'smooth'});}
+    else if(n==='5'){openChat();}
+    else if(n==='3'||n==='agent'){openAgent();}
+    else toast(t().soon);return;}
+  switch(el.id){
+    case 'langBtn':{const m=$('#langMenu');m.hidden=!m.hidden;el.setAttribute('aria-expanded',!m.hidden);renderChrome();return;}
+    case 'bookTop':openBooking('');return;
+    case 'agentLogin':openAcct();return;
+    case 'saveBtn':saveSearch();return;
+    case 'burger':$('#mnav').classList.toggle('open');return;
+    case 'petBtn':S.pet=!S.pet;S.shown=9;render();return;
+    case 'btsBtn':S.bts=!S.bts;S.shown=9;render();return;
+    case 'filBtn':S.filOpen=!S.filOpen;el.setAttribute('aria-expanded',S.filOpen);renderChrome();return;
+    case 'vGrid':S.view='grid';render();return;
+    case 'vTable':S.view='table';render();return;
+    case 'moreBtn':S.shown+=9;renderResults();return;
+    case 'chatBtn':openChat();return;
+    case 'aiBtn':openAI();return;
+  }
+});
+document.addEventListener('click',e=>{const m=$('#langMenu');if(!m.hidden&&!e.target.closest('.lang')){m.hidden=true;renderChrome();}},true);
+$('#q').addEventListener('input',e=>{S.q=e.target.value;S.shown=9;renderResults();});
+$('#sort').addEventListener('change',e=>{S.sort=+e.target.value;renderResults();});
+document.addEventListener('change',e=>{if(e.target.id==='fdist'){S.dist=e.target.value;S.shown=9;render();}});
+document.addEventListener('input',e=>{if(e.target.id==='fmin'||e.target.id==='fmax'){S[e.target.id==='fmin'?'min':'max']=e.target.value;S.shown=9;renderResults();const b=$('#filBtn');b.innerHTML=ic('sliders')+t().fil+(filtersActive()?'<span class="dot"></span>':'');}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(layer.innerHTML)closeModal();else if(panel)closePanel();else{$('#langMenu').hidden=true;renderChrome();}}
+  if(e.key==='Enter'&&e.target.matches('tr[data-open]'))openDetail(e.target.dataset.open);});
+/* ---------- helpers ---------- */
+const L3=(th,en,zh)=>S.lang==='en'?en:S.lang==='zh'?(zh||en):th;
+const num=(v,lo,hi)=>{v=Number(v);return isFinite(v)?Math.min(hi,Math.max(lo,v)):0};
+const str=(v,n)=>String(v==null?'':v).slice(0,n).trim();
+
+/* ---------- travel ---------- */
+const DCOORD={'Watthana':[13.737,100.585],'Suan Luang':[13.72,100.65],'Phaya Thai':[13.78,100.54],'Taling Chan':[13.77,100.44],'Huai Khwang':[13.77,100.58],'Lat Phrao':[13.83,100.61],'Bang Rak':[13.725,100.525],'Khlong Toei':[13.715,100.57],'Pathum Wan':[13.745,100.53],'Bang Sue':[13.81,100.53],'Khlong San':[13.72,100.505],'Wang Thonglang':[13.78,100.61],'Yan Nawa':[13.69,100.54],'Ratchathewi':[13.76,100.535],'Bang Phli':[13.62,100.71],'Bang Na':[13.67,100.62],'Chatuchak':[13.82,100.56],'Sathon':[13.715,100.53],'Phra Khanong':[13.705,100.6],'Din Daeng':[13.77,100.56]};
+const LMK=[['สยาม','Siam','暹罗',13.746,100.534],['อโศก','Asok','阿索',13.737,100.561],['สีลม','Silom','是隆',13.728,100.534],['สนามบินสุวรรณภูมิ','Suvarnabhumi Airport','素万那普机场',13.69,100.75],['สนามบินดอนเมือง','Don Mueang Airport','廊曼机场',13.913,100.604]];
+function km(a,b,c,d){const R=6371,r=x=>x*Math.PI/180,dl=r(c-a),dn=r(d-b);const h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+const walkOf=p=>!p.station?null:(p.walk||(120+Math.floor(((p.seed*37)%780)/10)*10));
+function travelHTML(p){
+  const c=DCOORD[p.district];const w=walkOf(p);
+  const q=encodeURIComponent((p.station?station(p)+' station':p.district)+' Bangkok');
+  let h=`<div class="sect"><h4>${ic('pin',16)} ${L3('ทำเลและการเดินทาง','Location & commute','位置与交通')}</h4>`;
+  if(w){const mins=Math.max(1,Math.ceil(w/80));const pct=Math.max(6,Math.min(100,100-(w/1200)*100));
+    h+=`<div class="walk"><span>${ic('train',16)} ${esc(station(p))}</span><div class="walkbar" aria-hidden="true"><i style="width:${pct}%"></i></div><b>${w.toLocaleString()} ${L3('ม.','m','米')} · ${L3('เดิน','walk','步行')} ~${mins} ${L3('นาที','min','分钟')}</b></div>`;}
+  if(c){h+=`<div class="trav">${LMK.map(l=>{const d=km(c[0],c[1],l[3],l[4]);const m=Math.round(d*1.35/24*60+6);return `<div><small>${L3(l[0],l[1],l[2])}</small><b>~${m} ${L3('นาที','min','分钟')}</b> <small style="display:inline">· ${(d*1.35).toFixed(0)} km</small></div>`}).join('')}</div>`;}
+  h+=`<p class="note">${L3('เวลาขับรถโดยประมาณนอกชั่วโมงเร่งด่วน คำนวณจากระยะทางเฉลี่ยของเขต','Approx. off-peak driving time, estimated from district distance','非高峰期驾车时间估算')} · <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${L3('เปิดใน Google Maps','Open in Google Maps','在 Google 地图中打开')} ↗</a></p></div>`;
+  return h;
+}
+
+/* ---------- calculators ---------- */
+function calcHTML(p){
+  let h='';
+  if(p.rent){h+=`<div class="sect" data-calc="rent" data-rent="${p.rent}"><h4>${ic('cal',16)} ${L3('เงินที่ต้องเตรียมก่อนเข้าอยู่','Move-in cost','入住所需费用')}</h4>
+    <div class="calc-in">
+     <div><label for="c-dep">${L3('เงินประกัน (เดือน)','Deposit (months)','押金（月）')}</label><select id="c-dep"><option>1</option><option selected>2</option><option>3</option></select></div>
+     <div><label for="c-adv">${L3('ค่าเช่าล่วงหน้า (เดือน)','Advance rent (months)','预付租金（月）')}</label><select id="c-adv"><option selected>1</option><option>2</option></select></div>
+     <div><label for="c-util">${L3('ค่าน้ำไฟ/เดือน (ประมาณ)','Utilities / month (est.)','水电/月（估）')}</label><input id="c-util" type="number" inputmode="numeric" value="${p.kind==='condo'?1500:3500}" min="0"></div>
+    </div><div class="calc-out" id="c-rent-out"></div></div>`;}
+  if(p.sale){h+=`<div class="sect" data-calc="sale"><h4>${ic('area',16)} ${L3('คำนวณค่าผ่อนต่อเดือน','Mortgage calculator','房贷计算')}</h4>
+    <div class="calc-in">
+     <div><label for="c-price">${L3('ราคาทรัพย์ (บาท)','Price (THB)','房价（泰铢）')}</label><input id="c-price" type="number" inputmode="numeric" value="${p.sale}" min="0"></div>
+     <div><label for="c-down">${L3('เงินดาวน์ (%)','Down payment (%)','首付（%）')}</label><input id="c-down" type="number" inputmode="decimal" value="10" min="0" max="100"></div>
+     <div><label for="c-rate">${L3('ดอกเบี้ยเฉลี่ย (%/ปี)','Interest (%/yr)','年利率（%）')}</label><input id="c-rate" type="number" inputmode="decimal" value="5.5" step="0.1" min="0"></div>
+     <div><label for="c-years">${L3('ระยะเวลาผ่อน (ปี)','Term (years)','年限')}</label><input id="c-years" type="number" inputmode="numeric" value="30" min="1" max="40"></div>
+    </div><div class="calc-out" id="c-sale-out"></div>
+    <p class="note">${L3('ค่าใช้จ่ายวันโอนคิดแบบทั่วไป: ค่าธรรมเนียมโอน 2% แบ่งจ่ายคนละครึ่ง + ค่าจดจำนอง 1% ของยอดกู้ อัตราจริงขึ้นกับมาตรการรัฐและธนาคาร ณ วันโอน','Transfer-day costs use standard rates: 2% transfer fee split 50/50 + 1% mortgage registration. Actual rates depend on current government measures and your bank.','过户费按一般标准估算：2% 过户费双方各半 + 贷款额 1% 抵押登记费，实际以政策和银行为准。')}</p></div>`;}
+  return h;
+}
+function recalc(){
+  const L=t();
+  const r=layer.querySelector('[data-calc="rent"]');
+  if(r){const rent=+r.dataset.rent,dep=+$('#c-dep').value,adv=+$('#c-adv').value,u=num($('#c-util').value,0,1e6);
+    const first=rent*(dep+adv),year=rent*12+u*12;
+    $('#c-rent-out').innerHTML=`<div class="hl"><small>${L3('จ่ายวันทำสัญญา','Due at signing','签约时支付')}</small><b>${fmt(first)}</b></div><div><small>${L3('เงินประกัน (ได้คืนเมื่อออก)','Deposit (refundable)','押金（可退）')}</small><b>${fmt(rent*dep)}</b></div><div><small>${L3('ค่าใช้จ่ายรวม 1 ปี (เช่า+น้ำไฟ)','1-year total (rent + utilities)','一年总费用')}</small><b>${fmt(year)}</b></div>`;}
+  const s=layer.querySelector('[data-calc="sale"]');
+  if(s){const price=num($('#c-price').value,0,1e11),down=num($('#c-down').value,0,100),rate=num($('#c-rate').value,0,30),yrs=num($('#c-years').value,1,40)||1;
+    const loan=price*(1-down/100),n=yrs*12,i=rate/1200;const pay=i?loan*i/(1-Math.pow(1+i,-n)):loan/n;
+    const fees=price*0.01+loan*0.01;
+    $('#c-sale-out').innerHTML=`<div class="hl"><small>${L3('ผ่อนต่อเดือน','Monthly payment','月供')}</small><b>${fmt(pay)}</b></div><div><small>${L3('ยอดกู้','Loan amount','贷款额')}</small><b>${fmt(loan)}</b></div><div><small>${L3('รายได้ที่ควรมี (ผ่อน ≤ 40%)','Suggested income (≤40% DSR)','建议月收入（≤40%）')}</small><b>${fmt(pay/0.4)}${L.mo}</b></div><div><small>${L3('ดอกเบี้ยรวมตลอดสัญญา','Total interest','总利息')}</small><b>${fmt(pay*n-loan)}</b></div><div><small>${L3('เงินสดวันโอน (ดาวน์+ค่าธรรมเนียม)','Cash at transfer (down + fees)','过户日现金')}</small><b>${fmt(price-loan+fees)}</b></div>`;}
+}
+document.addEventListener('input',e=>{if(e.target.id&&e.target.id.startsWith('c-'))recalc();});
+document.addEventListener('change',e=>{if(e.target.id&&e.target.id.startsWith('c-'))recalc();});
+
+/* ---------- saved search alerts (per viewer) ---------- */
+let SS=store.get('bt_saved',null);const FRESH=new Set();
+const critNow=()=>({mode:S.mode,q:S.q,pet:S.pet,bts:S.bts,kind:S.kind,bed:S.bed,min:S.min,max:S.max,dist:S.dist});
+function matchCrit(p,c){
+  if(c.mode==='rent'&&!p.mode.includes('r'))return false;if(c.mode==='sale'&&!p.mode.includes('s'))return false;
+  if(c.pet&&!p.pets)return false;if(c.bts&&!p.station)return false;if(c.kind!=='all'&&p.kind!==c.kind)return false;
+  if(c.bed&&(c.bed===3?p.beds<3:p.beds!==c.bed))return false;if(c.dist!=='all'&&p.district!==c.dist)return false;
+  const pr=c.mode==='sale'?(p.sale||0):(c.mode==='rent'?p.rent:(p.rent||p.sale));
+  if(c.min!==''&&pr<+c.min)return false;if(c.max!==''&&pr>+c.max)return false;
+  if(c.q){const h=(p.project+' '+p.district+' '+p.code+' '+(p.station||'')).toLowerCase();if(!h.includes(c.q.toLowerCase()))return false;}
+  return true;}
+function critText(c){const L=t(),a=[];a.push(c.mode==='rent'?L.rent:c.mode==='sale'?L.sale:L.all);if(c.kind!=='all')a.push(L.kinds[c.kind]);if(c.bed)a.push(c.bed+(c.bed===3?'+':'')+' '+L.bedU);if(c.dist!=='all')a.push(c.dist);if(c.min!==''||c.max!=='')a.push((c.min?fmt(c.min):'')+'–'+(c.max?fmt(c.max):''));if(c.pet)a.push(L.pet);if(c.bts)a.push(L.bts);if(c.q)a.push('"'+c.q+'"');return a.join(' · ');}
+function refreshFresh(){if(!SS)return;P.forEach(p=>{if(matchCrit(p,SS.crit)&&!SS.seen.includes(p.code))FRESH.add(p.code);});}
+function saveSearch(){const c=critNow();SS={crit:c,seen:P.filter(p=>matchCrit(p,c)).map(p=>p.code),at:Date.now()};store.set('bt_saved',SS);FRESH.clear();render();toast(L3('บันทึกการค้นหาแล้ว เมื่อมีทรัพย์ใหม่ตรงเงื่อนไข จะแสดงแจ้งเตือนตอนคุณกลับมาเปิดหน้านี้','Search saved. New matches will be flagged when you come back.','已保存搜索，回来时会提示新房源。'));}
+function renderAlert(){
+  const bar=$('#alertBar');if(!SS){bar.hidden=true;return;}
+  const n=[...FRESH].filter(c=>P.some(p=>p.code===c)).length;
+  bar.hidden=false;
+  bar.innerHTML=`${ic('bell')}<div class="txt">${n?`${L3('มีทรัพย์ใหม่','New matches:','新房源')}<span class="num">${n}</span>${L3('รายการตรงกับการค้นหาที่บันทึกไว้','for your saved search','套符合您保存的搜索')}`:L3('ยังไม่มีทรัพย์ใหม่สำหรับการค้นหาที่บันทึกไว้','No new matches for your saved search yet','保存的搜索暂无新房源')}<small>${esc(critText(SS.crit))}</small></div>
+   <button class="linkbtn" data-ssview>${L3('ดูรายการ','Show','查看')}</button><button class="linkbtn" data-ssdel>${L3('ปิดแจ้งเตือน','Turn off','关闭提醒')}</button>`;
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-ssview],[data-ssdel]');if(!b)return;
+  if('ssdel' in b.dataset){SS=null;FRESH.clear();try{localStorage.removeItem('bt_saved')}catch(_){}render();return;}
+  Object.assign(S,SS.crit,{favOnly:false,featured:false,shown:9});$('#q').value=S.q;
+  SS.seen=[...new Set(SS.seen.concat(P.filter(p=>matchCrit(p,SS.crit)).map(p=>p.code)))];store.set('bt_saved',SS);
+  render();$('#count').scrollIntoView({behavior:'smooth',block:'start'});
+});
+refreshFresh();
+
+/* ---------- photos (Supabase Storage) ---------- */
+const BUCKET='listing-photos';
+const PHOTO_BASE=CONFIG.supabaseUrl+'/storage/v1/object/public/'+BUCKET+'/';
+const okPath=s=>typeof s==='string'&&/^[0-9a-f-]{36}\/[A-Za-z0-9_-]{4,40}\.jpg$/.test(s);
+const purl=path=>PHOTO_BASE+path.split('/').map(encodeURIComponent).join('/');
+let galIdx=0;
+function imgs(p){return p.photos&&p.photos.length?p.photos.map(x=>purl(x.t)):imgsArt(p);}
+function imgsThumbs(p){return imgs(p);}
+function imgsFull(p){return p.photos&&p.photos.length?p.photos.map(x=>purl(x.f)):imgsArt(p);}
+function hash(s){let h=7;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))%1000003;return h;}
+/* ---------- image helpers ---------- */
+const spub=(bucket,path)=>CONFIG.supabaseUrl+'/storage/v1/object/public/'+bucket+'/'+String(path).split('/').map(encodeURIComponent).join('/');
+const okAny=s=>typeof s==='string'&&/^[A-Za-z0-9_\/.-]{3,200}$/.test(s)&&!s.includes('..');
+async function loadImg(file){
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type))throw new Error('type');
+  if(file.size>30*1024*1024)throw new Error('size');
+  const url=URL.createObjectURL(file);
+  try{return await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('decode'));i.src=url;});}
+  finally{setTimeout(()=>URL.revokeObjectURL(url),1000);}
+}
+function toBlob(img,max,q,square,keepAlpha){
+  return new Promise(res=>{let sw=img.naturalWidth,sh=img.naturalHeight,sx=0,sy=0;
+    if(square){const m=Math.min(sw,sh);sx=(sw-m)/2;sy=(sh-m)/2;sw=sh=m;}
+    const s=Math.min(1,max/Math.max(sw,sh));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(sw*s));c.height=Math.max(1,Math.round(sh*s));
+    const x=c.getContext('2d');if(!keepAlpha){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);}x.drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
+    c.toBlob(b=>res(b),keepAlpha?'image/png':'image/jpeg',q);});
+}
+async function compress(file){const img=await loadImg(file);let full=await toBlob(img,1800,.82);if(full.size>1500000)full=await toBlob(img,1400,.75);const thumb=await toBlob(img,640,.72);return {full,thumb,preview:URL.createObjectURL(thumb)};}
+const fileErr=()=>T3('ใช้รูปนี้ไม่ได้ ใช้ไฟล์ JPG, PNG หรือ WebP ขนาดไม่เกิน 30 MB (รูป HEIC จาก iPhone ให้แปลงเป็น JPG ก่อน)','This image cannot be used. Use JPG, PNG or WebP under 30 MB (convert iPhone HEIC to JPG).','无法使用此图片，请用 JPG/PNG/WebP。');
+
+/* ---------- site settings: logo, hero image, contacts ---------- */
+let SITE={};const MARK0=document.querySelector('.brand .mark').innerHTML;
+async function loadSettings(){if(!SB)return;const {data}=await SB.from('site_settings').select('logo_path,hero_path,phone,line_id').eq('id',1).maybeSingle();if(data){SITE=data;if(data.phone)CONFIG.phone=data.phone;if(data.line_id)CONFIG.line=data.line_id;applyBranding();}}
+function applyBranding(){
+  const mark=document.querySelector('.brand .mark');
+  if(SITE.logo_path&&okAny(SITE.logo_path)){mark.innerHTML=`<img src="${spub('site',SITE.logo_path)}" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;mark.style.background='transparent';}
+  else{mark.innerHTML=MARK0;mark.style.background='';}
+  const hero=document.querySelector('.hero');
+  if(SITE.hero_path&&okAny(SITE.hero_path)){hero.classList.add('has-img');hero.style.setProperty('--hero-img',`url("${spub('site',SITE.hero_path)}")`);}
+  else{hero.classList.remove('has-img');hero.style.removeProperty('--hero-img');}
+}
+
+/* ---------- auth state ---------- */
+const T3=(th,en,zh)=>L3(th,en,zh);
+let SESSION=null,PROFILE=null,AGENT=null,IS_ADMIN=false,RECOVERY=false;
+let agentOpen=false,acctTab='login',agentTab='list',adminTab='site',editingId=null,editScope='mine',formPhotos=[],photoBusy=0,saving=false,afterLoginTab=null;
+let MINE=[],REQS=[],MYREQS=[],FAVIDS=new Set(),ADM={agents:[],listings:[],reqs:[]};
+const uid=()=>SESSION&&SESSION.user&&SESSION.user.id;
+const avatarUrl=()=>PROFILE&&PROFILE.avatar_path&&okAny(PROFILE.avatar_path)?spub('avatars',PROFILE.avatar_path):null;
+const displayName=()=>(PROFILE&&PROFILE.display_name)||(SESSION&&SESSION.user&&SESSION.user.email||'').split('@')[0];
+if(SB){
+  SB.auth.getSession().then(({data})=>{SESSION=data.session;afterAuth();});
+  SB.auth.onAuthStateChange((ev,session)=>{SESSION=session;
+    if(ev==='PASSWORD_RECOVERY'){RECOVERY=true;openAcct('recovery');return;}
+    if(ev==='SIGNED_IN'||ev==='SIGNED_OUT'||ev==='USER_UPDATED')setTimeout(afterAuth,0);});
+}
+async function afterAuth(){
+  PROFILE=null;AGENT=null;IS_ADMIN=false;MINE=[];REQS=[];MYREQS=[];FAVIDS=new Set();
+  if(uid()){
+    let r=await SB.from('profiles').select('*').eq('id',uid()).maybeSingle();
+    if(!r.data){const nm=((SESSION.user.user_metadata||{}).name||SESSION.user.email.split('@')[0]).slice(0,60);await SB.from('profiles').insert({id:uid(),display_name:nm});r=await SB.from('profiles').select('*').eq('id',uid()).maybeSingle();}
+    PROFILE=r.data||null;
+    const a=await SB.from('agents').select('*').eq('id',uid()).maybeSingle();AGENT=a.data||null;
+    const ad=await SB.from('admins').select('email').limit(1);IS_ADMIN=!!(ad.data&&ad.data.length);
+    await syncFavs();
+    if(AGENT&&AGENT.approved)await loadMine();
+    if(afterLoginTab&&agentOpen){acctTab=afterLoginTab;afterLoginTab=null;}
+    else if(agentOpen&&(acctTab==='login'||acctTab==='signup'))acctTab='profile';
+  }else if(agentOpen&&!['login','signup','recovery'].includes(acctTab))acctTab='login';
+  renderAcctBtn();if(agentOpen)renderAcct();
+}
+async function syncFavs(){
+  const {data}=await SB.from('favorites').select('listing_id');FAVIDS=new Set((data||[]).map(x=>x.listing_id));
+  const local=[...S.favs].map(c=>P.find(p=>p.code===c)).filter(p=>p&&!FAVIDS.has(p.id));
+  if(local.length){await SB.from('favorites').upsert(local.map(p=>({listing_id:p.id})),{onConflict:'user_id,listing_id',ignoreDuplicates:true});local.forEach(p=>FAVIDS.add(p.id));}
+  applyFavIds();
+}
+function applyFavIds(){if(!uid())return;P.forEach(p=>{if(FAVIDS.has(p.id))S.favs.add(p.code);});store.set('bt_favs',[...S.favs]);renderResults();}
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-fav]');if(!b||!uid())return;const p=P.find(x=>x.code===b.dataset.fav);if(!p)return;
+  if(S.favs.has(p.code)){FAVIDS.add(p.id);await SB.from('favorites').upsert({listing_id:p.id},{onConflict:'user_id,listing_id',ignoreDuplicates:true});}else{FAVIDS.delete(p.id);await SB.from('favorites').delete().eq('listing_id',p.id).eq('user_id',uid());}});
+
+/* ---------- header account button ---------- */
+function renderAcctBtn(){
+  const b=$('#agentLogin');if(!b)return;
+  if(uid()){const av=avatarUrl();b.innerHTML=(av?`<img src="${av}" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`:`<span class="av" style="width:30px;height:30px;font-size:13px">${esc(displayName().slice(0,1).toUpperCase())}</span>`)+`<span>${esc(displayName())}</span>`;b.setAttribute('aria-label',T3('บัญชีของฉัน','My account','我的账户'));}
+  else{b.innerHTML=`<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>${T3('เข้าสู่ระบบ / สมัคร','Sign in / Sign up','登录 / 注册')}</span>`;b.setAttribute('aria-label','account');}
+}
+
+/* ---------- account modal ---------- */
+function openAcct(tab){closePanel();if(!agentOpen||!$('#agentBox')){openModal('<div class="agentbox" id="agentBox"></div>');agentOpen=true;}acctTab=tab||(uid()?'profile':'login');renderAcct();}
+function openAgent(){if(uid())openAcct('agent');else{afterLoginTab='agent';openAcct('login');}}
+function tabsHTML(list,cur,attr){return `<div class="seg acct-seg" style="margin:0">${list.map(([k,v])=>`<button type="button" ${attr}="${k}" class="${cur===k?'on':''}">${v}</button>`).join('')}</div>`;}
+const inp=(id,label,val,type,extra)=>`<div><label for="${id}">${label}</label><input id="${id}" type="${type||'text'}" value="${esc(val==null?'':val)}" ${extra||''}></div>`;
+function renderAcct(){
+  const box=$('#agentBox');if(!box)return;
+  if(!SB){box.innerHTML=`<div class="state">${T3('เชื่อมต่อระบบไม่ได้ ลองรีเฟรชหน้า','Could not connect. Refresh the page.','无法连接，请刷新。')}</div>`;return;}
+  if(acctTab==='recovery'){
+    box.innerHTML=`<h3>${T3('ตั้งรหัสผ่านใหม่','Set a new password','设置新密码')}</h3><form id="pwNewForm" novalidate style="display:flex;flex-direction:column;gap:12px"><fieldset>${inp('pw1',T3('รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)','New password (8+ characters)','新密码'),'','password','autocomplete="new-password"')}${inp('pw2',T3('ยืนยันรหัสผ่าน','Confirm password','确认密码'),'','password','autocomplete="new-password"')}</fieldset><div class="err" id="agErr" hidden></div><div class="actions"><button class="btn" type="submit">${T3('บันทึกรหัสผ่าน','Save password','保存')}</button></div></form>`;return;}
+  if(!uid()){
+    const login=acctTab!=='signup'&&acctTab!=='forgot';
+    box.innerHTML=`<h3>${acctTab==='forgot'?T3('ลืมรหัสผ่าน','Forgot password','忘记密码'):T3('บัญชี Baan Thara','Baan Thara account','Baan Thara 账户')}</h3>
+     <p class="lead">${T3('สมัครฟรี เก็บรายการโปรดไว้ดูได้ทุกเครื่อง ดูประวัติการนัดชม และสมัครเป็นเอเจนต์เพื่อลงประกาศ','Free account: keep favorites on every device, see your viewings, and apply as an agent to post listings.','免费注册：多设备同步收藏、查看预约、申请成为经纪人。')}</p>
+     ${acctTab==='forgot'?'':tabsHTML([['login',T3('เข้าสู่ระบบ','Sign in','登录')],['signup',T3('สมัครสมาชิก','Sign up','注册')]],acctTab==='signup'?'signup':'login','data-acct')}
+     <form id="${acctTab==='forgot'?'forgotForm':login?'loginForm':'signupForm'}" novalidate style="display:flex;flex-direction:column;gap:12px"><fieldset style="grid-template-columns:1fr">
+      ${acctTab==='signup'?inp('su-name',T3('ชื่อที่แสดง','Display name','显示名称'),'','text','maxlength="60" autocomplete="name"'):''}
+      ${inp('au-email',T3('อีเมล','Email','邮箱'),'','email','autocomplete="email"')}
+      ${acctTab==='forgot'?'':inp('au-pw',acctTab==='signup'?T3('ตั้งรหัสผ่าน (อย่างน้อย 8 ตัว)','Create a password (8+ characters)','设置密码（至少8位）'):T3('รหัสผ่าน','Password','密码'),'','password',`autocomplete="${acctTab==='signup'?'new-password':'current-password'}"`)}
+      ${acctTab==='signup'?inp('au-pw2',T3('ยืนยันรหัสผ่าน','Confirm password','确认密码'),'','password','autocomplete="new-password"'):''}
+     </fieldset><div class="err" id="agErr" hidden></div><div class="ok" id="agOk" hidden></div>
+     <div class="actions" style="justify-content:space-between;align-items:center">${login?`<button type="button" class="linkbtn" data-acct="forgot">${T3('ลืมรหัสผ่าน?','Forgot password?','忘记密码？')}</button>`:acctTab==='forgot'?`<button type="button" class="linkbtn" data-acct="login">${T3('กลับไปเข้าสู่ระบบ','Back to sign in','返回登录')}</button>`:'<span></span>'}
+      <button class="btn" type="submit" id="auBtn">${acctTab==='forgot'?T3('ส่งลิงก์ตั้งรหัสใหม่','Send reset link','发送重置链接'):login?T3('เข้าสู่ระบบ','Sign in','登录'):T3('สมัครสมาชิก','Create account','注册')}</button></div></form>`;
+    return;}
+  const tabs=[['profile',T3('บัญชีของฉัน','My account','我的账户')],['favs',T3('รายการโปรด','Saved','收藏')+` (${[...S.favs].filter(c=>P.some(p=>p.code===c)).length})`],['visits',T3('การนัดชมของฉัน','My viewings','我的预约')],['agent','Agent Club']];
+  if(IS_ADMIN)tabs.push(['admin',T3('จัดการเว็บ','Manage site','网站管理')]);
+  const av=avatarUrl();
+  box.innerHTML=`<div style="display:flex;align-items:center;gap:12px">${av?`<img src="${av}" alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover">`:`<span class="av">${esc(displayName().slice(0,1).toUpperCase())}</span>`}<div style="flex:1;min-width:0"><h3 style="font-size:21px">${esc(displayName())}</h3><small style="color:var(--muted)">${esc(SESSION.user.email||'')}${IS_ADMIN?' · '+T3('เจ้าของเว็บ','Site owner','网站所有者'):AGENT&&AGENT.approved?' · '+T3('เอเจนต์','Agent','经纪人'):''}</small></div><button class="linkbtn" id="auOut">${T3('ออกจากระบบ','Sign out','退出')}</button></div>
+   <div style="overflow-x:auto">${tabsHTML(tabs,acctTab,'data-acct')}</div><div id="acctBody"></div>`;
+  renderAcctBody();
+}
+function renderAcctBody(){
+  const b=$('#acctBody');if(!b)return;const L=t();
+  if(acctTab==='profile'){const av=avatarUrl();
+    b.innerHTML=`<form id="profileForm" novalidate style="display:flex;flex-direction:column;gap:14px">
+     <fieldset><legend>${T3('รูปโปรไฟล์','Profile photo','头像')}</legend><div class="wide" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+       ${av?`<img src="${av}" alt="" style="width:96px;height:96px;border-radius:50%;object-fit:cover">`:`<span class="av" style="width:96px;height:96px;font-size:36px">${esc(displayName().slice(0,1).toUpperCase())}</span>`}
+       <label class="btn outline" for="avFile" style="cursor:pointer">${T3('เลือกรูปจากเครื่อง','Choose a photo','选择照片')}</label><input id="avFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+       ${av?`<button type="button" class="linkbtn" id="avDel" style="color:var(--danger)">${T3('ลบรูป','Remove','删除')}</button>`:''}
+       <small style="color:var(--muted);flex-basis:100%">${T3('ระบบตัดรูปเป็นสี่เหลี่ยมจัตุรัสให้อัตโนมัติ','Photos are cropped to a square automatically.','自动裁剪为正方形。')}</small></div></fieldset>
+     <fieldset><legend>${T3('ข้อมูลส่วนตัว','Your details','个人信息')}</legend>${inp('pf-name',T3('ชื่อที่แสดง','Display name','显示名称'),PROFILE&&PROFILE.display_name,'text','maxlength="60"')}${inp('pf-phone',T3('เบอร์โทร (ใช้กรอกฟอร์มนัดชมให้อัตโนมัติ)','Phone (pre-fills viewing requests)','电话'),PROFILE&&PROFILE.phone,'tel','maxlength="30"')}</fieldset>
+     <div class="err" id="agErr" hidden></div><div class="actions"><button class="btn" type="submit">${T3('บันทึก','Save','保存')}</button></div></form>
+     <form id="pwForm" novalidate style="display:flex;flex-direction:column;gap:12px;margin-top:6px"><fieldset><legend>${T3('เปลี่ยนรหัสผ่าน','Change password','修改密码')}</legend>${inp('pw1',T3('รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)','New password (8+ characters)','新密码'),'','password','autocomplete="new-password"')}${inp('pw2',T3('ยืนยันรหัสผ่าน','Confirm password','确认密码'),'','password','autocomplete="new-password"')}</fieldset>
+     <div class="err" id="pwErr" hidden></div><div class="actions"><button class="btn outline" type="submit">${T3('เปลี่ยนรหัสผ่าน','Change password','修改密码')}</button></div></form>`;
+    return;}
+  if(acctTab==='favs'){const list=P.filter(p=>S.favs.has(p.code));
+    b.innerHTML=list.length?`<div class="mylist">${list.map(p=>{const pr=priceOf(p);return `<div class="myrow"><img src="${imgs(p)[0]}" alt=""><div class="grow"><b>${esc(p.project)}</b><small>${esc(p.code)} · ${fmt(pr.v)}${pr.r?L.mo:''} · ${loc(p)}</small></div><button class="linkbtn" data-open="${esc(p.code)}">${L.detail}</button></div>`}).join('')}</div>`
+      :`<div class="state">${T3('ยังไม่มีรายการโปรด กดรูปหัวใจบนการ์ดทรัพย์เพื่อบันทึก','No saved listings yet. Tap the heart on a listing to save it.','暂无收藏，点击爱心即可收藏。')}</div>`;return;}
+  if(acctTab==='visits'){b.innerHTML=`<div class="state">${T3('กำลังโหลด…','Loading…','加载中…')}</div>`;
+    SB.from('viewing_requests').select('id,listing_id,preferred_date,time_slot,status,created_at').eq('user_id',uid()).order('created_at',{ascending:false}).then(({data})=>{MYREQS=data||[];if(acctTab!=='visits')return;
+      const st={new:T3('รอเจ้าหน้าที่ติดต่อ','Waiting for a call','待联系'),contacted:T3('ติดต่อแล้ว','Contacted','已联系'),done:T3('เข้าชมแล้ว','Viewed','已看房'),cancelled:T3('ยกเลิก','Cancelled','已取消')};
+      b.innerHTML=MYREQS.length?`<div class="mylist">${MYREQS.map(q=>{const p=P.find(x=>x.id===q.listing_id);return `<div class="myrow">${p?`<img src="${imgs(p)[0]}" alt="">`:''}<div class="grow"><b>${p?esc(p.project):T3('ให้เจ้าหน้าที่แนะนำ','Agent to recommend','由顾问推荐')}</b><small>${esc(q.preferred_date)} · ${esc(q.time_slot||'')}</small></div><span class="src">${st[q.status]||esc(q.status)}</span></div>`}).join('')}</div>`
+        :`<div class="state">${T3('ยังไม่มีการนัดชม กดปุ่ม "จองชม" ที่ทรัพย์ที่สนใจได้เลย','No viewings yet. Use "Book a viewing" on any listing.','暂无预约。')}</div>`;});return;}
+  if(acctTab==='agent'){renderAgentTab(b);return;}
+  if(acctTab==='admin'&&IS_ADMIN){renderAdmin(b);return;}
+}
+
+/* ---------- Agent Club tab ---------- */
+async function loadMine(){
+  const a=await SB.from('listings').select(LSEL).eq('agent_id',uid()).order('created_at',{ascending:false});MINE=a.data||[];
+  const ids=MINE.map(r=>r.id);
+  if(ids.length){const r=await SB.from('viewing_requests').select('id,listing_id,name,phone,preferred_date,time_slot,note,status,created_at').in('listing_id',ids).order('created_at',{ascending:false}).limit(300);REQS=r.data||[];}else REQS=[];
+}
+function contactForm(id,me,btn){return `<form id="${id}" novalidate style="display:flex;flex-direction:column;gap:12px"><fieldset><legend>${T3('ข้อมูลติดต่อที่ลูกค้าเห็น','Contact details customers see','客户可见的联系方式')}</legend>
+  ${inp('ag-name',T3('ชื่อที่แสดง','Display name','显示名称'),me.name||displayName(),'text','maxlength="60"')}${inp('ag-line','LINE ID',me.line_id,'text','maxlength="60"')}${inp('ag-phone',T3('เบอร์โทร','Phone','电话'),me.phone||(PROFILE&&PROFILE.phone),'tel','maxlength="30"')}
+  <div class="wide"><small style="color:var(--muted)">${T3('รูปที่แสดงในประกาศคือรูปโปรไฟล์ของคุณ เปลี่ยนได้ที่แท็บ "บัญชีของฉัน"','Your profile photo appears on your listings. Change it in "My account".','房源中显示您的头像。')}</small></div></fieldset>
+  <div class="err" id="agErr" hidden></div><div class="actions"><button class="btn" type="submit">${btn}</button></div></form>`;}
+function renderAgentTab(b){
+  if(!AGENT){b.innerHTML=`<div class="state">${T3('สมัครเป็นเอเจนต์เพื่อลงประกาศทรัพย์ เจ้าของเว็บจะตรวจสอบและอนุมัติให้','Apply as an agent to post listings. The site owner will review and approve you.','申请成为经纪人，经网站所有者批准后即可发布。')}</div>`+contactForm('profForm',{},T3('สมัครเป็นเอเจนต์','Apply as an agent','申请'));return;}
+  if(!AGENT.approved){b.innerHTML=`<div class="state">${T3('ส่งคำขอแล้ว รอเจ้าของเว็บอนุมัติ เมื่ออนุมัติแล้วจะลงประกาศได้ทันที','Request sent. Waiting for the site owner to approve you.','已提交，等待批准。')}</div>`+contactForm('profForm',AGENT,T3('บันทึก','Save','保存'));return;}
+  const tabs=[['list',T3('ประกาศของฉัน','My listings','我的房源')+` (${MINE.length})`],['form',editingId&&editScope==='mine'?T3('แก้ไขประกาศ','Edit listing','编辑'):T3('ลงประกาศใหม่','New listing','新房源')],['reqs',T3('คำขอนัดชม','Requests','预约')+` (${REQS.filter(r=>r.status==='new').length})`],['prof',T3('ข้อมูลติดต่อ','Contact','联系方式')]];
+  b.innerHTML=`<div style="overflow-x:auto">${tabsHTML(tabs,agentTab,'data-agtab')}</div><div id="agBody"></div>`;
+  const body=$('#agBody');
+  if(agentTab==='list')body.innerHTML=listingRows(MINE,false);
+  else if(agentTab==='reqs')body.innerHTML=reqTable(REQS,MINE);
+  else if(agentTab==='prof')body.innerHTML=contactForm('profForm',AGENT,T3('บันทึก','Save','保存'));
+  else renderListingForm(body,editScope==='mine'?MINE.find(x=>x.id===editingId):null);
+}
+function listingRows(rows,admin){const L=t();
+  if(!rows.length)return `<div class="state">${admin?T3('ยังไม่มีประกาศ','No listings','暂无房源'):T3('ยังไม่มีประกาศ กดแท็บ "ลงประกาศใหม่" เพื่อเริ่ม','No listings yet. Open "New listing" to start.','暂无房源。')}</div>`;
+  return `<div class="mylist">${rows.map(r=>{const p=mapRow(r);const pr=p.rent?{v:p.rent,r:true}:{v:p.sale,r:false};return `<div class="myrow"><img src="${imgs(p)[0]}" alt=""><div class="grow"><b>${esc(p.project)}</b><small>${esc(p.code)} · ${fmt(pr.v)}${pr.r?L.mo:''} · ${r.status==='active'?T3('เปิดอยู่','Live','上架'):T3('ปิดแล้ว','Closed','已下架')}${admin?' · '+esc(r.agents&&r.agents.name||T3('ทีมเว็บ','Site team','网站')):''}${r.is_sample?' · '+T3('ตัวอย่าง','sample','示例'):''}${p.photos.length?' · '+p.photos.length+' '+T3('รูป','photos','张'):''}</small></div>
+   ${admin?`<button class="linkbtn" data-adfeat="${r.id}">${r.featured?'★ '+T3('แนะนำอยู่','Featured','精选'):'☆ '+T3('ตั้งเป็นแนะนำ','Feature','设为精选')}</button>`:''}
+   <button class="linkbtn" data-agedit="${r.id}" data-scope="${admin?'admin':'mine'}">${T3('แก้ไข/ใส่รูป','Edit/photos','编辑/照片')}</button><button class="linkbtn" data-agtoggle="${r.id}" data-scope="${admin?'admin':'mine'}">${r.status==='active'?T3('ปิดประกาศ','Close','下架'):T3('เปิดอีกครั้ง','Reopen','上架')}</button><button class="linkbtn" data-agdel="${r.id}" data-scope="${admin?'admin':'mine'}" style="color:var(--danger)">${T3('ลบ','Delete','删除')}</button></div>`}).join('')}</div>`;}
+function reqTable(reqs,rows){
+  const byId=Object.fromEntries(rows.map(r=>[r.id,r]));
+  if(!reqs.length)return `<div class="state">${T3('ยังไม่มีคำขอนัดชม','No viewing requests yet.','暂无预约。')}</div>`;
+  return `<div class="tbl-wrap"><table><thead><tr><th>${T3('วันที่ขอ','Received','收到')}</th><th>${T3('ทรัพย์','Listing','房源')}</th><th>${T3('ลูกค้า','Customer','客户')}</th><th>${T3('วัน/เวลาที่สะดวก','Preferred time','时间')}</th><th>${T3('ข้อความ','Note','备注')}</th><th>${T3('สถานะ','Status','状态')}</th></tr></thead><tbody>${reqs.map(q=>{const l=byId[q.listing_id];return `<tr style="cursor:default"><td>${fmtDate(new Date(q.created_at))}</td><td>${l?esc(l.code)+'<br><small>'+esc(l.project)+'</small>':T3('ให้แนะนำ','Recommend','推荐')}</td><td>${esc(q.name)}<br><code>${esc(q.phone)}</code></td><td>${esc(q.preferred_date)}<br><small>${esc(q.time_slot||'')}</small></td><td style="white-space:normal;min-width:160px">${esc(q.note||'')}</td><td><select data-reqstatus="${q.id}" style="height:34px;border:1px solid var(--line);border-radius:8px;background:var(--bg)">${[['new',T3('ใหม่','New','新')],['contacted',T3('ติดต่อแล้ว','Contacted','已联系')],['done',T3('นัดชมแล้ว','Done','完成')],['cancelled',T3('ยกเลิก','Cancelled','取消')]].map(([k,v])=>`<option value="${k}" ${q.status===k?'selected':''}>${v}</option>`).join('')}</select></td></tr>`}).join('')}</tbody></table></div>`;}
+
+/* ---------- listing form (agents and site owner) ---------- */
+function renderListingForm(b,r){
+  const L=t();const dists=Object.keys(DCOORD).sort(),stations=[...new Set(STATIONS.concat(P.map(p=>p.station).filter(Boolean)))].sort();
+  const sceneL={living:T3('ห้องนั่งเล่น','Living room','客厅'),dining:T3('ห้องทานข้าว','Dining','餐厅'),studio:T3('สตูดิโอ','Studio','开间'),bedroom:T3('ห้องนอน','Bedroom','卧室'),kitchen:T3('ครัว','Kitchen','厨房'),house:T3('บ้านเดี่ยว (ภายนอก)','House exterior','别墅外观'),town:T3('ทาวน์โฮม (ภายนอก)','Townhome exterior','联排外观')};
+  b.innerHTML=`<form id="agForm" novalidate style="display:flex;flex-direction:column;gap:14px"><fieldset><legend>${r?T3('แก้ไขประกาศ','Edit listing','编辑房源')+' '+esc(r.code):T3('ลงประกาศใหม่','New listing','新房源')}</legend>
+     <div class="wide"><label>${T3('รูปถ่าย (สูงสุด 8 รูป · รูปแรกคือรูปปก · กด ★ เพื่อเลือกรูปปก)','Photos (up to 8 · first is the cover · tap ★ to choose the cover)','照片（最多8张，★ 设为封面）')}</label><div class="phgrid" id="phGrid"></div></div>
+     <div class="wide"><label for="ag-project">${T3('ชื่อโครงการ / ชื่อประกาศ','Project / listing name','项目名称')}</label><input id="ag-project" maxlength="120"></div>
+     <div><label for="ag-mode">${T3('ประเภทประกาศ','Listing type','类型')}</label><select id="ag-mode"><option value="r">${L.rent}</option><option value="s">${L.sale}</option><option value="rs">${L.rent} + ${L.sale}</option></select></div>
+     <div><label for="ag-kind">${L.fKind}</label><select id="ag-kind">${Object.entries(L.kinds).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
+     <div><label for="ag-rent">${T3('ค่าเช่า/เดือน (บาท)','Rent / month (THB)','月租')}</label><input id="ag-rent" type="number" inputmode="numeric" min="0"></div>
+     <div><label for="ag-sale">${T3('ราคาขาย (บาท)','Sale price (THB)','售价')}</label><input id="ag-sale" type="number" inputmode="numeric" min="0"></div>
+     <div><label for="ag-dist">${L.fDist}</label><select id="ag-dist">${dists.map(d=>`<option>${d}</option>`).join('')}</select></div>
+     <div><label for="ag-station">${L.nearest}</label><select id="ag-station"><option value="">${T3('ไม่ใกล้รถไฟฟ้า','Not near a station','不近车站')}</option>${stations.map(s=>`<option>${esc(s)}</option>`).join('')}</select></div>
+     <div><label for="ag-walk">${T3('ระยะเดินถึงสถานี (ม.)','Walk to station (m)','步行距离（米）')}</label><input id="ag-walk" type="number" inputmode="numeric" min="0"></div>
+     <div><label for="ag-beds">${L.fBed}</label><input id="ag-beds" type="number" inputmode="numeric" min="0" value="1"></div>
+     <div><label for="ag-baths">${L.bathL}</label><input id="ag-baths" type="number" inputmode="numeric" min="0" value="1"></div>
+     <div><label for="ag-area">${T3('พื้นที่ (ตร.ม.)','Size (m²)','面积')}</label><input id="ag-area" type="number" inputmode="decimal" min="0"></div>
+     <div><label for="ag-floor">${L.floor}</label><input id="ag-floor" type="number" inputmode="numeric" min="0"></div>
+     <div><label for="ag-scene">${T3('ภาพประกอบ (ใช้เมื่อไม่มีรูปถ่าย)','Illustration (used without photos)','插图')}</label><select id="ag-scene">${Object.keys(sceneL).map(s=>`<option value="${s}">${sceneL[s]}</option>`).join('')}</select></div>
+     <div><label class="chk"><input type="checkbox" id="ag-pets"> ${L.pet}</label></div>
+     <div class="wide"><label for="ag-desc">${L.about}</label><textarea id="ag-desc" rows="4" maxlength="2000"></textarea></div>
+    </fieldset><div class="err" id="agErr" hidden></div>
+    <div class="actions">${r?`<button type="button" class="btn outline" id="agCancel">${T3('ยกเลิก','Cancel','取消')}</button>`:''}<button class="btn" type="submit" id="agSubmit">${r?T3('บันทึกการแก้ไข','Save changes','保存'):T3('ลงประกาศ','Publish listing','发布')}</button></div></form>`;
+  if(r){const s=(id,v)=>{const el=$('#ag-'+id);if(el.type==='checkbox')el.checked=!!v;else el.value=v==null?'':v;};
+    s('project',r.project);s('mode',r.mode);s('kind',r.kind);s('rent',r.rent);s('sale',r.sale);s('dist',r.district);s('station',r.station||'');s('walk',r.walk_m);s('beds',r.beds);s('baths',r.baths);s('area',r.area);s('floor',r.floor);s('scene',r.scene);s('pets',r.pets);s('desc',r.description);}
+  renderPhGrid();
+}
+function renderPhGrid(){
+  const g=$('#phGrid');if(!g)return;
+  g.innerHTML=formPhotos.map((p,i)=>`<div class="phtile"><img src="${p.existing?purl(p.t):p.preview}" alt="">${i===0?`<span class="phcover">${T3('รูปปก','Cover','封面')}</span>`:`<button type="button" class="phbtn star" data-phcover="${i}" title="${T3('ตั้งเป็นรูปปก','Make cover','设为封面')}">★</button>`}<button type="button" class="phbtn" data-phrm="${i}" aria-label="remove">${ic('x',14)}</button></div>`).join('')
+   +(photoBusy?`<div class="phtile phadd"><span class="phload"></span><small>${T3('กำลังย่อรูป…','Processing…','处理中…')}</small></div>`:'')
+   +(formPhotos.length+photoBusy<8?`<label class="phtile phadd" for="ag-files">${ic('area',22)}<small>${T3('เลือกรูปจากเครื่อง','Choose photos','选择照片')}</small></label>`:'')
+   +`<input id="ag-files" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>`;
+}
+
+/* ---------- site owner panel ---------- */
+async function loadAdmin(){
+  const [a,l,q]=await Promise.all([SB.from('agents').select('*').order('created_at',{ascending:false}),SB.from('listings').select(LSEL).order('created_at',{ascending:false}).limit(1000),SB.from('viewing_requests').select('id,listing_id,name,phone,preferred_date,time_slot,note,status,created_at').order('created_at',{ascending:false}).limit(500)]);
+  ADM={agents:a.data||[],listings:l.data||[],reqs:q.data||[]};
+}
+function renderAdmin(b){
+  const tabs=[['site',T3('รูปหน้าเว็บ/โลโก้','Logo & cover','标志/封面')],['agents',T3('อนุมัติเอเจนต์','Agents','经纪人')+` (${ADM.agents.filter(a=>!a.approved).length})`],['listings',T3('ประกาศทั้งหมด','All listings','全部房源')],['reqs',T3('คำขอนัดชมทั้งหมด','All requests','全部预约')]];
+  if(adminTab==='form')tabs.push(['form',T3('แก้ไขประกาศ','Edit listing','编辑')]);
+  b.innerHTML=`<div style="overflow-x:auto">${tabsHTML(tabs,adminTab,'data-adtab')}</div><div id="adBody"><div class="state">${T3('กำลังโหลด…','Loading…','加载中…')}</div></div>`;
+  const body=$('#adBody');
+  if(adminTab==='form'){renderListingForm(body,ADM.listings.find(x=>x.id===editingId));return;}
+  if(adminTab==='site'){
+    const img=(path,label,key,ratio)=>`<div class="wide" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><div style="width:${ratio==='wide'?'240px':'96px'};aspect-ratio:${ratio==='wide'?'16/7':'1'};max-width:100%;border-radius:12px;overflow:hidden;background:var(--soft);border:1px solid var(--line);display:grid;place-items:center">${path&&okAny(path)?`<img src="${spub('site',path)}" alt="" style="width:100%;height:100%;object-fit:cover">`:`<small style="color:var(--muted)">${T3('ยังไม่มีรูป','No image','无图片')}</small>`}</div>
+      <div style="display:flex;flex-direction:column;gap:6px"><b>${label}</b><label class="btn outline" for="sf-${key}" style="cursor:pointer">${T3('เลือกรูปจากเครื่อง','Choose image','选择图片')}</label><input id="sf-${key}" data-siteimg="${key}" type="file" accept="image/jpeg,image/png,image/webp" hidden>${path?`<button type="button" class="linkbtn" data-siteclear="${key}" style="color:var(--danger)">${T3('ใช้แบบเดิม','Use default','恢复默认')}</button>`:''}</div></div>`;
+    body.innerHTML=`<form id="siteForm" novalidate style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+      <fieldset><legend>${T3('รูปภาพของเว็บ','Site images','网站图片')}</legend>${img(SITE.logo_path,T3('โลโก้ (แนะนำรูปสี่เหลี่ยมจัตุรัส)','Logo (square works best)','标志（建议正方形）'),'logo','sq')}${img(SITE.hero_path,T3('รูปปกหน้าแรก (แนะนำรูปแนวนอน)','Homepage cover (landscape)','首页封面（横向）'),'hero','wide')}</fieldset>
+      <fieldset><legend>${T3('ช่องทางติดต่อของบริษัท','Company contacts','公司联系方式')}</legend>${inp('sf-phone',T3('เบอร์โทร','Phone','电话'),SITE.phone||CONFIG.phone,'tel','maxlength="30"')}${inp('sf-line','LINE OA',SITE.line_id||CONFIG.line,'text','maxlength="60"')}</fieldset>
+      <div class="err" id="agErr" hidden></div><div class="actions"><button class="btn" type="submit">${T3('บันทึกช่องทางติดต่อ','Save contacts','保存')}</button></div></form>`;
+    return;}
+  const fill=()=>{
+    if(adminTab==='agents'){body.innerHTML=ADM.agents.length?`<div class="mylist">${ADM.agents.map(a=>`<div class="myrow">${a.avatar_path&&okAny(a.avatar_path)?`<img src="${spub('avatars',a.avatar_path)}" alt="" style="width:46px;border-radius:50%">`:`<span class="av">${esc((a.name||'?').slice(0,1))}</span>`}<div class="grow"><b>${esc(a.name)}</b><small>LINE ${esc(a.line_id||'-')} · ${esc(a.phone||'-')} · ${fmtDate(new Date(a.created_at))}</small></div><span class="src" style="${a.approved?'':'color:var(--ink);background:var(--surface);border:1px dashed var(--ink)'}">${a.approved?T3('อนุมัติแล้ว','Approved','已批准'):T3('รออนุมัติ','Pending','待批准')}</span><button class="linkbtn" data-adapprove="${a.id}" data-v="${a.approved?'0':'1'}">${a.approved?T3('ยกเลิกสิทธิ์','Revoke','撤销'):T3('อนุมัติ','Approve','批准')}</button></div>`).join('')}</div>`:`<div class="state">${T3('ยังไม่มีผู้สมัครเป็นเอเจนต์','No agent applications yet.','暂无申请。')}</div>`;}
+    else if(adminTab==='listings')body.innerHTML=listingRows(ADM.listings,true);
+    else if(adminTab==='reqs')body.innerHTML=reqTable(ADM.reqs,ADM.listings);
+  };
+  if(ADM._loaded)fill();
+  loadAdmin().then(()=>{ADM._loaded=true;if(acctTab==='admin'&&adminTab!=='site'&&adminTab!=='form'&&$('#adBody'))fill();});
+}
+
+/* ---------- events ---------- */
+function agErr(m,id){const e=$('#'+(id||'agErr'));if(e){e.textContent=m;e.hidden=!m;}}
+const newPid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const scopeRows=sc=>sc==='admin'?ADM.listings:MINE;
+async function refreshAfterListingChange(scope){if(scope==='admin')await loadAdmin();if(AGENT&&AGENT.approved)await loadMine();loadListings();}
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-acct],[data-agtab],[data-adtab],[data-agedit],[data-agdel],[data-agtoggle],[data-adfeat],[data-adapprove],[data-phrm],[data-phcover],[data-siteclear],#agCancel,#auOut,#avDel');if(!b)return;
+  if(b.id==='auOut'){await SB.auth.signOut();acctTab='login';renderAcct();toast(T3('ออกจากระบบแล้ว','Signed out','已退出'));return;}
+  if(b.dataset.acct){acctTab=b.dataset.acct;if(acctTab==='agent'){agentTab='list';editingId=null;formPhotos=[];}if(acctTab==='admin'){adminTab='site';}renderAcct();return;}
+  if(b.dataset.agtab){agentTab=b.dataset.agtab;if(agentTab==='form'&&editScope!=='mine'){editingId=null;}if(agentTab!=='form'){editingId=null;formPhotos=[];}else if(!editingId)formPhotos=[];editScope='mine';renderAcctBody();return;}
+  if(b.dataset.adtab){adminTab=b.dataset.adtab;if(adminTab!=='form'){editingId=null;formPhotos=[];}renderAcctBody();return;}
+  if(b.id==='agCancel'){const sc=editScope;editingId=null;formPhotos=[];if(sc==='admin')adminTab='listings';else agentTab='list';renderAcctBody();return;}
+  if(b.id==='avDel'){const old=PROFILE.avatar_path;const {error}=await SB.from('profiles').update({avatar_path:null}).eq('id',uid());if(error)return toast(T3('ลบรูปไม่สำเร็จ','Could not remove','删除失败'));if(AGENT)await SB.from('agents').update({avatar_path:null}).eq('id',uid());if(old)await SB.storage.from('avatars').remove([old]);PROFILE.avatar_path=null;if(AGENT)AGENT.avatar_path=null;renderAcctBtn();renderAcct();loadListings();return;}
+  if(b.dataset.phrm!==undefined){formPhotos.splice(+b.dataset.phrm,1);renderPhGrid();return;}
+  if(b.dataset.phcover!==undefined){const [x]=formPhotos.splice(+b.dataset.phcover,1);formPhotos.unshift(x);renderPhGrid();return;}
+  if(b.dataset.siteclear){const k=b.dataset.siteclear+'_path';const old=SITE[k];const {error}=await SB.from('site_settings').update({[k]:null}).eq('id',1);if(error)return toast(T3('บันทึกไม่สำเร็จ','Could not save','保存失败'));if(old)await SB.storage.from('site').remove([old]);SITE[k]=null;applyBranding();renderAcctBody();return;}
+  if(b.dataset.adapprove){const v=b.dataset.v==='1';const {error}=await SB.from('agents').update({approved:v}).eq('id',b.dataset.adapprove);if(error)return toast(T3('บันทึกไม่สำเร็จ','Could not save','保存失败'));toast(v?T3('อนุมัติเอเจนต์แล้ว','Agent approved','已批准'):T3('ยกเลิกสิทธิ์แล้ว','Access revoked','已撤销'));await loadAdmin();renderAcctBody();return;}
+  if(b.dataset.adfeat){const r=ADM.listings.find(x=>x.id===b.dataset.adfeat);if(!r)return;const {error}=await SB.from('listings').update({featured:!r.featured}).eq('id',r.id);if(error)return toast(T3('บันทึกไม่สำเร็จ','Could not save','保存失败'));await loadAdmin();renderAcctBody();loadListings();return;}
+  const id=b.dataset.agedit||b.dataset.agdel||b.dataset.agtoggle;if(!id)return;const scope=b.dataset.scope||'mine';const r=scopeRows(scope).find(x=>x.id===id);if(!r)return;
+  if(b.dataset.agedit){editingId=id;editScope=scope;formPhotos=(Array.isArray(r.photos)?r.photos:[]).filter(x=>x&&okPath(x.f)&&okPath(x.t)).map(x=>({existing:true,f:x.f,t:x.t}));if(scope==='admin')adminTab='form';else agentTab='form';renderAcctBody();return;}
+  if(b.dataset.agtoggle){const {error}=await SB.from('listings').update({status:r.status==='active'?'closed':'active'}).eq('id',id);if(error)return toast(T3('บันทึกไม่สำเร็จ','Could not save','保存失败'));await refreshAfterListingChange(scope);renderAcctBody();return;}
+  if(b.dataset.agdel){
+    if(b.dataset.confirm!=='1'){b.dataset.confirm='1';b.textContent=T3('กดอีกครั้งเพื่อลบ','Tap again to delete','再次点击删除');setTimeout(()=>{if(b.isConnected){b.dataset.confirm='';b.textContent=T3('ลบ','Delete','删除');}},3000);return;}
+    const {error}=await SB.from('listings').delete().eq('id',id);if(error)return toast(T3('ลบไม่สำเร็จ','Could not delete','删除失败'));
+    const paths=(Array.isArray(r.photos)?r.photos:[]).flatMap(x=>[x.f,x.t]).filter(okPath);if(paths.length)await SB.storage.from(BUCKET).remove(paths);
+    toast(T3('ลบประกาศแล้ว','Listing deleted','已删除'));await refreshAfterListingChange(scope);renderAcctBody();}
+});
+document.addEventListener('change',async e=>{
+  const el=e.target;
+  if(el.id==='ag-files'){
+    const files=[...el.files].slice(0,Math.max(0,8-formPhotos.length));el.value='';agErr('');let bad=0;photoBusy=files.length;renderPhGrid();
+    for(const f of files){try{const c=await compress(f);formPhotos.push({existing:false,...c});}catch(_){bad++;}photoBusy--;renderPhGrid();}
+    if(bad)agErr(fileErr());return;}
+  if(el.id==='avFile'){const f=el.files[0];el.value='';if(!f)return;
+    try{const img=await loadImg(f);const blob=await toBlob(img,400,.85,true);const path=`${uid()}/${newPid()}.jpg`;
+      const up=await SB.storage.from('avatars').upload(path,blob,{contentType:'image/jpeg'});if(up.error)throw up.error;
+      const old=PROFILE.avatar_path;const {error}=await SB.from('profiles').update({avatar_path:path}).eq('id',uid());if(error)throw error;
+      if(AGENT)await SB.from('agents').update({avatar_path:path}).eq('id',uid());
+      if(old)await SB.storage.from('avatars').remove([old]);PROFILE.avatar_path=path;if(AGENT)AGENT.avatar_path=path;
+      toast(T3('เปลี่ยนรูปโปรไฟล์แล้ว','Profile photo updated','头像已更新'));renderAcctBtn();renderAcct();loadListings();
+    }catch(err){toast(err&&err.message==='type'||err&&err.message==='decode'||err&&err.message==='size'?fileErr():T3('อัปโหลดรูปไม่สำเร็จ','Upload failed','上传失败'));}
+    return;}
+  if(el.dataset&&el.dataset.siteimg){const f=el.files[0];el.value='';if(!f)return;const k=el.dataset.siteimg;
+    try{const img=await loadImg(f);const blob=k==='logo'?await toBlob(img,512,.9,false,f.type==='image/png'):await toBlob(img,2200,.82);
+      const ext=blob.type==='image/png'?'png':'jpg';const path=`${k}-${newPid()}.${ext}`;
+      const up=await SB.storage.from('site').upload(path,blob,{contentType:blob.type});if(up.error)throw up.error;
+      const old=SITE[k+'_path'];const {error}=await SB.from('site_settings').update({[k+'_path']:path}).eq('id',1);if(error)throw error;
+      if(old)await SB.storage.from('site').remove([old]);SITE[k+'_path']=path;applyBranding();toast(T3('อัปเดตรูปแล้ว','Image updated','图片已更新'));renderAcctBody();
+    }catch(err){toast(err&&['type','decode','size'].includes(err.message)?fileErr():T3('อัปโหลดรูปไม่สำเร็จ','Upload failed','上传失败'));}
+    return;}
+  if(el.dataset&&el.dataset.reqstatus){const {error}=await SB.from('viewing_requests').update({status:el.value}).eq('id',el.dataset.reqstatus);
+    if(error)toast(T3('อัปเดตสถานะไม่สำเร็จ','Could not update status','更新失败'));else{[REQS,ADM.reqs].forEach(arr=>{const q=arr.find(x=>x.id===el.dataset.reqstatus);if(q)q.status=el.value;});toast(T3('อัปเดตสถานะแล้ว','Status updated','已更新'));}}
+});
+const authMsg=m=>/invalid login/i.test(m)?T3('อีเมลหรือรหัสผ่านไม่ถูกต้อง','Wrong email or password.','邮箱或密码错误。'):/not confirmed/i.test(m)?T3('ยังไม่ได้ยืนยันอีเมล เปิดอีเมลแล้วกดลิงก์ยืนยันก่อน','Please confirm your email first (check your inbox).','请先验证邮箱。'):/already registered|already been registered/i.test(m)?T3('อีเมลนี้สมัครแล้ว ลองเข้าสู่ระบบ หรือกด "ลืมรหัสผ่าน"','This email is already registered. Sign in or reset your password.','该邮箱已注册。'):/rate|too many/i.test(m)?T3('ทำรายการถี่เกินไป รอสักครู่แล้วลองใหม่','Too many attempts. Wait a moment and try again.','请求过多，请稍后。'):/weak|at least/i.test(m)?T3('รหัสผ่านง่ายเกินไป ลองตั้งให้ยาวขึ้น','Password is too weak. Try a longer one.','密码太弱。'):T3('ทำรายการไม่สำเร็จ ลองอีกครั้ง','Something went wrong. Try again.','操作失败，请重试。');
+document.addEventListener('submit',async e=>{
+  const id=e.target.id;const done=()=>{const b=e.target.querySelector('button[type=submit]');if(b)b.disabled=false;};
+  if(!['loginForm','signupForm','forgotForm','pwForm','pwNewForm','profileForm','profForm','siteForm','agForm'].includes(id))return;
+  e.preventDefault();agErr('');const sb=e.target.querySelector('button[type=submit]');
+  if(id==='loginForm'||id==='signupForm'||id==='forgotForm'){
+    const em=$('#au-email').value.trim();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return agErr(T3('อีเมลไม่ถูกต้อง','Enter a valid email.','邮箱无效'));
+    if(id==='forgotForm'){sb.disabled=true;const {error}=await SB.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});done();if(error)return agErr(authMsg(error.message));const ok=$('#agOk');ok.textContent=T3('ส่งลิงก์ตั้งรหัสผ่านใหม่ไปที่อีเมลแล้ว (ถ้าไม่เห็นให้ดูในสแปม)','Reset link sent. Check your inbox (and spam).','重置链接已发送。');ok.hidden=false;return;}
+    const pw=$('#au-pw').value;
+    if(id==='loginForm'){if(!pw)return agErr(T3('กรอกรหัสผ่าน','Enter your password.','请输入密码'));sb.disabled=true;const {error}=await SB.auth.signInWithPassword({email:em,password:pw});done();if(error)return agErr(authMsg(error.message));toast(T3('เข้าสู่ระบบแล้ว','Signed in','已登录'));return;}
+    const nm=$('#su-name').value.trim().slice(0,60);if(!nm)return agErr(T3('กรอกชื่อที่แสดง','Enter a display name.','请填写名称'));
+    if(pw.length<8)return agErr(T3('รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร','Password must be at least 8 characters.','密码至少8位。'));if(pw!==$('#au-pw2').value)return agErr(T3('รหัสผ่านสองช่องไม่ตรงกัน','Passwords do not match.','两次密码不一致。'));
+    sb.disabled=true;const {data,error}=await SB.auth.signUp({email:em,password:pw,options:{data:{name:nm},emailRedirectTo:location.origin+location.pathname}});done();
+    if(error)return agErr(authMsg(error.message));
+    if(data&&data.user&&Array.isArray(data.user.identities)&&data.user.identities.length===0)return agErr(authMsg('already registered'));
+    if(!data.session){const ok=$('#agOk');ok.innerHTML=`<b>${T3('สมัครเรียบร้อย','Almost done','注册成功')}</b><br>${T3('เปิดอีเมล','Open the email sent to','请打开发送至')} <b>${esc(em)}</b> ${T3('แล้วกดลิงก์ยืนยัน จากนั้นกลับมาเข้าสู่ระบบ (ถ้าไม่เห็นให้ดูในสแปม)','and tap the confirmation link, then sign in (check spam if needed).','的邮件并点击确认链接，然后登录。')}`;ok.hidden=false;e.target.querySelector('fieldset').hidden=true;sb.hidden=true;}
+    return;}
+  if(id==='pwForm'||id==='pwNewForm'){const p1=$('#pw1').value,p2=$('#pw2').value,eid=id==='pwForm'?'pwErr':'agErr';
+    if(p1.length<8)return agErr(T3('รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร','Password must be at least 8 characters.','密码至少8位。'),eid);if(p1!==p2)return agErr(T3('รหัสผ่านสองช่องไม่ตรงกัน','Passwords do not match.','两次密码不一致。'),eid);
+    sb.disabled=true;const {error}=await SB.auth.updateUser({password:p1});done();if(error)return agErr(authMsg(error.message),eid);
+    toast(T3('เปลี่ยนรหัสผ่านแล้ว','Password changed','密码已修改'));if(id==='pwNewForm'){RECOVERY=false;acctTab='profile';try{history.replaceState(null,'',location.pathname)}catch(_){}renderAcct();}else e.target.reset();return;}
+  if(id==='profileForm'){const body={display_name:$('#pf-name').value.trim().slice(0,60)||null,phone:$('#pf-phone').value.trim().slice(0,30)||null};
+    sb.disabled=true;const {error}=await SB.from('profiles').update(body).eq('id',uid());done();if(error)return agErr(T3('บันทึกไม่สำเร็จ ลองอีกครั้ง','Could not save. Try again.','保存失败'));
+    Object.assign(PROFILE,body);toast(T3('บันทึกแล้ว','Saved','已保存'));renderAcctBtn();renderAcct();return;}
+  if(id==='profForm'){const body={name:$('#ag-name').value.trim().slice(0,60),line_id:$('#ag-line').value.trim().slice(0,60)||null,phone:$('#ag-phone').value.trim().slice(0,30)||null,avatar_path:PROFILE&&PROFILE.avatar_path||null};
+    if(!body.name)return agErr(T3('กรอกชื่อที่แสดง','Enter a display name.','请填写名称'));sb.disabled=true;
+    const {error}=AGENT?await SB.from('agents').update(body).eq('id',uid()):await SB.from('agents').insert({id:uid(),...body});done();
+    if(error)return agErr(T3('บันทึกไม่สำเร็จ ลองอีกครั้ง','Could not save. Try again.','保存失败'));
+    toast(AGENT?T3('บันทึกแล้ว','Saved','已保存'):T3('ส่งคำขอเป็นเอเจนต์แล้ว','Agent request sent','申请已提交'));const a=await SB.from('agents').select('*').eq('id',uid()).maybeSingle();AGENT=a.data;renderAcctBody();loadListings();return;}
+  if(id==='siteForm'){const body={phone:$('#sf-phone').value.trim().slice(0,30)||null,line_id:$('#sf-line').value.trim().slice(0,60)||null};sb.disabled=true;
+    const {error}=await SB.from('site_settings').update(body).eq('id',1);done();if(error)return agErr(T3('บันทึกไม่สำเร็จ','Could not save','保存失败'));
+    Object.assign(SITE,body);if(body.phone)CONFIG.phone=body.phone;if(body.line_id)CONFIG.line=body.line_id;toast(T3('บันทึกแล้ว','Saved','已保存'));loadListings();return;}
+  // listing form
+  if(saving)return;if(photoBusy)return agErr(T3('รอให้ย่อรูปเสร็จก่อน','Wait for photos to finish processing.','请等待照片处理完成。'));
+  const g=k=>$('#ag-'+k);const mode=g('mode').value;const n=(v,lo,hi)=>{v=Number(v);return isFinite(v)&&v!==0?Math.min(hi,Math.max(lo,v)):null};
+  const row={mode,kind:g('kind').value,project:g('project').value.trim().slice(0,120),district:g('dist').value,station:g('station').value||null,walk_m:g('station').value?n(g('walk').value,0,10000):null,
+    beds:n(g('beds').value,0,20)??0,baths:n(g('baths').value,0,20)??0,area:n(g('area').value,0,99999),floor:n(g('floor').value,0,200),rent:mode.includes('r')?n(g('rent').value,0,1e9):null,sale:mode.includes('s')?n(g('sale').value,0,1e12):null,
+    pets:g('pets').checked,scene:g('scene').value,description:g('desc').value.trim().slice(0,2000)||null};
+  if(!row.project||!row.area)return agErr(T3('กรอกชื่อโครงการและพื้นที่ให้ครบ','Enter the project name and size.','请填写项目名称和面积。'));
+  if((mode.includes('r')&&!row.rent)||(mode.includes('s')&&!row.sale))return agErr(T3('กรอกราคาให้ตรงกับประเภทประกาศ','Enter a price for each listing type.','请填写对应价格。'));
+  saving=true;const subTxt=sb.textContent;sb.disabled=true;const scope=editingId?editScope:'mine';
+  try{
+    const fresh=formPhotos.filter(p=>!p.existing);let i=0;
+    for(const p of fresh){i++;sb.textContent=T3(`กำลังอัปโหลดรูป ${i}/${fresh.length}…`,`Uploading photo ${i}/${fresh.length}…`,`上传 ${i}/${fresh.length}…`);
+      const pid=newPid(),f=`${uid()}/${pid}.jpg`,tp=`${uid()}/${pid}_t.jpg`;
+      const a=await SB.storage.from(BUCKET).upload(f,p.full,{contentType:'image/jpeg'});if(a.error)throw a.error;
+      const c=await SB.storage.from(BUCKET).upload(tp,p.thumb,{contentType:'image/jpeg'});if(c.error)throw c.error;
+      p.existing=true;p.f=f;p.t=tp;}
+    row.photos=formPhotos.map(p=>({f:p.f,t:p.t}));
+    sb.textContent=T3('กำลังบันทึก…','Saving…','保存中…');
+    const res=editingId?await SB.from('listings').update(row).eq('id',editingId):await SB.from('listings').insert({agent_id:uid(),status:'active',...row});
+    if(res.error)throw res.error;
+    if(editingId){const old=scopeRows(scope).find(x=>x.id===editingId);const keep=new Set(row.photos.flatMap(x=>[x.f,x.t]));const gone=(old&&Array.isArray(old.photos)?old.photos:[]).flatMap(x=>[x.f,x.t]).filter(pth=>okPath(pth)&&!keep.has(pth));if(gone.length)await SB.storage.from(BUCKET).remove(gone);}
+    toast(editingId?T3('บันทึกการแก้ไขแล้ว','Changes saved','已保存'):T3('ลงประกาศแล้ว แสดงในหน้ารายการเรียบร้อย','Listing published','已发布'));
+    editingId=null;formPhotos=[];if(scope==='admin')adminTab='listings';else agentTab='list';await refreshAfterListingChange(scope);renderAcctBody();
+  }catch(err){sb.disabled=false;sb.textContent=subTxt;const m=String(err&&(err.message||err.error)||'');
+    agErr(/row-level|policy|permission/i.test(m)?T3('บัญชีนี้ยังไม่มีสิทธิ์ลงประกาศ','This account cannot post yet.','此账户暂无发布权限。'):/exceed|size|too large/i.test(m)?T3('รูปใหญ่เกินไป','A photo is too large.','照片过大。'):T3('บันทึกไม่สำเร็จ ลองอีกครั้ง','Could not save. Try again.','保存失败，请重试。'));}
+  finally{saving=false;}
+});
+/* prefill booking from profile */
+const _openBooking=openBooking;openBooking=function(code){_openBooking(code);if(PROFILE){if(PROFILE.display_name)$('#bkN').value=PROFILE.display_name;if(PROFILE.phone)$('#bkT').value=PROFILE.phone;}};
+
+render();loadSettings();loadListings();
+</script>
+
+</body>
+</html>
