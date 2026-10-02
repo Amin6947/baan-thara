@@ -16,7 +16,10 @@
 <meta name="twitter:image" content="https://amin6947.github.io/baan-thara/share.jpg">
 <meta itemprop="image" content="https://amin6947.github.io/baan-thara/share.jpg">
 <meta name="theme-color" content="#B8137F">
-<link rel="icon" href="logo_mark.png"><link rel="apple-touch-icon" href="logo_mark.png">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="JUBILEE"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>(function(){try{var m=localStorage.getItem('bt_mode'),c=localStorage.getItem('bt_palette');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);c=c||'pink';if(c!=='mono')document.documentElement.setAttribute('data-palette',c);}catch(e){}})();</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
@@ -295,6 +298,17 @@ form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--
 .hero.has-img .eyebrow{color:#DDDDDD}.hero.has-img p{color:rgba(255,255,255,.88)}
 .hero.has-img .seg{background:rgba(255,255,255,.18)}.hero.has-img .seg button{color:#fff}.hero.has-img .seg button.on{color:#1B211D;background:#fff}
 .acct-seg button{white-space:nowrap}
+.app-btn{padding:8px 14px;font-size:13.5px}
+.app-bar{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:65;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 12px;box-shadow:0 12px 30px rgba(0,0,0,.18);max-width:460px;margin-inline:auto}
+.app-bar img{width:44px;height:44px;border-radius:11px;flex:none}
+.app-bar .t{flex:1;min-width:0;line-height:1.3}.app-bar .t b{display:block;font-size:14.5px}.app-bar .t small{color:var(--muted);font-size:12.5px}
+.app-bar .x2{background:none;border:0;color:var(--muted);padding:6px;display:grid;place-items:center}
+.inst{padding:24px;display:flex;flex-direction:column;gap:14px}
+.inst h3{margin:0;font-family:var(--f-display);font-size:21px;display:flex;gap:12px;align-items:center}.inst h3 img{width:48px;height:48px;border-radius:12px}
+.inst ol{margin:0;padding-left:22px;line-height:1.9}
+.inst .copyline{display:flex;flex-direction:column;gap:8px;align-items:stretch}.inst .copyline code{min-width:0;word-break:break-all;white-space:normal}.inst .copyline button{width:100%}
+.inst .kbd{display:inline-flex;align-items:center;gap:4px;background:var(--soft);border-radius:6px;padding:1px 8px;font-weight:600}
+
 .ai-panel{width:min(420px,calc(100% - 32px));height:min(680px,calc(100vh - 120px));border-radius:20px}
 .ai-panel header{padding:14px 16px;gap:12px}
 .ai-av{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;flex:none}
@@ -456,7 +470,8 @@ footer b{color:var(--ink)}
   <div class="f-co"><img src="logo_mark.png" alt="JUBILEE" class="f-logo"><div><b>บริษัท จูบิลี่เรียลเอสเตท จำกัด</b><br>Jubilee Real Estate Co.,Ltd.<br><small>ทะเบียนนิติบุคคลเลขที่ / Reg. No. 0105569020674</small></div></div>
   <div><b id="fAddrL">ที่อยู่</b><br>4475 ถ. สุขุมวิท แขวงบางนาใต้ เขตบางนา กรุงเทพมหานคร 10260<br><small>4475 Sukhumvit Rd., Bang Na Tai, Bang Na, Bangkok 10260</small></div>
   <div><b id="fContactL">ติดต่อ</b><br>คุณณิชมน รักโชติ · กรรมการบริษัท<br><span class="f-tel" id="fTel">095-216-9756</span></div>
-</div><div class="wrap foot-bottom"><span id="foot1"></span><span id="foot2"></span></div></footer>
+</div><div class="wrap foot-bottom"><span id="foot1"></span><button type="button" class="btn app-btn" data-install hidden></button><span id="foot2"></span></div></footer>
+<div class="app-bar" id="appBar" hidden></div>
 
 <button class="float-l" id="chatBtn"></button>
 <button class="float-r" id="aiBtn"></button>
@@ -694,7 +709,7 @@ function renderChrome(){
   const L=t();document.documentElement.lang=S.lang==='zh'?'zh':S.lang;
   const navActive=S.featured?2:1;
   $('#nav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}" class="${i===navActive?'on':''}">${n}</button>`).join('');
-  $('#mnav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}">${n}</button>`).join('')+`<button data-nav="acct">${L3('บัญชีของฉัน / เข้าสู่ระบบ','My account / Sign in','我的账户 / 登录')}</button><button data-nav="book">${L.book}</button>`;
+  $('#mnav').innerHTML=L.nav.map((n,i)=>`<button data-nav="${i}">${n}</button>`).join('')+`<button data-nav="install" class="nav-install">📲 ${L3('ติดตั้งแอป JUBILEE','Install the JUBILEE app','安装 JUBILEE App')}</button><button data-nav="acct">${L3('บัญชีของฉัน / เข้าสู่ระบบ','My account / Sign in','我的账户 / 登录')}</button><button data-nav="book">${L.book}</button>`;
   $('#agentLogin').innerHTML=ic('brief')+`<span>${L.agent}</span>`;
   const cur=LANGS.find(l=>l[0]===S.lang);
   $('#langBtn').innerHTML=ic('globe')+`<span class="lang-label">${cur[1]==='GB'?'EN':cur[1]}</span>`+ic($('#langMenu').hidden?'down':'up',14);
@@ -716,7 +731,7 @@ function renderChrome(){
   $('#aiBtn').innerHTML=ic('spark',20)+`<span>${L.ai}</span>`;
   $('#moreBtn').textContent=L.more;
   $('#foot1').textContent=L.foot1;$('#foot2').textContent=L.foot2;
-  renderFilters();renderAcctBtn();if(typeof renderThemeMenu==='function'&&$('#thmBtn'))renderThemeMenu();if(typeof renderTeam==='function')renderTeam();
+  renderFilters();renderAcctBtn();if(typeof renderThemeMenu==='function'&&$('#thmBtn'))renderThemeMenu();if(typeof renderTeam==='function')renderTeam();if(typeof renderAppUI==='function')renderAppUI();
 }
 function renderFilters(){
   const L=t(),f=$('#filters');f.hidden=!S.filOpen;if(!S.filOpen)return;
@@ -945,6 +960,7 @@ document.addEventListener('click',e=>{
     else if(n==='3'||n==='agent'){openAgent();}
     else if(n==='book'){openBooking('');}
     else if(n==='acct'){openAcct();}
+    else if(n==='install'){installApp();}
     else toast(t().soon);return;}
   switch(el.id){
     case 'langBtn':{const m=$('#langMenu');m.hidden=!m.hidden;el.setAttribute('aria-expanded',!m.hidden);renderChrome();return;}
@@ -1573,7 +1589,45 @@ function renderTeam(){
 let deepDone=false;
 function deepLink(){if(deepDone)return;const c=new URLSearchParams(location.search).get('p');if(!c)return;const p=P.find(x=>x.code===c);if(p){deepDone=true;openDetail(c);}}
 
-render();loadSettings().then(renderTeam);loadListings();
+/* ---------- installable app (PWA) ---------- */
+let deferredInstall=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=/iPhone|iPad|iPod/i.test(UA)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const inAppBrowser=/MicroMessenger|Line\/|FBAN|FBAV|Instagram/i.test(UA);
+if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;renderAppUI();});
+window.addEventListener('appinstalled',()=>{deferredInstall=null;try{localStorage.setItem('bt_app_installed','1')}catch(_){}renderAppUI();toast(L3('ติดตั้งแอปแล้ว เปิดได้จากหน้าจอโฮม','App installed. Open it from your home screen.','App 已安装，可从主屏幕打开'));});
+function renderAppUI(){
+  const show=!isStandalone();
+  document.querySelectorAll('[data-install]').forEach(b=>{b.hidden=!show;b.textContent='📲 '+L3('ติดตั้งแอป JUBILEE','Install the JUBILEE app','安装 JUBILEE App');});
+  document.querySelectorAll('.nav-install').forEach(b=>b.hidden=!show);
+  const bar=$('#appBar');if(!bar)return;let dismissed=false;try{dismissed=localStorage.getItem('bt_appbar_off')==='1'||localStorage.getItem('bt_app_installed')==='1'}catch(_){}
+  if(!show||dismissed||!isMobile){bar.hidden=true;return;}
+  bar.hidden=false;
+  bar.innerHTML=`<img src="icon-192.png" alt=""><div class="t"><b>${L3('ติดตั้งแอป JUBILEE','Get the JUBILEE app','安装 JUBILEE App')}</b><small>${L3('เปิดเร็ว ไม่ต้องพิมพ์ลิงก์ · ฟรี','Faster to open · free','打开更快 · 免费')}</small></div><button type="button" class="btn" data-install-now style="padding:9px 16px">${L3('ติดตั้ง','Install','安装')}</button><button type="button" class="x2" data-appbar-off aria-label="close">${ic('x',18)}</button>`;
+}
+async function installApp(){
+  closePanel();
+  if(isStandalone())return toast(L3('คุณเปิดอยู่ในแอปแล้ว','You are already using the app','您已在 App 中'));
+  if(deferredInstall){deferredInstall.prompt();const r=await deferredInstall.userChoice.catch(()=>null);deferredInstall=null;if(r&&r.outcome==='accepted')return;renderAppUI();return;}
+  const url=siteUrl();
+  let steps;
+  if(inAppBrowser)steps=`<p style="margin:0">${L3('ตอนนี้เปิดอยู่ในแอปแชท (WeChat / LINE / Facebook) ซึ่งติดตั้งแอปไม่ได้','You are inside a chat app (WeChat / LINE / Facebook), which cannot install apps.','当前在聊天应用内（微信/LINE/Facebook），无法安装。')}</p><ol><li>${L3('กด <span class="kbd">···</span> มุมขวาบน','Tap <span class="kbd">···</span> at the top right','点击右上角 <span class="kbd">···</span>')}</li><li>${L3('เลือก <b>เปิดในเบราว์เซอร์</b> (Safari / Chrome)','Choose <b>Open in browser</b> (Safari / Chrome)','选择<b>在浏览器打开</b>（Safari / Chrome）')}</li><li>${L3('กดปุ่ม "ติดตั้งแอป JUBILEE" อีกครั้ง','Tap "Install the JUBILEE app" again','再次点击“安装 JUBILEE App”')}</li></ol>`;
+  else if(isIOS)steps=`<ol><li>${L3('เปิดหน้านี้ใน <b>Safari</b>','Open this page in <b>Safari</b>','用 <b>Safari</b> 打开本页')}</li><li>${L3('กดปุ่มแชร์ <span class="kbd">⬆︎</span> ด้านล่าง','Tap the Share button <span class="kbd">⬆︎</span>','点击底部分享按钮 <span class="kbd">⬆︎</span>')}</li><li>${L3('เลือก <b>เพิ่มไปยังหน้าจอโฮม</b> (Add to Home Screen)','Choose <b>Add to Home Screen</b>','选择<b>添加到主屏幕</b>')}</li><li>${L3('กด <b>เพิ่ม</b> ไอคอน JUBILEE จะขึ้นบนหน้าจอ','Tap <b>Add</b>, the JUBILEE icon appears on your home screen','点击<b>添加</b>，主屏幕会出现 JUBILEE 图标')}</li></ol>`;
+  else steps=`<ol><li>${L3('เปิดหน้านี้ใน <b>Chrome</b> หรือ <b>Edge</b>','Open this page in <b>Chrome</b> or <b>Edge</b>','用 <b>Chrome</b> 或 <b>Edge</b> 打开本页')}</li><li>${L3('กดเมนู <span class="kbd">⋮</span> แล้วเลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มลงในหน้าจอหลัก</b>','Open the <span class="kbd">⋮</span> menu and choose <b>Install app</b> or <b>Add to Home screen</b>','打开 <span class="kbd">⋮</span> 菜单，选择<b>安装应用</b>或<b>添加到主屏幕</b>')}</li><li>${L3('บนคอม กดไอคอนติดตั้ง <span class="kbd">⊕</span> ที่ช่องที่อยู่เว็บก็ได้','On a computer, you can also click the install icon <span class="kbd">⊕</span> in the address bar','电脑上也可点击地址栏的安装图标 <span class="kbd">⊕</span>')}</li></ol>`;
+  openModal(`<div class="inst"><h3><img src="icon-192.png" alt="">${L3('ติดตั้งแอป JUBILEE','Install the JUBILEE app','安装 JUBILEE App')}</h3>${steps}
+   <p style="margin:0;color:var(--muted);font-size:13.5px">${L3('ฟรี ไม่ต้องผ่าน App Store / Play Store ติดตั้งแล้วเปิดได้จากหน้าจอเหมือนแอปทั่วไป','Free, no app store needed. Once installed it opens from your home screen like any app.','免费，无需应用商店，安装后可像普通 App 一样从主屏幕打开。')}</p>
+   <div class="copyline"><code>${esc(url)}</code><button data-copy="${esc(url)}">${L3('คัดลอกลิงก์','Copy link','复制链接')}</button></div></div>`,'sm');
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-install],[data-install-now],[data-appbar-off]');if(!b)return;
+  if(b.dataset.appbarOff!==undefined){try{localStorage.setItem('bt_appbar_off','1')}catch(_){}$('#appBar').hidden=true;return;}
+  installApp();
+});
+if(new URLSearchParams(location.search).get('install'))setTimeout(installApp,600);
+if(new URLSearchParams(location.search).get('source')==='app'){try{history.replaceState(null,'',location.pathname)}catch(_){}}
+
+render();loadSettings().then(renderTeam);loadListings();renderAppUI();
 </script>
 
 </body>
