@@ -3,15 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Baan Thara Properties | คอนโด บ้าน เช่า-ขาย กรุงเทพฯ</title>
+<title>JUBILEE Real Estate | จูบิลี่เรียลเอสเตท · คอนโด บ้าน เช่า-ขาย กรุงเทพฯ</title>
 <meta name="description" content="ค้นหาคอนโด บ้านเดี่ยว ทาวน์โฮม ให้เช่าและขายในกรุงเทพฯ และปริมณฑล ใกล้รถไฟฟ้า เลี้ยงสัตว์ได้ พร้อมนัดชมออนไลน์">
-<meta property="og:title" content="Baan Thara Properties">
-<meta property="og:description" content="คอนโดและบ้าน เช่า-ขาย กรุงเทพฯ และปริมณฑล">
+<meta property="og:title" content="JUBILEE Real Estate · 曼谷精选房源 · คอนโด บ้าน เช่า-ขาย">
+<meta property="og:description" content="คอนโดและบ้าน เช่า-ขาย กรุงเทพฯ · 曼谷公寓别墅租售 · Bangkok condos &amp; homes for rent and sale">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#111111">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M7 26V14l9-7 9 7v12' fill='none' stroke='white' stroke-width='2.4'/%3E%3C/svg%3E">
+<meta property="og:site_name" content="JUBILEE Real Estate">
+<meta property="og:url" content="https://amin6947.github.io/baan-thara/">
+<meta property="og:image" content="https://amin6947.github.io/baan-thara/share.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://amin6947.github.io/baan-thara/share.jpg">
+<meta itemprop="image" content="https://amin6947.github.io/baan-thara/share.jpg">
+<meta name="theme-color" content="#B8137F">
+<link rel="icon" href="logo_mark.png"><link rel="apple-touch-icon" href="logo_mark.png">
 <style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<script>(function(){try{var m=localStorage.getItem('bt_mode'),c=localStorage.getItem('bt_palette');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);if(c&&c!=='mono')document.documentElement.setAttribute('data-palette',c);}catch(e){}})();</script>
+<script>(function(){try{var m=localStorage.getItem('bt_mode'),c=localStorage.getItem('bt_palette');if(m==='light'||m==='dark')document.documentElement.setAttribute('data-theme',m);c=c||'pink';if(c!=='mono')document.documentElement.setAttribute('data-palette',c);}catch(e){}})();</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -291,6 +298,10 @@ form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--
 .d-badges .tag.new,.d-badges .tag.sale{box-shadow:0 0 0 1px var(--ink)}
 .agent-login{max-width:220px}.agent-login span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* colour palettes (chosen in the theme menu) */
+:root{--gold:#B8913A;--gold-ink:#FFFFFF}
+:root[data-palette="pink"]{--accent:#B8137F;--accent-hover:#950F67;--accent-ink:#FFFFFF;--accent-soft:#FBE3F1;--tag-dark:#B8137F;--brand-mark:#B8137F;}
+@media (prefers-color-scheme:dark){:root[data-palette="pink"]:not([data-theme="light"]){--accent:#F06BC0;--accent-hover:#F58ACF;--accent-ink:#1A0712;--accent-soft:#2C1424;--tag-dark:#B8137F;--brand-mark:#B8137F;}}
+:root[data-palette="pink"][data-theme="dark"]{--accent:#F06BC0;--accent-hover:#F58ACF;--accent-ink:#1A0712;--accent-soft:#2C1424;--tag-dark:#B8137F;--brand-mark:#B8137F;}
 :root[data-palette="green"]{--accent:#24513F;--accent-hover:#1B3F31;--accent-ink:#FFFFFF;--accent-soft:#E2ECE6;--tag-dark:#24513F;--brand-mark:#24513F;}
 @media (prefers-color-scheme:dark){:root[data-palette="green"]:not([data-theme="light"]){--accent:#62B08C;--accent-hover:#79C19F;--accent-ink:#0C1410;--accent-soft:#1E2E26;--tag-dark:#24513F;--brand-mark:#24513F;}}
 :root[data-palette="green"][data-theme="dark"]{--accent:#62B08C;--accent-hover:#79C19F;--accent-ink:#0C1410;--accent-soft:#1E2E26;--tag-dark:#24513F;--brand-mark:#24513F;}
@@ -306,19 +317,56 @@ form.bk input,form.bk select,form.bk textarea{width:100%;border:1px solid var(--
  @media (max-width:560px){.top .wrap{gap:8px}.top-right{gap:2px}.top-right .ghost{padding:8px 7px}.top-right .ghost>svg.i:last-child:not(:first-child){display:none}}
 @media (max-width:480px){#bookTop{display:none}.brand .mark{width:38px;height:38px}.brand b{font-size:17px}}
 .thm-sep{height:1px;background:var(--line);margin:6px 4px}
-footer{border-top:1px solid var(--line);margin-top:60px;padding-block:28px 110px;color:var(--muted);font-size:13.5px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+footer{border-top:1px solid var(--line);margin-top:40px;padding-block:32px 110px;color:var(--muted);font-size:13.5px;background:var(--surface)}
+footer .foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;line-height:1.7}
+footer b{color:var(--ink)}
+.f-co{display:flex;gap:14px;align-items:flex-start}.f-logo{width:56px;height:56px;border-radius:12px;border:1px solid var(--line);background:#fff;object-fit:contain;flex:none}
+.f-tel{font-size:18px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px}
+.team{padding-block:56px 10px}
+.team-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.team-head h2{font-family:var(--f-display);font-size:clamp(26px,4vw,36px);margin:6px 0 4px}
+.team-head p{margin:0;color:var(--muted);max-width:60ch}
+.team-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tm .tb .row{flex-direction:column}}
+.tm{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.tm img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--soft)}
+.tm .tb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
+.tm .tb small{color:var(--muted)}
+.tm .tb .row{display:flex;gap:8px}.tm .tb .row a,.tm .tb .row button{flex:1;text-align:center;text-decoration:none;padding:9px 6px;font-size:13.5px;border-radius:9px}
+.btn.gold{background:var(--gold);color:var(--gold-ink)}.btn.gold:hover{filter:brightness(.95)}
+.sharebox{margin:16px 24px 0;border:1px solid var(--line);border-radius:14px;padding:14px}
+.sharebox h4{margin:0 0 10px;font-size:14px;color:var(--muted);font-weight:600}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sh{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:10px 12px;font-weight:600;color:#fff;text-decoration:none;font-size:14px}
+.sh.wechat{grid-column:1/-1;background:#07C160;font-size:15px;padding:12px}
+.sh.fb{background:#1877F2}.sh.line{background:#06C755}.sh.shx{background:#111}.sh.wa{background:#25D366}.sh.tg{background:#229ED9}
+.sh.copy{background:var(--soft);color:var(--ink);grid-column:1/-1}
+.sh svg{width:18px;height:18px;fill:currentColor;flex:none}
+.d-bar{display:none}
+@media (max-width:820px){.d-bar{display:grid;grid-template-columns:1fr 1.2fr 52px;gap:8px;position:sticky;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);border-radius:0 0 18px 18px;z-index:3}
+ .d-bar a,.d-bar button{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:10px;padding:12px 6px;font-weight:700;text-decoration:none;border:0}
+ .d-bar .call{background:var(--accent);color:var(--accent-ink)}.d-bar .bk{background:var(--gold);color:var(--gold-ink)}.d-bar .shr{background:var(--soft);color:var(--ink)}}
+.wx-modal{padding:24px;display:flex;flex-direction:column;gap:14px}
+.wx-modal h3{margin:0;font-family:var(--f-display);font-size:21px}
+.wx-qr{align-self:center;padding:12px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.wx-steps{margin:0;padding-left:20px;color:var(--ink);line-height:1.8}
+.wx-text{white-space:pre-wrap;background:var(--soft);border-radius:10px;padding:12px;font-size:13px;max-height:180px;overflow:auto;user-select:all}
+.wx-tip{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.78);color:#fff;display:flex;flex-direction:column;align-items:flex-end;padding:18px 22px;gap:10px;font-size:17px;text-align:right}
+.wx-tip .arr{font-size:46px;line-height:1;margin-right:6px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true"><img src="share.jpg" alt="" width="600" height="315"></div>
 
 
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#" id="brand">
-      <span class="mark"><svg viewBox="0 0 32 32"><path d="M6 27V14l10-8 10 8v13" fill="none" stroke="#fff" stroke-width="2"/><path d="M11 27c2-5 8-5 10 0" fill="none" stroke="#BDBDBD" stroke-width="2"/><path d="M13 23c1.5-2 4.5-2 6 0" fill="none" stroke="#BDBDBD" stroke-width="2"/></svg></span>
-      <span><b>Baan Thara</b><small>PROPERTIES</small></span>
+      <span class="mark"><img src="logo_mark_white.png" alt="JUBILEE" style="width:34px;height:34px;object-fit:contain"></span>
+      <span><b>JUBILEE</b><small>REAL ESTATE</small></span>
     </a>
     <nav class="main" id="nav"></nav>
     <div class="top-right">
@@ -374,7 +422,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
   </section>
 </main>
 
-<footer><div class="wrap"><span id="foot1"></span><span id="foot2"></span></div></footer>
+<section class="wrap team" id="contact">
+  <div class="team-head"><div><div class="eyebrow">JUBILEE TEAM</div><h2 id="teamTitle">ทีมที่ปรึกษาการขาย</h2><p id="teamSub"></p></div>
+   <button class="btn share-site" id="shareSite"></button></div>
+  <div class="team-grid" id="teamGrid"></div>
+</section>
+<footer><div class="wrap foot">
+  <div class="f-co"><img src="logo_mark.png" alt="JUBILEE" class="f-logo"><div><b>บริษัท จูบิลี่เรียลเอสเตท จำกัด</b><br>Jubilee Real Estate Co.,Ltd.<br><small>ทะเบียนนิติบุคคลเลขที่ / Reg. No. 0105569020674</small></div></div>
+  <div><b id="fAddrL">ที่อยู่</b><br>4475 ถ. สุขุมวิท แขวงบางนาใต้ เขตบางนา กรุงเทพมหานคร 10260<br><small>4475 Sukhumvit Rd., Bang Na Tai, Bang Na, Bangkok 10260</small></div>
+  <div><b id="fContactL">ติดต่อ</b><br>คุณณิชมน รักโชติ · กรรมการบริษัท<br><span class="f-tel" id="fTel">095-216-9756</span></div>
+</div><div class="wrap foot-bottom"><span id="foot1"></span><span id="foot2"></span></div></footer>
 
 <button class="float-l" id="chatBtn"></button>
 <button class="float-r" id="aiBtn"></button>
@@ -412,7 +469,7 @@ const ic=(n,s)=>`<svg class="i" viewBox="0 0 24 24"${s?` style="width:${s}px;hei
 
 /* ---------- i18n ---------- */
 const T={
- th:{nav:['หน้าแรก','อสังหาริมทรัพย์','ประกาศแนะนำ','Agent Club','Looking','ติดต่อเรา'],agent:'Agent Login',book:'จองชม',eyebrow:'รายการ',h1:'อสังหาริมทรัพย์ทั้งหมด',sub:'ค้นหาบ้านในฝันจากคอลเลกชันคอนโดและบ้านคัดสรรในกรุงเทพฯ และปริมณฑล',
+ th:{nav:['หน้าแรก','อสังหาริมทรัพย์','ประกาศแนะนำ','Agent Club','Looking','ติดต่อเรา'],agent:'Agent Login',book:'จองชม',eyebrow:'รายการ',h1:'อสังหาริมทรัพย์ทั้งหมด',sub:'JUBILEE Real Estate คัดสรรคอนโด บ้าน และทาวน์โฮม เช่า-ขาย ในกรุงเทพฯ และปริมณฑล',
   all:'ทั้งหมด',rent:'ให้เช่า',sale:'ขาย',q:'ค้นหาตามชื่อ ทำเล หรือรหัสประกาศ...',pet:'เลี้ยงสัตว์ได้',bts:'ใกล้รถไฟฟ้า',fil:'ตัวกรอง',
   sort:['ใหม่ล่าสุด','ราคา: ต่ำ → สูง','ราคา: สูง → ต่ำ','พื้นที่: มาก → น้อย'],found:'พบ',items:'รายการ',isNew:'มาใหม่',mo:'/เดือน',
   listedOn:'ลงวันที่',bedU:'ห้องนอน',bathU:'ห้องน้ำ',detail:'ดูรายละเอียด',more:'โหลดเพิ่ม',none:'ไม่พบทรัพย์ที่ตรงกับเงื่อนไข ลองปรับตัวกรองหรือคำค้นหา',clear:'ล้างตัวกรอง',
@@ -427,7 +484,7 @@ const T={
   chatAdmin:'แชทกับแอดมิน',chatHi:'สวัสดีค่ะ ติดต่อทีมงานได้ทุกวัน 09:00–20:00 น.',copy:'คัดลอก',copied:'คัดลอกแล้ว',
   ai:'ปรึกษา AI',aiTitle:'ผู้ช่วยค้นหาทรัพย์',aiHi:'บอกงบ ทำเล หรือความต้องการได้เลยค่ะ เช่น "คอนโดใกล้ BTS งบ 25,000 เลี้ยงแมวได้"',aiPh:'พิมพ์ความต้องการ...',
   aiSugg:['คอนโดเช่า งบ 20,000','2 ห้องนอน ใกล้ BTS','บ้านเดี่ยวขาย','เลี้ยงสัตว์ได้ ทองหล่อ'],aiFound:n=>`เจอ ${n} รายการที่ใกล้เคียง ตัวอย่างที่เหมาะที่สุดค่ะ`,aiNone:'ยังไม่เจอทรัพย์ที่ตรงทุกข้อ ลองขยายงบหรือเปลี่ยนทำเลดูนะคะ',aiShow:'แสดงทั้งหมดในหน้ารายการ',
-  soon:'ส่วนนี้อยู่ระหว่างพัฒนา',foot1:'© 2026 Baan Thara Properties',foot2:'กรุงเทพมหานคร'},
+  soon:'ส่วนนี้อยู่ระหว่างพัฒนา',foot1:'© 2026 Jubilee Real Estate Co.,Ltd.',foot2:'สงวนลิขสิทธิ์'},
  en:{nav:['Home','Properties','Featured','Agent Club','Looking','Contact'],agent:'Agent Login',book:'Book a viewing',eyebrow:'Listings',h1:'All Properties',sub:'Find your next home from our curated condos and houses across Bangkok and its suburbs',
   all:'All',rent:'For rent',sale:'For sale',q:'Search by name, area or listing code...',pet:'Pet friendly',bts:'Near BTS/MRT',fil:'Filters',
   sort:['Newest','Price: low → high','Price: high → low','Size: large → small'],found:'Found',items:'listings',isNew:'New',mo:'/mo',
@@ -443,7 +500,7 @@ const T={
   chatAdmin:'Chat with us',chatHi:'Hello! Our team is available daily, 09:00–20:00.',copy:'Copy',copied:'Copied',
   ai:'Ask AI',aiTitle:'Property finder',aiHi:'Tell me your budget, area or needs, e.g. "condo near BTS under 25,000, cats OK".',aiPh:'Describe what you need...',
   aiSugg:['Rent under 20,000','2 bed near BTS','House for sale','Pet friendly Thonglor'],aiFound:n=>`Found ${n} close matches. Top picks:`,aiNone:'Nothing matches every point yet. Try a wider budget or another area.',aiShow:'Show all in listings',
-  soon:'This section is coming soon',foot1:'© 2026 Baan Thara Properties',foot2:'Bangkok, Thailand'},
+  soon:'This section is coming soon',foot1:'© 2026 Jubilee Real Estate Co.,Ltd.',foot2:'All rights reserved'},
  zh:{nav:['首页','房产','精选','经纪人俱乐部','求租求购','联系我们'],agent:'经纪人登录',book:'预约看房',eyebrow:'房源',h1:'全部房产',sub:'在曼谷及周边精选公寓与别墅中，找到理想的家',
   all:'全部',rent:'出租',sale:'出售',q:'按名称、区域或编号搜索...',pet:'可养宠物',bts:'近轻轨',fil:'筛选',
   sort:['最新','价格：低 → 高','价格：高 → 低','面积：大 → 小'],found:'共',items:'套房源',isNew:'新上',mo:'/月',
@@ -459,15 +516,16 @@ const T={
   chatAdmin:'联系客服',chatHi:'您好！客服每天 09:00–20:00 在线。',copy:'复制',copied:'已复制',
   ai:'AI 咨询',aiTitle:'找房助手',aiHi:'告诉我预算、区域或需求，例如“近BTS公寓，预算25,000，可养猫”。',aiPh:'输入您的需求...',
   aiSugg:['租金 20,000 以内','两卧 近BTS','出售独栋别墅','可养宠物 通罗'],aiFound:n=>`找到 ${n} 套相近房源，推荐：`,aiNone:'暂无完全匹配的房源，可放宽预算或更换区域。',aiShow:'在列表中查看全部',
-  soon:'该栏目即将上线',foot1:'© 2026 Baan Thara Properties',foot2:'泰国曼谷'}
+  soon:'该栏目即将上线',foot1:'© 2026 Jubilee Real Estate Co.,Ltd.',foot2:'版权所有'}
 };
 const LANGS=[['th','TH','ไทย'],['en','GB','English'],['zh','CN','中文']];
 
 /* ---------- sample data (fictional projects) ---------- */
 /* ---------- site config: แก้ข้อมูลติดต่อจริงตรงนี้ ---------- */
 const CONFIG={
-  phone:'02-000-4567',      // เบอร์โทรสำนักงาน
-  line:'@baanthara',        // LINE Official Account
+  phone:'095-216-9756',     // เบอร์โทรบริษัท
+  line:'',                  // LINE Official Account (ใส่เมื่อมี)
+  wechat:'',                // WeChat ID (ใส่เมื่อมี)
   supabaseUrl:'https://srdcpdkckuifvtetxdwx.supabase.co',
   supabaseKey:'sb_publishable_ixCwFiIjgHEZZCl_yhK0Rg_BYzsE9F6' // publishable key: ใส่ในหน้าเว็บได้ ปลอดภัยด้วย RLS
 };
@@ -484,7 +542,7 @@ function mapRow(r){
   return {id:r.id,code:String(r.code),owner:r.agent_id,mode:r.mode,kind:r.kind,project:String(r.project),district:String(r.district),station:r.station||null,walk:r.walk_m||null,
     beds:+r.beds||0,baths:+r.baths||0,area:+r.area,floor:+r.floor||0,rent:+r.rent||0,sale:+r.sale||0,pets:!!r.pets,days,date:created,scene:r.scene,featured:!!r.featured,isNew:days<=7,
     seed:hash(r.id),photos,desc:r.description||'',isSample:!!r.is_sample,fromAgent:!!r.agent_id,
-    agent:a?[a.name,a.name]:['ทีม Baan Thara','Baan Thara team'],agentLine:a?(a.line_id||''):CONFIG.line,agentPhone:a?(a.phone||''):CONFIG.phone,agentAvatar:a&&a.avatar_path&&okAny(a.avatar_path)?spub('avatars',a.avatar_path):null};
+    agent:a?[a.name,a.name]:['ที่ปรึกษาการขาย Jubilee','Jubilee sales consultant'],agentLine:a?(a.line_id||''):CONFIG.line,agentPhone:a?(a.phone||''):CONFIG.phone,agentAvatar:a?(a.avatar_path&&okAny(a.avatar_path)?spub('avatars',a.avatar_path):null):'team'+(1+hash(r.id)%4)+'.jpg'};
 }
 const LSEL='id,code,agent_id,mode,kind,project,district,station,walk_m,beds,baths,area,floor,rent,sale,pets,scene,description,photos,status,featured,is_sample,created_at,agents(name,line_id,phone,avatar_path)';
 async function loadListings(){
@@ -493,6 +551,7 @@ async function loadListings(){
   LOADING=false;if(error){LOADERR=true;}else{LOADERR=false;P=data.map(mapRow);}
   refreshFresh();renderChrome();renderAlert();renderResults();
   if(uid())syncFavs();
+  deepLink();
 }
 /* ---------- illustrated photos (SVG) ---------- */
 function rng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647;}
@@ -626,7 +685,7 @@ function renderChrome(){
   $('#aiBtn').innerHTML=ic('spark',20)+`<span>${L.ai}</span>`;
   $('#moreBtn').textContent=L.more;
   $('#foot1').textContent=L.foot1;$('#foot2').textContent=L.foot2;
-  renderFilters();renderAcctBtn();if(typeof renderThemeMenu==='function'&&$('#thmBtn'))renderThemeMenu();
+  renderFilters();renderAcctBtn();if(typeof renderThemeMenu==='function'&&$('#thmBtn'))renderThemeMenu();if(typeof renderTeam==='function')renderTeam();
 }
 function renderFilters(){
   const L=t(),f=$('#filters');f.hidden=!S.filOpen;if(!S.filOpen)return;
@@ -685,6 +744,7 @@ function openDetail(code){
   openModal(`
    <div class="gal-main"><img id="galImg" src="${im[0]}" alt="${esc(p.project)}"></div>
    <div class="thumbs">${th.map((s,i)=>`<button data-thumb="${i}" class="${i?'':'on'}" aria-label="photo ${i+1}"><img src="${s}" alt=""></button>`).join('')}</div>${p.photos&&p.photos.some(x=>okStock(x.f))?`<p style="margin:6px 24px 0;font-size:12px;color:var(--muted)">${L3('ภาพประกอบตัวอย่างจาก Unsplash ไม่ใช่ภาพของทรัพย์จริง','Sample photos from Unsplash, not the actual property','示例图片来自 Unsplash，并非实际房源')}</p>`:''}
+   ${shareBoxHTML({url:listingUrl(p),title:p.project+' | JUBILEE Real Estate',code:p.code})}
    <div class="d-body">
     <div style="min-width:0">
      <div class="d-badges">${p.isNew?`<span class="tag new">${L.isNew}</span>`:''}${p.mode.includes('r')?`<span class="tag rent">${L.rent}</span>`:''}${p.mode.includes('s')?`<span class="tag sale">${L.sale}</span>`:''}<span class="code">${p.code}</span></div>
@@ -711,7 +771,8 @@ function openDetail(code){
      ${p.agentLine?`<div class="copyline"><span>LINE</span><code>${esc(p.agentLine)}</code><button data-copy="${esc(p.agentLine)}">${L.copy}</button></div>`:''}
      <div class="copyline"><code>${esc(p.agentPhone||CONFIG.phone)}</code><button data-copy="${esc(p.agentPhone||CONFIG.phone)}">${L.copy}</button></div>
     </aside>
-   </div>`);
+   </div>
+   ${detailBarHTML(p)}`);
   recalc();
 }
 function openBooking(code){
@@ -723,7 +784,7 @@ function openBooking(code){
    <div><label for="bkT">${L.bkPhone}</label><input id="bkT" inputmode="tel" autocomplete="tel" placeholder="08x-xxx-xxxx"></div>
    <div class="row2"><div><label for="bkD">${L.bkDate}</label><input id="bkD" type="date" min="${minD}" value="${minD}"></div><div><label for="bkS">${L.bkTime}</label><select id="bkS">${L.bkTimes.map(x=>`<option>${x}</option>`).join('')}</select></div></div>
    <div><label for="bkM">${L.bkNote}</label><textarea id="bkM" rows="2"></textarea></div>
-   <label style="display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink)"><input type="checkbox" id="bkC" style="width:auto;margin-top:4px"> <span>${L3('ยินยอมให้ Baan Thara และเอเจนต์ผู้ดูแลทรัพย์ เก็บและใช้ชื่อและเบอร์โทรนี้เพื่อติดต่อเรื่องนัดชมเท่านั้น ขอลบข้อมูลได้ทุกเมื่อที่','I agree that Baan Thara and the listing agent may store and use this name and phone number only to arrange the viewing. Ask for deletion anytime at','同意 Baan Thara 及经纪人仅为安排看房使用此姓名和电话。如需删除请联系')} ${esc(CONFIG.phone)}</span></label>
+   <label style="display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--ink)"><input type="checkbox" id="bkC" style="width:auto;margin-top:4px"> <span>${L3('ยินยอมให้ Jubilee Real Estate และเอเจนต์ผู้ดูแลทรัพย์ เก็บและใช้ชื่อและเบอร์โทรนี้เพื่อติดต่อเรื่องนัดชมเท่านั้น ขอลบข้อมูลได้ทุกเมื่อที่','I agree that Jubilee Real Estate and the listing agent may store and use this name and phone number only to arrange the viewing. Ask for deletion anytime at','同意 Jubilee Real Estate 及经纪人仅为安排看房使用此姓名和电话。如需删除请联系')} ${esc(CONFIG.phone)}</span></label>
    <div class="err" id="bkErr" hidden>${L.bkErr}</div>
    <button class="btn" type="submit">${L.bkSend}</button>
   </form>`,'sm');
@@ -748,7 +809,7 @@ function openChat(){
   if(panel==='chat'){closePanel();return;}closePanel();panel='chat';const L=t();
   document.body.insertAdjacentHTML('beforeend',`<div class="panel l" id="panel"><header>${ic('chat')}<b>${L.chatAdmin}</b><button data-pclose aria-label="close">${ic('x')}</button></header>
    <div class="msgs"><div class="m bot">${L.chatHi}</div>
-   <div class="copyline"><span>LINE</span><code>${esc(CONFIG.line)}</code><button data-copy="${esc(CONFIG.line)}">${L.copy}</button></div>
+   ${CONFIG.line?`<div class="copyline"><span>LINE</span><code>${esc(CONFIG.line)}</code><button data-copy="${esc(CONFIG.line)}">${L.copy}</button></div>`:''}
    <div class="copyline"><span>${ic('phone',16)}</span><code>${esc(CONFIG.phone)}</code><button data-copy="${esc(CONFIG.phone)}">${L.copy}</button></div>
    <button class="btn" data-book="">${ic('cal')}${L.bookView}</button></div></div>`);
 }
@@ -824,7 +885,7 @@ document.addEventListener('click',e=>{
     if(n==='0'){S.featured=false;render();window.scrollTo({top:0,behavior:'smooth'});}
     else if(n==='1'){S.featured=false;S.shown=9;render();$('#count').scrollIntoView({behavior:'smooth'});}
     else if(n==='2'){S.featured=true;S.shown=9;render();$('#count').scrollIntoView({behavior:'smooth'});}
-    else if(n==='5'){openChat();}
+    else if(n==='5'){const c=$('#contact');if(c)c.scrollIntoView({behavior:'smooth'});}
     else if(n==='3'||n==='agent'){openAgent();}
     else if(n==='book'){openBooking('');}
     else if(n==='acct'){openAcct();}
@@ -1039,7 +1100,7 @@ function renderAcct(){
     box.innerHTML=`<h3>${T3('ตั้งรหัสผ่านใหม่','Set a new password','设置新密码')}</h3><form id="pwNewForm" novalidate style="display:flex;flex-direction:column;gap:12px"><fieldset>${inp('pw1',T3('รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)','New password (8+ characters)','新密码'),'','password','autocomplete="new-password"')}${inp('pw2',T3('ยืนยันรหัสผ่าน','Confirm password','确认密码'),'','password','autocomplete="new-password"')}</fieldset><div class="err" id="agErr" hidden></div><div class="actions"><button class="btn" type="submit">${T3('บันทึกรหัสผ่าน','Save password','保存')}</button></div></form>`;return;}
   if(!uid()){
     const login=acctTab!=='signup'&&acctTab!=='forgot';
-    box.innerHTML=`<h3>${acctTab==='forgot'?T3('ลืมรหัสผ่าน','Forgot password','忘记密码'):T3('บัญชี Baan Thara','Baan Thara account','Baan Thara 账户')}</h3>
+    box.innerHTML=`<h3>${acctTab==='forgot'?T3('ลืมรหัสผ่าน','Forgot password','忘记密码'):T3('บัญชี Jubilee','Jubilee account','Jubilee 账户')}</h3>
      <p class="lead">${T3('สมัครฟรี เก็บรายการโปรดไว้ดูได้ทุกเครื่อง ดูประวัติการนัดชม และสมัครเป็นเอเจนต์เพื่อลงประกาศ','Free account: keep favorites on every device, see your viewings, and apply as an agent to post listings.','免费注册：多设备同步收藏、查看预约、申请成为经纪人。')}</p>
      ${acctTab==='forgot'?'':tabsHTML([['login',T3('เข้าสู่ระบบ','Sign in','登录')],['signup',T3('สมัครสมาชิก','Sign up','注册')]],acctTab==='signup'?'signup':'login','data-acct')}
      <form id="${acctTab==='forgot'?'forgotForm':login?'loginForm':'signupForm'}" novalidate style="display:flex;flex-direction:column;gap:12px"><fieldset style="grid-template-columns:1fr">
@@ -1294,18 +1355,18 @@ document.addEventListener('submit',async e=>{
 const _openBooking=openBooking;openBooking=function(code){_openBooking(code);if(PROFILE){if(PROFILE.display_name)$('#bkN').value=PROFILE.display_name;if(PROFILE.phone)$('#bkT').value=PROFILE.phone;}};
 
 /* ---------- theme switcher: mode (light/dark/auto) + colour palette ---------- */
-const PALETTES=[['mono','#111111',['ขาวดำ','Black & white','黑白']],['green','#24513F',['เขียวป่า','Forest green','森林绿']],['navy','#1F3A68',['น้ำเงิน','Navy','藏青']],['gold','#8A6A2F',['ทอง','Gold','金色']]];
+const PALETTES=[['pink','#B8137F',['ชมพู Jubilee','Jubilee pink','Jubilee 粉']],['mono','#111111',['ขาวดำ','Black & white','黑白']],['green','#24513F',['เขียวป่า','Forest green','森林绿']],['navy','#1F3A68',['น้ำเงิน','Navy','藏青']],['gold','#8A6A2F',['ทอง','Gold','金色']]];
 const MODES=[['light',['สว่าง','Light','浅色'],'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'],['dark',['มืด','Dark','深色'],'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'],['auto',['ตามเครื่อง','Match device','跟随系统'],'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>']];
 const thmGet=(k,d)=>{try{return localStorage.getItem(k)||d}catch(_){return d}};
 const thmSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}};
 function applyTheme(){
-  const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','mono'),r=document.documentElement;
+  const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','pink'),r=document.documentElement;
   if(m==='light'||m==='dark')r.setAttribute('data-theme',m);else r.removeAttribute('data-theme');
   if(p&&p!=='mono')r.setAttribute('data-palette',p);else r.removeAttribute('data-palette');
   const meta=document.querySelector('meta[name="theme-color"]');if(meta){const dark=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);meta.content=dark?'#0B0B0B':(PALETTES.find(x=>x[0]===p)||PALETTES[0])[1];}
 }
 function renderThemeMenu(){
-  const pick=a=>a[S.lang==='en'?1:S.lang==='zh'?2:0];const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','mono');
+  const pick=a=>a[S.lang==='en'?1:S.lang==='zh'?2:0];const m=thmGet('bt_mode','auto'),p=thmGet('bt_palette','pink');
   const cur=MODES.find(x=>x[0]===m)||MODES[2];
   $('#thmBtn').innerHTML=`<svg class="i" viewBox="0 0 24 24">${cur[2]}</svg><span class="lang-label">${L3('ธีม','Theme','主题')}</span>`+ic($('#thmMenu').hidden?'down':'up',14);
   $('#thmMenu').innerHTML=`<h6>${L3('โหมด','Mode','模式')}</h6>`+MODES.map(x=>`<button data-thmmode="${x[0]}" class="${x[0]===m?'on':''}"><svg class="i" viewBox="0 0 24 24">${x[2]}</svg>${pick(x[1])}${x[0]===m?`<span class="ck">${ic('check',16)}</span>`:''}</button>`).join('')
@@ -1323,7 +1384,135 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#thmMenu').hidd
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);}catch(_){}
 applyTheme();
 
-render();loadSettings();loadListings();
+/* ---------- sharing (WeChat Moments, Facebook, LINE, X, WhatsApp, Telegram) ---------- */
+const UA=navigator.userAgent||'';const isWeChat=/MicroMessenger/i.test(UA);const isMobile=/Android|iPhone|iPad|iPod/i.test(UA);
+const enc=encodeURIComponent;
+const siteUrl=()=>location.origin+location.pathname;
+const listingUrl=p=>siteUrl()+'?p='+enc(p.code);
+const SHI={
+ wechat:'<svg viewBox="0 0 24 24"><path d="M9 4C5 4 2 6.7 2 10c0 1.9 1 3.6 2.6 4.7L4 17l2.8-1.4c.7.2 1.4.3 2.2.3h.4A5.6 5.6 0 0 1 9 14c0-3.3 3.1-6 7-6h.5C15.7 5.7 12.6 4 9 4zm7 5c-3.3 0-6 2.2-6 5s2.7 5 6 5c.7 0 1.3-.1 1.9-.3L20 20l-.6-2.1C21 17 22 15.6 22 14c0-2.8-2.7-5-6-5z"/></svg>',
+ fb:'<svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.3V10H7v4h3v8h4v-8h3l1-4h-4V8.6c0-.4.3-.6 1-.6z"/></svg>',
+ line:'<svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 4 3.6 7.3 8.4 7.9.3.1.8.2.9.5.1.3 0 .7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8.1-6C21.5 14.4 22 12.8 22 11c0-4.4-4.5-8-10-8z"/></svg>',
+ x:'<svg viewBox="0 0 24 24"><path d="M17.8 3H21l-7 8 8.2 10h-6.4l-5-6.2L5 21H2l7.5-8.6L1.6 3h6.6l4.5 5.7L17.8 3z"/></svg>',
+ wa:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>',
+ tg:'<svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.6l-4.9-1.5c-1.1-.3-1.1-1 .2-1.5L20.4 3.1c.9-.3 1.7.2 1.5 1.2z"/></svg>',
+ link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="fill:none"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>',
+ share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="fill:none"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>'
+};
+function stationEn(p){const l=S.lang;S.lang='en';const s=station(p);S.lang=l;return s;}
+function momentsText(p){
+  const kind={condo:'公寓',house:'独栋别墅',town:'联排别墅'}[p.kind]||'房源';
+  const price=[p.rent?`月租 ฿${Math.round(p.rent).toLocaleString('en-US')}`:'',p.sale?`售价 ฿${Math.round(p.sale).toLocaleString('en-US')}`:''].filter(Boolean).join(' · ');
+  return `🏙【JUBILEE EXCLUSIVE · 曼谷精选房源】${p.project} | JUBILEE Real Estate
+
+📍 核心地段: ${p.district}, Bangkok${p.station?' · 近 '+stationEn(p):''}
+🏠 ${kind} · ${p.beds}卧${p.baths}卫 · ${p.area}㎡
+💰 ${price}${p.pets?'\n🐾 可养宠物':''}
+
+🔗 查看完整房源详情与高清图集:
+${listingUrl(p)}
+
+📞 微信专属咨询 / 预约看房:
+• 电话 / WhatsApp: ${CONFIG.phone}${CONFIG.wechat?'\n• 微信 ID: '+CONFIG.wechat:''}
+• Jubilee Real Estate Co.,Ltd.`;
+}
+function siteText(){
+  return `🏙【JUBILEE Real Estate · 曼谷精选房源】
+曼谷公寓 · 独栋别墅 · 联排别墅 租售
+คอนโด บ้าน ทาวน์โฮม เช่า-ขาย กรุงเทพฯ
+
+🔗 ${siteUrl()}
+
+📞 ${CONFIG.phone}${CONFIG.wechat?' · 微信 ID: '+CONFIG.wechat:''}
+Jubilee Real Estate Co.,Ltd.`;
+}
+function shareBoxHTML(o){ // o: {url,title,code?}
+  const u=enc(o.url),t=enc(o.title);
+  return `<div class="sharebox" id="shareBox"><h4>${L3('แชร์ / โพสต์หน้านี้','Share this page','分享 / 发布此页')}</h4><div class="sh-grid">
+   <button type="button" class="sh wechat" data-sh="wechat" ${o.code?`data-code="${esc(o.code)}"`:'data-site="1"'}>${SHI.wechat}${L3('โพสต์ใน WeChat Moments','Post to WeChat Moments','发布到微信朋友圈')}</button>
+   <a class="sh fb" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${u}">${SHI.fb}Facebook</a>
+   <a class="sh line" target="_blank" rel="noopener" href="https://social-plugins.line.me/lineit/share?url=${u}">${SHI.line}LINE</a>
+   <a class="sh shx" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">${SHI.x}X (Twitter)</a>
+   <a class="sh wa" target="_blank" rel="noopener" href="https://wa.me/?text=${enc(o.title+' '+o.url)}">${SHI.wa}WhatsApp</a>
+   <a class="sh tg" target="_blank" rel="noopener" href="https://t.me/share/url?url=${u}&text=${t}">${SHI.tg}Telegram</a>
+   <button type="button" class="sh copy" data-sh="link" data-url="${esc(o.url)}">${SHI.link}${L3('คัดลอกลิงก์','Copy link','复制链接')}</button>
+  </div></div>`;
+}
+async function copyText(t){
+  try{await navigator.clipboard.writeText(t);return true;}catch(_){}
+  const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.select();
+  let ok=false;try{ok=document.execCommand('copy');}catch(_){}ta.remove();return ok;
+}
+let qrLoading=null;
+function loadQR(){if(window.QRCode)return Promise.resolve();if(qrLoading)return qrLoading;
+  qrLoading=new Promise(res=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';s.onload=res;s.onerror=res;document.head.appendChild(s);});return qrLoading;}
+function showWxTip(copied){
+  const d=document.createElement('div');d.className='wx-tip';
+  d.innerHTML=`<div class="arr">↗</div><b>${L3('กด ··· มุมขวาบน','Tap ··· at the top right','点击右上角 ···')}</b><div>${L3('แล้วเลือก “分享到朋友圈” (แชร์ไปที่ Moments)','then choose “分享到朋友圈” (Share to Moments)','然后选择“分享到朋友圈”')}</div>${copied?`<div style="opacity:.85;font-size:14px">${L3('คัดลอกข้อความประกาศแล้ว กดวาง (Paste) ในช่องข้อความได้เลย','Listing text copied, paste it in the caption','房源文字已复制，可直接粘贴')}</div>`:''}<div style="margin-top:auto;align-self:center;opacity:.7;font-size:14px">${L3('แตะเพื่อปิด','Tap to close','点击关闭')}</div>`;
+  d.addEventListener('click',()=>d.remove());document.body.appendChild(d);
+}
+function openWxModal(ctx){
+  window.__wxText=ctx.text;
+  openModal(`<div class="wx-modal"><h3>${L3('แชร์ไปที่ WeChat Moments','Share to WeChat Moments','分享到微信朋友圈')}</h3>
+   <div class="wx-qr" id="wxQr"></div>
+   <ol class="wx-steps"><li>${L3('เปิด WeChat กด ⊕ แล้วเลือก Scan (扫一扫) สแกน QR นี้','Open WeChat, tap ⊕ → Scan (扫一扫) this QR','打开微信，点击 ⊕ → 扫一扫')}</li><li>${L3('เมื่อหน้าเว็บเปิดใน WeChat กด ··· มุมขวาบน','When the page opens in WeChat, tap ··· at the top right','网页打开后点击右上角 ···')}</li><li>${L3('เลือก “分享到朋友圈” แล้ววางข้อความด้านล่าง','Choose “分享到朋友圈” and paste the text below','选择“分享到朋友圈”，粘贴下方文字')}</li></ol>
+   <div class="wx-text">${esc(ctx.text)}</div>
+   <div class="actions"><button type="button" class="btn" data-copy-wx="1">${L3('คัดลอกข้อความ','Copy text','复制文字')}</button></div></div>`,'sm');
+  loadQR().then(()=>{const el=$('#wxQr');if(el&&window.QRCode){el.innerHTML='';new QRCode(el,{text:ctx.url,width:200,height:200,correctLevel:QRCode.CorrectLevel.M});}else if(el)el.innerHTML=`<code style="word-break:break-all">${esc(ctx.url)}</code>`;});
+}
+async function shareWeChat(ctx){
+  const copied=await copyText(ctx.text);
+  if(isWeChat){showWxTip(copied);return;}
+  if(isMobile&&navigator.share){
+    toast(L3('กำลังเตรียมรูปและข้อความ…','Preparing photo and text…','正在准备图片和文字…'));
+    try{
+      let files=[];
+      if(ctx.img){try{const b=await fetch(ctx.img,{mode:'cors'}).then(r=>r.blob());const f=new File([b],'jubilee.jpg',{type:b.type||'image/jpeg'});if(navigator.canShare&&navigator.canShare({files:[f]}))files=[f];}catch(_){}}
+      await navigator.share(files.length?{files,text:ctx.text,title:ctx.title}:{title:ctx.title,text:ctx.text,url:ctx.url});
+      toast(L3('คัดลอกข้อความประกาศแล้ว ถ้าข้อความไม่ขึ้นใน WeChat ให้กดวาง (Paste)','Text copied. If it does not appear in WeChat, tap Paste.','文字已复制，如未显示请在微信中粘贴'));
+      return;
+    }catch(e){if(e&&e.name==='AbortError')return;}
+  }
+  openWxModal(ctx);
+  if(copied)toast(L3('คัดลอกข้อความประกาศแล้ว','Listing text copied','文字已复制'));
+}
+function openShareSite(){
+  closePanel();
+  openModal(`<div style="padding:22px 0 18px"><h3 style="margin:0 24px;font-family:var(--f-display);font-size:21px">${L3('แชร์เว็บไซต์ JUBILEE','Share the JUBILEE website','分享 JUBILEE 网站')}</h3><img src="share.jpg" alt="" style="display:block;width:calc(100% - 48px);margin:14px 24px 0;border-radius:12px;border:1px solid var(--line)">${shareBoxHTML({url:siteUrl(),title:'JUBILEE Real Estate · 曼谷精选房源'})}</div>`,'sm');
+}
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-sh],[data-copy-wx],[data-sh-scroll],#shareSite,[data-tmbook]');if(!b)return;
+  if(b.id==='shareSite'){openShareSite();return;}
+  if(b.dataset.tmbook!==undefined){openBooking('');return;}
+  if(b.dataset.shScroll!==undefined){const sb=$('#shareBox');if(sb)sb.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  if(b.dataset.copyWx){const ok=await copyText(window.__wxText||'');toast(ok?L3('คัดลอกข้อความแล้ว','Text copied','已复制'):L3('คัดลอกไม่ได้ กดค้างที่ข้อความเพื่อคัดลอก','Could not copy. Long-press the text to copy.','无法复制，请长按文字'));return;}
+  if(b.dataset.sh==='link'){const ok=await copyText(b.dataset.url);toast(ok?L3('คัดลอกลิงก์แล้ว','Link copied','链接已复制'):b.dataset.url);return;}
+  if(b.dataset.sh==='wechat'){
+    if(b.dataset.site)return shareWeChat({text:siteText(),url:siteUrl(),img:siteUrl()+'share.jpg',title:'JUBILEE Real Estate'});
+    const p=P.find(x=>x.code===b.dataset.code);if(!p)return;
+    const full=imgsFull(p)[0];
+    shareWeChat({text:momentsText(p),url:listingUrl(p),img:/^https?:/.test(full)?full:null,title:p.project+' | JUBILEE Real Estate'});
+  }
+});
+function detailBarHTML(p){const tel=String(p.agentPhone||CONFIG.phone).replace(/[^\d+]/g,'');
+  return `<div class="d-bar"><a class="call" href="tel:${esc(tel)}">${ic('phone',16)}${L3('โทร','Call','致电')}</a><button type="button" class="bk" data-book="${esc(p.code)}">${L3('นัดชมทรัพย์','Book a viewing','预约看房')}</button><button type="button" class="shr" data-sh-scroll aria-label="share">${SHI.share}</button></div>`;}
+
+/* ---------- sales team & footer labels ---------- */
+const TEAM=['team1.jpg','team2.jpg','team3.jpg','team4.jpg'];
+function renderTeam(){
+  const g=$('#teamGrid');if(!g)return;const tel=CONFIG.phone.replace(/[^\d+]/g,'');
+  $('#teamTitle').textContent=L3('ทีมที่ปรึกษาการขาย','Our sales consultants','我们的置业顾问');
+  $('#teamSub').textContent=L3('พร้อมดูแลทั้งลูกค้าไทย จีน และต่างชาติ ตั้งแต่หาทรัพย์ นัดชม จนถึงทำสัญญา','Serving Thai, Chinese and international clients from search and viewings to signing.','为泰国、中国及国际客户提供从选房、看房到签约的全程服务');
+  $('#shareSite').innerHTML=SHI.share.replace('<svg ','<svg style="width:18px;height:18px" ')+L3('แชร์เว็บนี้','Share this website','分享本网站');
+  const fa=$('#fAddrL'),fc=$('#fContactL');if(fa)fa.textContent=L3('ที่อยู่','Address','地址');if(fc)fc.textContent=L3('ติดต่อ','Contact','联系');
+  const ft=$('#fTel');if(ft)ft.textContent=CONFIG.phone;
+  g.innerHTML=TEAM.map(src=>`<div class="tm"><img src="${src}" alt="${L3('ที่ปรึกษาการขาย','Sales consultant','置业顾问')}" loading="lazy"><div class="tb"><b>${L3('ที่ปรึกษาการขาย','Sales consultant','置业顾问')}</b><small>Jubilee Real Estate · ไทย / English / 中文</small><div class="row"><a class="btn" href="tel:${esc(tel)}">${L3('โทร','Call','致电')}</a><button type="button" class="btn gold" data-tmbook>${L3('นัดชม','Book','预约')}</button></div></div></div>`).join('');
+}
+/* ---------- open a listing from a shared link (?p=CODE) ---------- */
+let deepDone=false;
+function deepLink(){if(deepDone)return;const c=new URLSearchParams(location.search).get('p');if(!c)return;const p=P.find(x=>x.code===c);if(p){deepDone=true;openDetail(c);}}
+
+render();loadSettings().then(renderTeam);loadListings();
 </script>
 
 </body>
